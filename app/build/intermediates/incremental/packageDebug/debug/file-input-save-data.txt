@@ -1,0 +1,7 @@
+#Internal package file, do not edit.
+#Tue Dec 05 21:36:54 IST 2017
+0.baseType=DIRECTORY
+0.base=C\:\\Users\\prate\\Desktop\\AndroidStudioProjects\\atg\\atg_android_new\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
+0.path=classes.dex
+0.set=DEX
+count=1

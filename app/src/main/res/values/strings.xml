@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">ATG World</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+
+    <string name="action_settings">Settings</string>
+    <string name="no_internet_connection">No Internet Connection</string>
+    <string name="str_not_connect_to_server">Not connected to server.</string>
+    <string name="str_font">open-sans-regular.ttf</string>
+    <string name="str_font_bold">open-sans-semibold.ttf</string>
+    <string name="str_font_material">material-icon-font.ttf</string>
+
+    <string name="ic_keyboard_arrow_left">&#xe0c6;</string>
+    <string name="ic_keyboard_arrow_right">&#xe0c7;</string>
+    <string name="ic_email">&#xe087;</string>
+    <string name="ic_add">&#xe006;</string>
+    <string name="ic_close">&#xe048;</string>
+    <string name="ic_keyboard_arrow_down">&#xe0c5;</string>
+    <string name="ic_folder">&#xe09d;</string>
+    <string-array name="nav_user_item">
+        <item>Home</item>
+        <item>Post</item>
+        <item>Connect</item>
+        <item>Notifications</item>
+        <item>My Posts</item>
+        <item>My Saved</item>
+        <item>Upcoming</item>
+        <item>My Groups</item>
+        <item>Explore Groups</item>
+        <item>Logout</item>
+    </string-array>
+    <string name="FACEBOOK_ID">165150440699462</string>
+    <string name="fb_login_protocol_scheme">fb165150440699462</string>
+    <string name="SERVER_CLIENT_ID">694307195919-quopau3ed75mkjvrr1snq0sdkamuc2mb.apps.googleusercontent.com</string>
+    <string name="string_1">The files are very easy to navigate.</string>
+    <string name="string_2">The files are very easy to navigate. layers are organised
+     in groups and subgroup</string>
+    <string name="string_3">5th May 2016</string>
+
+    <string name="str_timeline_view">Timeline View</string>
+    <string name="str_imgoing">I\'M GOING</string>
+    <string name="str_myinterests">MY INTERESTS</string>
+    <string name="str_no_data_found">No Data Found</string>
+    <string name="str_helvatica_normal">helvetica_normal.ttf</string>
+    <string name="str_helvetica_bold">helvetica_bold.ttf</string>
+    <string name="swipe_right_text">Swipe right to Upvote user post</string>
+    <string name="swipe_left_text">Swipe Left to Downvote user post</string>
+
+
+</resources>
