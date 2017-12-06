@@ -1,4 +1,4 @@
-package com.ATG.World;
+package com.ATG.World.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.ATG.World.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -65,7 +67,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.notifications_nav) {
 
-        }else if (id == R.id.logout_nav){
+        } else if (id == R.id.logout_nav) {
 
         }
 
