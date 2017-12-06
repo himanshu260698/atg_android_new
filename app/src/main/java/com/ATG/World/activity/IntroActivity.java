@@ -64,11 +64,11 @@ public class IntroActivity extends AppCompatActivity {
 
         // layouts of all welcome sliders
         // add few more layouts if you want
-        /* layouts = new int[]{
+        layouts = new int[]{
                 R.layout.intro_slide_one,
                 R.layout.intro_slide_one,
                 R.layout.intro_slide_one,
-                R.layout.intro_slide_one};*/
+                R.layout.intro_slide_one};
 
         // adding bottom dots
         addBottomDots(0);
