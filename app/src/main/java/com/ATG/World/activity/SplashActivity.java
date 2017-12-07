@@ -11,7 +11,9 @@ public class SplashActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
        //We will use shared preference to check login activity which we will add later
-        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+        //startActivity(new Intent(SplashActivity.this, MainActivity.class));
+
+        startActivity(new Intent(SplashActivity.this, SocialLoginActivity.class));
         finish();
 
 
