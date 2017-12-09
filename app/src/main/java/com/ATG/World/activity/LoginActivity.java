@@ -3,6 +3,7 @@ package com.ATG.World.activity;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Build;
@@ -18,9 +19,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ATG.World.R;
+import com.ATG.World.models.User_details;
 import com.ATG.World.models.WsLoginResponse;
 import com.ATG.World.network.AtgClient;
 import com.ATG.World.network.AtgService;
+import com.ATG.World.preferences.UserPreferenceManager;
+
+import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -81,21 +86,17 @@ public class LoginActivity extends AppCompatActivity {
         mEmailView.setError(null);
         mPasswordView.setError(null);
 
-        // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
-        // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
         }
-
-        // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
@@ -107,37 +108,57 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
             focusView.requestFocus();
         } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-
-
-
-
-
-
-
-
-
-
-
             showProgress(true);
             Call<WsLoginResponse> call = retrofit.getEmailLogin(email,password,"0","");
             call.enqueue(new Callback<WsLoginResponse>() {
                 @Override
                 public void onResponse(Call<WsLoginResponse> call, Response<WsLoginResponse> response) {
-                    WsLoginResponse response1=response.body();
-                    int a=response1.getError_code();
-                    String b=response1.getMsg();
-                    Toast.makeText(LoginActivity.this, a+"  "+b, Toast.LENGTH_LONG).show();
-                    showProgress(false);
-                    /*if(a==1){
-                        //do few things
+                    WsLoginResponse wsLoginResponse=response.body();
+
+                    if (wsLoginResponse.getError_code()==0) {
+                        User_details userDetails=wsLoginResponse.getUser_details();
+
+                        UserPreferenceManager.login(LoginActivity.this,
+                                userDetails.getId(),
+                                userDetails.getFirst_name(),
+                                userDetails.getLast_name(),
+                                userDetails.getUser_type(),
+                                "",
+                                userDetails.getProfile_picture(),
+                                "",
+                                userDetails.getLocation(),
+                                userDetails.getFb_login(),
+                                userDetails.getGoogle_login(),
+                                userDetails.getLinkdin_login(),
+                                userDetails.getTwitter_login(),
+                                userDetails.getEmail(),
+                                userDetails.getMob_no()
+                        );
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("flg", "1");
+                        intent.putExtras(bundle);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         finish();
-                    }*/
+                        startActivity(intent);
+                    } else if (wsLoginResponse.getError_code()==1) {
+                        Toast.makeText(LoginActivity.this, "Please check your credentials.", Toast.LENGTH_SHORT).show();
+
+                    } else if (wsLoginResponse.getError_code()==2) {
+                        Toast.makeText(LoginActivity.this, "This email is not registered with this site.", Toast.LENGTH_SHORT).show();
+
+                    } else if (wsLoginResponse.getError_code()==3) {
+                        Toast.makeText(LoginActivity.this, "Your account has been blocked by administrator!.Please contact administrator to activate your account.", Toast.LENGTH_SHORT).show();
+
+                    } else if (wsLoginResponse.getError_code()==4) {
+                        Toast.makeText(LoginActivity.this, "Please activate your account.", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    showProgress(false);
+
 
                 }
 
@@ -149,28 +170,15 @@ public class LoginActivity extends AppCompatActivity {
 
                 }
             });
-            //mAuthTask = new UserLoginTask(email, password);
-            //mAuthTask.execute((Void) null);
-
-
-
-
-
-
-
-
-
 
         }
     }
 
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
         return email.contains("@");
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
         return password.length() > 4;
     }
 
@@ -209,56 +217,5 @@ public class LoginActivity extends AppCompatActivity {
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
-
-    /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
-     */
-    /*public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
-
-        private final String mEmail;
-        private final String mPassword;
-
-        UserLoginTask(String email, String password) {
-            mEmail = email;
-            mPassword = password;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
-
-           /* for (String credential : ) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
-            // TODO: register the new account here.
-            return true;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
-
-            if (success) {
-                finish();
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-            }
-        }
-    }*/
 }
 

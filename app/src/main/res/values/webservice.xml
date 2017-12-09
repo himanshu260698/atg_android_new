@@ -2,30 +2,30 @@
 <resources>
 
     <!--live url-->
-    <string name="WS_HOST">https://www.atg.world/</string>
-    <string name="WS_EVENT_IMAGE_PATH">https://www.atg.world/public/assets/Frontend/images/event_profile/</string>
-    <string name="WS_PROFILE_IMAGE_PATH">https://www.atg.world/public/assets/Frontend/user/profile_pics/</string>
-    <string name="WS_SLIDEING_IMAGE_PATH">https://www.atg.world/public/assets/Frontend/images/slider_banner_image/</string>
-    <string name="WS_EVENT_DETAIL_IMAGE">https://www.atg.world/public/assets/Frontend/images/event_profile/thumb/</string>
-    <string name="WS_ARTICLE_DETAIL_IMAGE">https://www.atg.world/public/assets/Frontend/images/article_image/thumb/</string>
-    <string name="WS_EDUCATION_DETAIL_IMAGE">https://www.atg.world/public/assets/Frontend/images/education_image/thumb/</string>
-    <string name="WS_JOB_DETAIL_IMAGE">https://www.atg.world/public/assets/Frontend/images/job_image/thumb/</string>
-    <string name="WS_SavedEventProfile">https://www.atg.world/public/assets/Frontend/images/event_profile/</string>
-    <string name="WS_MEETUP_DETAIL_IMAGE">https://www.atg.world/public/assets/Frontend/images/meetup_image/thumb/</string>
-    <string name="WS_BLOG_DETAIL_IMAGE">https://www.atg.world/public/assets/Frontend/images/blog_image/</string>
-    <string name="WS_QUESTION_DETAIL_IMAGE">https://www.atg.world/public/assets/Frontend/images/question_image/thumb/</string>
-    <string name="WS_GROUP_ICONS">https://www.atg.world/public/assets/Backend/img/group_img/icon/thumb/</string>
-    <string name="WS_GUEST_IMAGE_PATH">https://www.atg.world/public/assets/Frontend/images/event_guest_image/thumb/</string>
-    <string name="WS_POST_ARTICLE_IMAGE">https://www.atg.world/public/assets/Frontend/images/article_image/thumb/</string>
-    <string name="WS_POST_EVENT_IMAGE">https://www.atg.world/public/assets/Frontend/images/event_profile/thumb/</string>
-    <string name="WS_DESCRIPTION_DETAIL_IMG">https://www.atg.world/public/assets/Frontend/images/content_images/</string>
-    <string name="WS_Saved_postimg">https://www.atg.world/public/assets/Frontend/img/</string>
-    <string name="WS_GROUPICONS">https://www.atg.world/public/Backend/img/</string>
-    <string name="WS_EXPLOREGROUPICON">https://www.atg.world/public/assets/Backend/img/group_img/icon/thumb/</string>
-    <string name="WS_GROUP_IMAGE">https://www.atg.world/public/assets/Backend/img/group_img/icon/thumb/</string>
-    <string name="SUBGROUP_COVER_IMG">https://www.atg.world/public/assets/Backend/img/group_img/cover/</string>
-    <string name="WS_COVER_IMAGE">https://www.atg.world/public/assets/Frontend/user/cover_photo/</string>
-    <string name="WS_GROUP_COVER_IMAGE">https://www.atg.world/public/assets/Frontend/img/</string>
+    <string name="WS_HOST">http://atg.party/</string>
+    <string name="WS_EVENT_IMAGE_PATH">http://atg.party/public/assets/Frontend/images/event_profile/</string>
+    <string name="WS_PROFILE_IMAGE_PATH">http://atg.party/public/assets/Frontend/user/profile_pics/</string>
+    <string name="WS_SLIDEING_IMAGE_PATH">http://atg.party/public/assets/Frontend/images/slider_banner_image/</string>
+    <string name="WS_EVENT_DETAIL_IMAGE">http://atg.party/public/assets/Frontend/images/event_profile/thumb/</string>
+    <string name="WS_ARTICLE_DETAIL_IMAGE">http://atg.party/public/assets/Frontend/images/article_image/thumb/</string>
+    <string name="WS_EDUCATION_DETAIL_IMAGE">http://atg.party/public/assets/Frontend/images/education_image/thumb/</string>
+    <string name="WS_JOB_DETAIL_IMAGE">http://atg.party/public/assets/Frontend/images/job_image/thumb/</string>
+    <string name="WS_SavedEventProfile">http://atg.party/public/assets/Frontend/images/event_profile/</string>
+    <string name="WS_MEETUP_DETAIL_IMAGE">http://atg.party/public/assets/Frontend/images/meetup_image/thumb/</string>
+    <string name="WS_BLOG_DETAIL_IMAGE">http://atg.party/public/assets/Frontend/images/blog_image/</string>
+    <string name="WS_QUESTION_DETAIL_IMAGE">http://atg.party/public/assets/Frontend/images/question_image/thumb/</string>
+    <string name="WS_GROUP_ICONS">http://atg.party/public/assets/Backend/img/group_img/icon/thumb/</string>
+    <string name="WS_GUEST_IMAGE_PATH">http://atg.party/public/assets/Frontend/images/event_guest_image/thumb/</string>
+    <string name="WS_POST_ARTICLE_IMAGE">http://atg.party/public/assets/Frontend/images/article_image/thumb/</string>
+    <string name="WS_POST_EVENT_IMAGE">http://atg.party/public/assets/Frontend/images/event_profile/thumb/</string>
+    <string name="WS_DESCRIPTION_DETAIL_IMG">http://atg.party/public/assets/Frontend/images/content_images/</string>
+    <string name="WS_Saved_postimg">http://atg.party/public/assets/Frontend/img/</string>
+    <string name="WS_GROUPICONS">http://atg.party/public/Backend/img/</string>
+    <string name="WS_EXPLOREGROUPICON">http://atg.party/public/assets/Backend/img/group_img/icon/thumb/</string>
+    <string name="WS_GROUP_IMAGE">http://atg.party/public/assets/Backend/img/group_img/icon/thumb/</string>
+    <string name="SUBGROUP_COVER_IMG">http://atg.party/public/assets/Backend/img/group_img/cover/</string>
+    <string name="WS_COVER_IMAGE">http://atg.party/public/assets/Frontend/user/cover_photo/</string>
+    <string name="WS_GROUP_COVER_IMAGE">http://atg.party/public/assets/Frontend/img/</string>
 
 
     <string name="WS_SLIDER_BANEER">ws-slider-banner</string>

@@ -8,7 +8,7 @@ public class User_details {
 
     @SerializedName("id")
     @Expose
-    private int id;
+    private String id;
     @SerializedName("user_name")
     @Expose
     private String user_name;
@@ -211,11 +211,11 @@ public class User_details {
     @Expose
     private String google_login;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

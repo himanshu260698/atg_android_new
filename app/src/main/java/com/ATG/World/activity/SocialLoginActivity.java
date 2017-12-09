@@ -1,5 +1,9 @@
 package com.ATG.World.activity;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,9 +12,11 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.ATG.World.R;
+import com.ATG.World.models.User_details;
 import com.ATG.World.models.WsLoginResponse;
 import com.ATG.World.network.AtgClient;
 import com.ATG.World.network.AtgService;
+import com.ATG.World.preferences.UserPreferenceManager;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -43,6 +49,8 @@ import retrofit2.Response;
 public class SocialLoginActivity extends AppCompatActivity implements View.OnClickListener {
     private CallbackManager callbackManager;
     private int socialFlag;
+    private String mStrLastNAME = "";
+    private String mStrFBLogin = "0", mStrGoogleLogin = "0", mStrTwitterLogin = "0";
 
     private LoginButton loginFacebookButton;
     private TwitterLoginButton twitterLoginButton;
@@ -52,6 +60,8 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
     private Button loginEmailButton;
     private Button signupButton;
     private AtgService retrofit;
+    private View mProgressView;
+    private View mLoginView;
 
     //Facebook Details
     private String fbEmail;
@@ -85,6 +95,8 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
     private void setUI() {
         loginEmailButton=findViewById(R.id.login_email);
         signupButton=findViewById(R.id.sign_up_email);
+        mLoginView = findViewById(R.id.login_view);
+        mProgressView = findViewById(R.id.login_progress_home);
         loginEmailButton.setOnClickListener(this);
         signupButton.setOnClickListener(this);
 
@@ -95,6 +107,7 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
         twitterLoginButton.setCallback(new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
+                showProgress(true);
                 TwitterSession user = result.data;
                 twitterId = String.valueOf(user.getUserId());
                 twitterUsername = user.getUserName();
@@ -134,6 +147,7 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         LoginManager.getInstance().logOut();
                         try {
+                            showProgress(true);
                              fbEmail = object.getString("email");
                              fbId = object.getString("id");
                             String mName = object.getString("name");
@@ -177,6 +191,7 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
     private void handleSignInResult(Task<GoogleSignInAccount> task) {
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if (acct != null) {
+            showProgress(true);
             String personName = acct.getDisplayName();
             String[] userName = personName.split(" ");
             googleFirstName = userName[0];
@@ -195,16 +210,121 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onResponse(Call<WsLoginResponse> call, Response<WsLoginResponse> response) {
                 WsLoginResponse wsLoginResponse =response.body();
-                if(wsLoginResponse.getUser_details()==null)
-                    Toast.makeText(SocialLoginActivity.this, wsLoginResponse.getError_code()+ wsLoginResponse.getMsg(),Toast.LENGTH_LONG).show();
-                else
-                    Toast.makeText(SocialLoginActivity.this, wsLoginResponse.getError_code()+"",Toast.LENGTH_LONG).show();
+
+                         if (wsLoginResponse.getError_code()==0) {
+                        Toast.makeText(SocialLoginActivity.this, "Logged in successfully.", Toast.LENGTH_SHORT).show();
+                        User_details userDetails=wsLoginResponse.getUser_details();
+
+                        if (userDetails.getLast_name() != null)
+                            mStrLastNAME = userDetails.getLast_name();
+
+                        if (socialFlag == 1) {
+                            mStrFBLogin = "1";
+                        } else {
+                            mStrFBLogin = "0";
+                        }
+                        if (socialFlag == 2) {
+                            mStrGoogleLogin = "1";
+                        } else {
+                            mStrGoogleLogin = "0";
+                        }
+                        if (socialFlag == 3) {
+                            mStrTwitterLogin = "1";
+                        } else {
+                            mStrTwitterLogin = "0";
+                        }
+
+                        UserPreferenceManager.login(SocialLoginActivity.this,
+                                userDetails.getId(),
+                                userDetails.getFirst_name(),
+                                mStrLastNAME,
+                                userDetails.getUser_type(),
+                                "",
+                                userDetails.getProfile_picture(),
+                                "",
+                                "",
+                                mStrFBLogin,
+                                mStrGoogleLogin,
+                                "",
+                                mStrTwitterLogin,
+                                userDetails.getEmail(),
+                                ""
+                        );
+                        Intent intent = new Intent(SocialLoginActivity.this, MainActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("flg", "1");
+                        intent.putExtras(bundle);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        finish();
+                        startActivity(intent);
+                    }
+                    else if (wsLoginResponse.getError_code()==1) {
+                        Toast.makeText(SocialLoginActivity.this, "Logged in successfully.", Toast.LENGTH_SHORT).show();
+
+                        User_details userDetails=wsLoginResponse.getUser_details();
+
+                        if (userDetails.getLast_name() != null)
+                            mStrLastNAME = userDetails.getLast_name();
+
+                        if (socialFlag == 1) {
+                            mStrFBLogin = "1";
+                        } else {
+                            mStrFBLogin = "0";
+                        }
+                        if (socialFlag == 2) {
+                            mStrGoogleLogin = "1";
+                        } else {
+                            mStrGoogleLogin = "0";
+                        }
+                        if (socialFlag == 3) {
+                            mStrTwitterLogin = "1";
+                        } else {
+                            mStrTwitterLogin = "0";
+                        }
+
+                        UserPreferenceManager.login(SocialLoginActivity.this,
+                                userDetails.getId(),
+                                userDetails.getFirst_name(),
+                                userDetails.getLast_name(),
+                                userDetails.getUser_type(),
+                                "",
+                                userDetails.getProfile_picture(),
+                                "",
+                                userDetails.getLocation(),
+                                mStrFBLogin,
+                                mStrGoogleLogin,
+                                userDetails.getLinkdin_login(),
+                                mStrTwitterLogin,
+                                userDetails.getEmail(),
+                                userDetails.getMob_no()
+                        );
+                        Intent intent = new Intent(SocialLoginActivity.this, MainActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("flg", "1");
+                        intent.putExtras(bundle);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        finish();
+                        startActivity(intent);
+                    } else if (wsLoginResponse.getError_code()==2) {
+                        Toast.makeText(SocialLoginActivity.this, "Please select groups.", Toast.LENGTH_SHORT).show();
+                       /* Intent intent = new Intent(SocialLoginActivity.this, SelectGroupActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        finish();
+                        startActivity(intent);
+                        */
+
+                    }
+
+
+                showProgress(false);
 
 
             }
 
             @Override
             public void onFailure(Call<WsLoginResponse> call, Throwable t) {
+                showProgress(false);
+                Toast.makeText(SocialLoginActivity.this,"Network issue",Toast.LENGTH_SHORT).show();
 
             }
         };
@@ -219,11 +339,38 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
             call.enqueue(callback);
 
         }
+    }
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    private void showProgress(final boolean show) {
+        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+        // for very easy animations. If available, use these APIs to fade-in
+        // the progress spinner.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
+            mLoginView.setVisibility(show ? View.GONE : View.VISIBLE);
+            mLoginView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mLoginView.setVisibility(show ? View.GONE : View.VISIBLE);
+                }
+            });
 
-
-
-
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mProgressView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+        } else {
+            // The ViewPropertyAnimator APIs are not available, so simply show
+            // and hide the relevant UI components.
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mLoginView.setVisibility(show ? View.GONE : View.VISIBLE);
+        }
     }
 
     @Override
