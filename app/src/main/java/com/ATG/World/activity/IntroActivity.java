@@ -65,10 +65,10 @@ public class IntroActivity extends AppCompatActivity {
         // layouts of all welcome sliders
         // add few more layouts if you want
         layouts = new int[]{
-                R.layout.intro_slide_one,
-                R.layout.intro_slide_one,
-                R.layout.intro_slide_one,
-                R.layout.intro_slide_one};
+                R.layout.intro_slider_one,
+                R.layout.intro_slider_two,
+                R.layout.intro_slider_three,
+                R.layout.intro_slider_four};
 
         // adding bottom dots
         addBottomDots(0);
@@ -128,7 +128,7 @@ public class IntroActivity extends AppCompatActivity {
 
     private void launchHomeScreen() {
         mPreferenceManager.setFirstTimeLaunch(false);
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, SplashActivity.class));
         finish();
     }
 
