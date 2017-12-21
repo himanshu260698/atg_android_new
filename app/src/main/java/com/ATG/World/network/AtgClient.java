@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class AtgClient {
-    public static final String BASE_URL = getString(R.string.WS_HOST);
+    public static final String BASE_URL = "http://atg.party/";
 
     private static Retrofit retrofit = null ;
 

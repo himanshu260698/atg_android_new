@@ -19,9 +19,8 @@
         android:layout_height="1dp"
         android:alpha=".5"
         android:background="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@id/layout_dots"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/layout_dots" />
 
     <LinearLayout
         android:id="@+id/layout_dots"
