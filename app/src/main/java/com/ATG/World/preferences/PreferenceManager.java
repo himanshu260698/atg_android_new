@@ -16,7 +16,7 @@ public class PreferenceManager {
     int PRIVATE_MODE = 0;
 
     // Shared preferences file name
-    private static final String PREF_NAME = "androidhive-welcome";
+    private static final String PREF_NAME = "ATG-Welcome";
 
     private static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
 
@@ -30,16 +30,8 @@ public class PreferenceManager {
         editor.putBoolean(IS_FIRST_TIME_LAUNCH, isFirstTime);
         editor.commit();
     }
-    
-    
-    
-    
 
     public boolean isFirstTimeLaunch() {
         return pref.getBoolean(IS_FIRST_TIME_LAUNCH, true);
     }
-
-
-
-
 }
