@@ -78,5 +78,15 @@
     </string>
     <!-- End Intro Slider -->
 
+    <!-- Fab Layout String -->
+
+    <string name="job">Post Job</string>
+    <string name="meetup">Post Meetup</string>
+    <string name="article">Post Article</string>
+    <string name="education">Post Education</string>
+    <string name="event">Post Event</string>
+    <string name="qrious">Post Qrious</string>
+    <!-- Fab Layout String end -->
+
 
 </resources>

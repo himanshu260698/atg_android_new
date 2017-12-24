@@ -14,7 +14,9 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.animation.Animation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ATG.World.R;
@@ -25,35 +27,62 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
-    View headerLayout;
+        implements NavigationView.OnNavigationItemSelectedListener,View.OnClickListener {
+    private View headerLayout;
+    private LinearLayout layoutFabjob;
+    private LinearLayout layoutFabMeetup;
+    private LinearLayout layoutFabArticle;
+    private LinearLayout layoutFabEducation;
+    private LinearLayout layoutFabEvent;
+    private LinearLayout layoutFabQrious;
+    private boolean fabExpanded = false;
+    private FloatingActionButton fab;
+    private Toolbar toolbar;
+    private NavigationView navigationView;
+    private DrawerLayout drawer;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setUI();
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //NEW post activity here
-            }
-        });
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        closeSubMenusFab();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
         navigationView.setNavigationItemSelectedListener(this);
         headerLayout=navigationView.getHeaderView(0);
         UpdateNavProfile();
+    }
+    private void setUI(){
+        navigationView =  findViewById(R.id.nav_view);
+        drawer = findViewById(R.id.drawer_layout);
+        toolbar =  findViewById(R.id.toolbar);
+        fab = findViewById(R.id.fab);
+        layoutFabjob=findViewById(R.id.layoutFabJob);
+        layoutFabMeetup=findViewById(R.id.layoutFabMeetup);
+        layoutFabArticle=findViewById(R.id.layoutFabArticle);
+        layoutFabEducation=findViewById(R.id.layoutFabEducation);
+        layoutFabEvent=findViewById(R.id.layoutFabEvent);
+        layoutFabQrious=findViewById(R.id.layoutFabQrious);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (fabExpanded == true){
+                    closeSubMenusFab();
+                } else {
+                    openSubMenusFab();
+                }
+            }
+
+        });
     }
 
     private void UpdateNavProfile() {
@@ -106,7 +135,6 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.logout_nav) {
             logOut();
-            
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -138,5 +166,34 @@ public class MainActivity extends AppCompatActivity
         });
         mBuilder.create();
         mBuilder.show();
+    }
+
+    private void closeSubMenusFab(){
+        layoutFabjob.setVisibility(View.INVISIBLE);
+        layoutFabMeetup.setVisibility(View.INVISIBLE);
+        layoutFabArticle.setVisibility(View.INVISIBLE);
+        layoutFabEducation.setVisibility(View.INVISIBLE);
+        layoutFabEvent.setVisibility(View.INVISIBLE);
+        layoutFabQrious.setVisibility(View.INVISIBLE);
+        fab.setImageResource(R.drawable.ic_add_black_24px);
+        fabExpanded = false;
+    }
+
+    //Opens FAB submenus
+    private void openSubMenusFab(){
+        layoutFabjob.setVisibility(View.VISIBLE);
+        layoutFabMeetup.setVisibility(View.VISIBLE);
+        layoutFabArticle.setVisibility(View.VISIBLE);
+        layoutFabEducation.setVisibility(View.VISIBLE);
+        layoutFabEvent.setVisibility(View.VISIBLE);
+        layoutFabQrious.setVisibility(View.VISIBLE);
+        fab.setImageResource(R.drawable.ic_clear_black_24px);
+        fabExpanded = true;
+    }
+
+    @Override
+    public void onClick(View view) {
+
+
     }
 }
