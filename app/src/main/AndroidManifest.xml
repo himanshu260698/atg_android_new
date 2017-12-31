@@ -30,12 +30,13 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.SocialLoginActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -66,5 +67,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ATG.World.activity.SocialLoginActivity" />
         </activity>
+        <activity android:name=".activity.NotificationActivity"></activity>
     </application>
+
 </manifest>

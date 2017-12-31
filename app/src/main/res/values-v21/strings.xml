@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="check_your_network_connection">Check Your Network Connection</string>
+    <string name="reload">Reload</string>
+    <string name="no_data">No Data Available</string>
+    <string name="content_desc">Content Description</string>
+    <string name="error_message">Can\'t load data.\\nCheck your network connection.</string>
+    <string name="openDrawer">Open Drawer</string>
+    <string name="closeDrawer">Close Drawer</string>
+    <string name="fragment_event">Events</string>
+    <string name="fragment_jobs">Jobs</string>
+    <string name="fragment_queries">Qrious</string>
+    <string name="fragment_education">Education</string>
+    <string name="my_posts">My Posts</string>
+    <string name="my_groups">My Groups</string>
+    <string name="explore_groups">Explore Groups</string>
+</resources>

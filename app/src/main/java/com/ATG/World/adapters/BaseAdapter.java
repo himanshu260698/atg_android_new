@@ -12,12 +12,21 @@ import java.util.List;
  */
 
 public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    protected static final int HEADER = 0;
     protected static final int ITEM = 1;
+    protected static final int FOOTER = 2;
+
     protected List<T> items ;
     protected OnItemClickListener onItemClickListener;
+    protected OnReloadClickListener onReloadClickListener;
+    protected boolean isFooterAdded = false;
 
-    public interface OnItemClickListener {
+    public interface OnItemClickListener{
         void onItemClick(int position, View view);
+    }
+
+    public interface OnReloadClickListener{
+        void onReloadClick();
     }
 
     public BaseAdapter() {
@@ -29,8 +38,14 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
         RecyclerView.ViewHolder viewHolder = null;
 
         switch (viewType) {
+            case HEADER:
+                viewHolder = createHeaderViewHolder(parent);
+                break;
             case ITEM:
                 viewHolder = createItemViewHolder(parent);
+                break;
+            case FOOTER:
+                viewHolder = createFooterViewHolder(parent);
                 break;
             default:
                 break;
@@ -42,8 +57,14 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         switch (getItemViewType(position)) {
+            case HEADER:
+                bindHeaderViewHolder(viewHolder);
+                break;
             case ITEM:
                 bindItemViewHolder(viewHolder, position);
+                break;
+            case FOOTER:
+                bindFooterViewHolder(viewHolder);
                 break;
             default:
                 break;
@@ -56,21 +77,37 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     }
 
     // region Abstract Methods
+    protected abstract RecyclerView.ViewHolder createHeaderViewHolder(ViewGroup parent);
+
     protected abstract RecyclerView.ViewHolder createItemViewHolder(ViewGroup parent);
+
+    protected abstract RecyclerView.ViewHolder createFooterViewHolder(ViewGroup parent);
+
+    protected abstract void bindHeaderViewHolder(RecyclerView.ViewHolder viewHolder);
 
     protected abstract void bindItemViewHolder(RecyclerView.ViewHolder viewHolder, int position);
 
-    public T getItem(int position){
+    protected abstract void bindFooterViewHolder(RecyclerView.ViewHolder viewHolder);
+
+    protected abstract void displayLoadMoreFooter();
+
+    protected abstract void displayErrorFooter();
+
+    public abstract void addFooter();
+    // endregion
+
+    // region Helper Methods
+    public T getItem(int position) {
         return items.get(position);
     }
 
-    public void add(T item){
+    public void add(T item) {
         items.add(item);
         notifyItemInserted(items.size() - 1);
     }
 
-    public void addAll(List<T> items){
-        for (T item : items){
+    public void addAll(List<T> items) {
+        for (T item : items) {
             add(item);
         }
     }
@@ -84,6 +121,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     }
 
     public void clear() {
+        isFooterAdded = false;
         while (getItemCount() > 0) {
             remove(getItem(0));
         }
@@ -97,7 +135,41 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
         return (position == items.size()-1);
     }
 
+    public void removeFooter() {
+        isFooterAdded = false;
+
+        int position = items.size() - 1;
+        T item = getItem(position);
+
+        if (item != null) {
+            items.remove(position);
+            notifyItemRemoved(position);
+        }
+    }
+
+    public void updateFooter(FooterType footerType){
+        switch (footerType) {
+            case LOAD_MORE:
+                displayLoadMoreFooter();
+                break;
+            case ERROR:
+                displayErrorFooter();
+                break;
+            default:
+                break;
+        }
+    }
+
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
+    }
+
+    public void setOnReloadClickListener(OnReloadClickListener onReloadClickListener) {
+        this.onReloadClickListener = onReloadClickListener;
+    }
+
+    public enum FooterType {
+        LOAD_MORE,
+        ERROR
     }
 }
