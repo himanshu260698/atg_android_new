@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -20,6 +20,28 @@
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
+
+    <style name="HeadingText" >
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textSize">@dimen/heading_text_size</item>
+        <item name="android:layout_margin">@dimen/text_margin</item>
+        <item name="android:padding">@dimen/text_padding</item>
+    </style>
+
+    <style name="OtherText" >
+        <item name="android:textSize">@dimen/other_text_size</item>
+        <item name="android:layout_margin">@dimen/text_margin</item>
+        <item name="android:textColor">@color/grey_500</item>
+        <item name="android:padding">@dimen/text_padding</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
+
+    <style name="DrawableTextStyle" >
+        <item name="android:textSize">@dimen/drawable_text_size</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:layout_margin">@dimen/drawable_margin</item>
+        <item name="android:drawablePadding">@dimen/drawable_padding</item>
     </style>
 
 </resources>
