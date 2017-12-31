@@ -36,20 +36,27 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private View headerLayout;
-    private LinearLayout layoutFabjob;
-    private LinearLayout layoutFabMeetup;
-    private LinearLayout layoutFabArticle;
-    private LinearLayout layoutFabEducation;
-    private LinearLayout layoutFabEvent;
-    private LinearLayout layoutFabQrious;
+
+    @BindView(R.id.layoutFabJob)
+    LinearLayout layoutFabjob;
+    @BindView(R.id.layoutFabMeetup)
+    LinearLayout layoutFabMeetup;
+    @BindView(R.id.layoutFabArticle)
+    LinearLayout layoutFabArticle;
+    @BindView(R.id.layoutFabEducation)
+    LinearLayout layoutFabEducation;
+    @BindView(R.id.layoutFabEvent)
+    LinearLayout layoutFabEvent;
+    @BindView(R.id.layoutFabQrious)
+    LinearLayout layoutFabQrious;
+
     private boolean fabExpanded = false;
 
 
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
-    //@BindView(R.id.fab)
+    @BindView(R.id.fab)
     FloatingActionButton fab;
-    //try once
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.nav_view)
@@ -80,8 +87,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setUI();
+
         ButterKnife.bind(this);
+        setUI();
 
         setSupportActionBar(toolbar);
 
@@ -129,16 +137,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void setUI() {
-        navigationView = findViewById(R.id.nav_view);
-        drawer = findViewById(R.id.drawer_layout);
-        toolbar = findViewById(R.id.toolbar);
-         fab = findViewById(R.id.fab);
-        layoutFabjob = findViewById(R.id.layoutFabJob);
-        layoutFabMeetup = findViewById(R.id.layoutFabMeetup);
-        layoutFabArticle = findViewById(R.id.layoutFabArticle);
-        layoutFabEducation = findViewById(R.id.layoutFabEducation);
-        layoutFabEvent = findViewById(R.id.layoutFabEvent);
-        layoutFabQrious = findViewById(R.id.layoutFabQrious);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -348,7 +346,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // show or hide the fab
     private void toggleFab() {
         if (navItemIndex == 0)
-            fab.setVisibility(View.GONE);
+            fab.show();
         else
             fab.hide();
     }
