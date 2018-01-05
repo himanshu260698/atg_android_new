@@ -27,7 +27,7 @@
             <RelativeLayout
                 android:id="@+id/layout_profile"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
                 <ProgressBar
                     android:id="@+id/progress"
@@ -40,6 +40,7 @@
                     android:id="@+id/imv_groupprofile"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:layout_centerInParent="true"
                     android:layout_margin="5dp"
                     android:layout_weight="0.2"
                     android:src="@drawable/ic_avtar_male" />
@@ -60,13 +61,14 @@
                     android:layout_weight="1"
                     android:layout_marginLeft="5dp"
                     android:orientation="horizontal">
+
                     <TextView
-                        android:textStyle="bold"
+                        style="@style/HeadingText"
                         android:id="@+id/tv_grouptitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Engineering"
-                        android:textColor="#000"/>
+                        android:text="Engineering" />
+
                 </LinearLayout>
 
                 <RelativeLayout
@@ -80,7 +82,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Add a Tagline"
-                        android:textColor="#4B4B4B"/>
+                        style="@style/OtherText"/>
 
                 </RelativeLayout>
             </LinearLayout>
