@@ -4,6 +4,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
@@ -15,10 +17,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.animation.Animation;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ATG.World.Fragments.MyGroupFragment;
 import com.ATG.World.R;
 import com.ATG.World.preferences.UserPreferenceManager;
 import com.ATG.World.utilities.GlideApp;
@@ -40,6 +44,8 @@ public class MainActivity extends AppCompatActivity
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawer;
+    private FrameLayout frameLayout;
+    private FragmentTransaction fragmentTransaction;
 
 
     @Override
@@ -65,6 +71,7 @@ public class MainActivity extends AppCompatActivity
         drawer = findViewById(R.id.drawer_layout);
         toolbar =  findViewById(R.id.toolbar);
         fab = findViewById(R.id.fab);
+        frameLayout = findViewById(R.id.main_container);
         layoutFabjob=findViewById(R.id.layoutFabJob);
         layoutFabMeetup=findViewById(R.id.layoutFabMeetup);
         layoutFabArticle=findViewById(R.id.layoutFabArticle);
@@ -93,12 +100,12 @@ public class MainActivity extends AppCompatActivity
         String profle=getString(R.string.WS_PROFILE_IMAGE_PATH) + UserPreferenceManager.getUserId(MainActivity.this) + "/thumb/" +
                 UserPreferenceManager.getUserImage(MainActivity.this);
         Log.e("Image",profle);
-       GlideApp.with(MainActivity.this)
+
+        GlideApp.with(MainActivity.this)
                 .load(profle)
                 .override(80, 80)
                 .error(R.drawable.ic_avtar_male)
                 .into(navProfileImage);
-
 
         navProfilename.setText(UserPreferenceManager.getUserFirstName(this)+" "+UserPreferenceManager.getUserLastName(this));
         if(UserPreferenceManager.getUserLocatione(this).equalsIgnoreCase(""))
@@ -135,6 +142,8 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.logout_nav) {
             logOut();
+        } else if (id == R.id.my_groups_nav) {
+            changeFrame(new MyGroupFragment(),R.string.my_groups);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -196,4 +205,12 @@ public class MainActivity extends AppCompatActivity
 
 
     }
+
+    public void changeFrame(Fragment fragment, int id){
+        toolbar.setTitle(id);
+        fragmentTransaction = getSupportFragmentManager().beginTransaction().replace(R.id.main_container,fragment);
+        fragmentTransaction.commit();
+    }
+
+
 }

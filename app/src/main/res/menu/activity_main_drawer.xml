@@ -17,6 +17,10 @@
             android:icon="@drawable/ic_menu_connect"
             android:title="Connect" />
         <item
+            android:id="@+id/my_groups_nav"
+            android:title="@string/my_groups"
+            android:icon="@drawable/googleg_standard_color_18"/>
+        <item
             android:id="@+id/notifications_nav"
             android:icon="@drawable/ic_menu_notifications"
             android:title="Notifications" />
