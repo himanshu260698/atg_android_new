@@ -18,15 +18,13 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.animation.Animation;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ATG.World.Fragments.MyGroupFragment;
 import com.ATG.World.R;
 import com.ATG.World.fragments.HomeFragment;
+import com.ATG.World.fragments.MyGroupFragment;
 import com.ATG.World.preferences.UserPreferenceManager;
 import com.ATG.World.utilities.GlideApp;
 
@@ -53,10 +51,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     LinearLayout layoutFabQrious;
 
     private boolean fabExpanded = false;
-    private FloatingActionButton fab;
-    private Toolbar toolbar;
-    private NavigationView navigationView;
-    private DrawerLayout drawer;
+    //private FloatingActionButton fab;
+    //private Toolbar toolbar;
+    //private NavigationView navigationView;
+    //private DrawerLayout drawer;
     private FrameLayout frameLayout;
     private FragmentTransaction fragmentTransaction;
 
@@ -257,6 +255,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case 1:
                 logOut();
+                return null;
+
+            case 4:
+                MyGroupFragment myGroupFragment = new MyGroupFragment();
+                return myGroupFragment;
 
             default:
                 return new HomeFragment();
@@ -298,6 +301,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     case R.id.nav_my_groups:
                         navItemIndex = 4;
+                        //changeFrame(new MyGroupFragment(),R.string.my_groups);
                         CURRENT_TAG = TAG_MY_GROUPS;
                         break;
 
@@ -415,7 +419,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void changeFrame(Fragment fragment, int id){
         toolbar.setTitle(id);
-        fragmentTransaction = getSupportFragmentManager().beginTransaction().replace(R.id.main_container,fragment);
+        fragmentTransaction = getSupportFragmentManager().beginTransaction().replace(R.id.main_content,fragment);
         fragmentTransaction.commit();
     }
 
