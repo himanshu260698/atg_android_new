@@ -19,10 +19,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.animation.Animation;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ATG.World.Fragments.MyGroupFragment;
 import com.ATG.World.R;
 import com.ATG.World.fragments.HomeFragment;
 import com.ATG.World.preferences.UserPreferenceManager;
@@ -51,6 +53,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     LinearLayout layoutFabQrious;
 
     private boolean fabExpanded = false;
+    private FloatingActionButton fab;
+    private Toolbar toolbar;
+    private NavigationView navigationView;
+    private DrawerLayout drawer;
+    private FrameLayout frameLayout;
+    private FragmentTransaction fragmentTransaction;
 
 
     @BindView(R.id.drawer_layout)
@@ -404,4 +412,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
 
     }
+
+    public void changeFrame(Fragment fragment, int id){
+        toolbar.setTitle(id);
+        fragmentTransaction = getSupportFragmentManager().beginTransaction().replace(R.id.main_container,fragment);
+        fragmentTransaction.commit();
+    }
+
+
 }
