@@ -1,108 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardElevation="3dp"
-    android:layout_marginTop="12dp"
-    android:layout_marginBottom="5dp"
-    android:layout_marginLeft="12dp"
-    android:layout_marginRight="12dp"
-    app:cardCornerRadius="4dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <LinearLayout android:orientation="vertical"
-        android:layout_width="match_parent"
+    android:background="@android:color/transparent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <android.support.v7.widget.CardView android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clipToPadding="false">
+        app:cardElevation="3dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        app:cardCornerRadius="4dp"
+        app:cardBackgroundColor="#fff"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
-        <LinearLayout
-            android:id="@+id/layout_main_home_Data"
+        <LinearLayout android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="#fff"
-            android:orientation="horizontal">
-
-            <RelativeLayout
-                android:id="@+id/layout_profile"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-
-                <ProgressBar
-                    android:id="@+id/progress"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_centerInParent="true"
-                    android:visibility="visible" />
-
-                <ImageView
-                    android:id="@+id/imv_groupprofile"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_centerInParent="true"
-                    android:layout_margin="5dp"
-                    android:layout_weight="0.2"
-                    android:src="@drawable/ic_avtar_male" />
-
-            </RelativeLayout>
-
+            android:clipToPadding="false">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:id="@+id/layout_main_home_Data"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_weight="0.2"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="5dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/HeadingText"
-                        android:id="@+id/tv_grouptitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Engineering" />
-
-                </LinearLayout>
+                android:layout_margin="5dp"
+                android:background="#fff"
+                android:orientation="horizontal">
 
                 <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginBottom="5dp">
+                    android:id="@+id/layout_profile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
 
-                    <TextView
-                        android:id="@+id/tv_tagline"
+                    <ProgressBar
+                        android:id="@+id/progress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Add a Tagline"
-                        style="@style/OtherText"/>
+                        android:layout_centerInParent="true"
+                        android:visibility="visible" />
+
+                    <ImageView
+                        android:id="@+id/imv_groupprofile"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerInParent="true"
+                        android:layout_margin="5dp"
+                        android:layout_weight="0.2"
+                        android:src="@drawable/ic_avtar_male" />
 
                 </RelativeLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-               android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_marginRight="10dp">
-                <ImageView
-                    android:id="@+id/popup"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_format_align_right_black_24dp"
-                    android:layout_marginRight="10dp"
-                    />
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/HeadingText"
+                            android:id="@+id/tv_grouptitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Engineering" />
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginBottom="5dp">
+
+                        <TextView
+                            android:id="@+id/tv_tagline"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Add a Tagline"
+                            android:layout_marginLeft="@dimen/text_margin"
+                            android:paddingLeft="@dimen/text_padding"
+                            android:textColor="#4b4b4b" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                   android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginRight="10dp">
+                    <ImageView
+                        android:id="@+id/popup"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_format_align_right_black_24dp"
+                        android:layout_marginRight="10dp"
+                        />
+                </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
-
-</android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>
+</LinearLayout>
