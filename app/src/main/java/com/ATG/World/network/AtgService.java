@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 
 import com.ATG.World.models.DashboardResponse;
+import com.ATG.World.models.MyGroupResponse;
 import com.ATG.World.models.WsLoginResponse;
 
 import retrofit2.Call;
@@ -55,5 +56,9 @@ public interface AtgService {
 
     @POST("ws-mark-notifications-read")
     Call<> markNotificationRead(@Field("user_id") int user_id);*/
+
+    @POST("ws-my-groups")
+    @FormUrlEncoded
+    Call<MyGroupResponse> getMyGroupsData(@Field("user_id") @NonNull String userId);
 
 }
