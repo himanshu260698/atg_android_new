@@ -163,7 +163,8 @@ public class GetAllFragment extends BaseFragment implements GetAllAdapter.OnItem
     public Callback<DashboardResponse> firstFetchCallback = new Callback<DashboardResponse>() {
         @Override
         public void onResponse(Call<DashboardResponse> call, Response<DashboardResponse> response) {
-            mProgressBar.setVisibility(View.GONE);
+            if(mProgressBar!=null)
+                mProgressBar.setVisibility(View.GONE);
             isLoading = false;
 
             if (!response.isSuccessful()) {
@@ -197,7 +198,8 @@ public class GetAllFragment extends BaseFragment implements GetAllAdapter.OnItem
 
             if (!call.isCanceled()) {
                 isLoading = false;
-                mProgressBar.setVisibility(View.GONE);
+                if(mProgressBar!=null)
+                    mProgressBar.setVisibility(View.GONE);
 
                 if (NetworkUtility.isKnownException(t)) {
                     errorTextView.setText("Can't load data.\nCheck your network connection.");
