@@ -17,7 +17,7 @@ public class MyGroupResponse {
     private List<GroupDetails> arrMyGroups = null;
     @SerializedName("user_parent_group")
     @Expose
-    private List<Object> userParentGroup = null;
+    private List<String> userParentGroup = null;
 
     public String getErrorCode() {
         return errorCode;
@@ -43,11 +43,11 @@ public class MyGroupResponse {
         this.arrMyGroups = arrMyGroups;
     }
 
-    public List<Object> getUserParentGroup() {
+    public List<String> getUserParentGroup() {
         return userParentGroup;
     }
 
-    public void setUserParentGroup(List<Object> userParentGroup) {
+    public void setUserParentGroup(List<String> userParentGroup) {
         this.userParentGroup = userParentGroup;
     }
 
