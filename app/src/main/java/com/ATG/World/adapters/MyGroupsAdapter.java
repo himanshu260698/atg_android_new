@@ -28,13 +28,16 @@ public class MyGroupsAdapter extends ArrayAdapter {
 
     Context context;
     List<GroupDetails> groupDetails;
+    List<String> parentId;
     private TextView mTvGotoGroups, mTv_AddEditTag, mTvInviteFrnds, mTvNichegroups;
+    private View firstView, secondView, thirdView;
 
-    public MyGroupsAdapter(Context context, List<GroupDetails> groupDetails){
+    public MyGroupsAdapter(Context context, List<GroupDetails> groupDetails,List<String> parentId){
 
         super(context,0,groupDetails);
         this.context = context;
         this.groupDetails = groupDetails;
+        this.parentId = parentId;
 
     }
 
@@ -50,6 +53,7 @@ public class MyGroupsAdapter extends ArrayAdapter {
 
         //String profile = this.context.getString(R.string.WS_EXPLOREGROUPICON)+groupDetails.get(position).getImage();
         String profile = groupDetails.get(position).getImage();
+        final String groupId = groupDetails.get(position).getId().toString();
 
         GlideApp.with(this.context)
                 .load(profile)
@@ -66,14 +70,14 @@ public class MyGroupsAdapter extends ArrayAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                popUpWindowDialog(view);
+                popUpWindowDialog(view,groupId);
             }
         });
 
         return view;
     }
 
-    private void popUpWindowDialog(View view) {
+    private void popUpWindowDialog(View view,String groupId) {
         final PopupWindow popup = new PopupWindow(getContext());
         View layout = LayoutInflater.from(getContext()).inflate(R.layout.my_group_popup, null);
 
@@ -85,6 +89,9 @@ public class MyGroupsAdapter extends ArrayAdapter {
         mTv_AddEditTag = (TextView) layout.findViewById(R.id.tv_addedittag);
         mTvInviteFrnds = (TextView) layout.findViewById(R.id.tv_invitefrnd);
         mTvNichegroups = (TextView) layout.findViewById(R.id.tv_nichegroups);
+        firstView = layout.findViewById(R.id.first_hr);
+        secondView = layout.findViewById(R.id.second_hr);
+        thirdView = layout.findViewById(R.id.third_hr);
 
         mTv_AddEditTag.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +111,12 @@ public class MyGroupsAdapter extends ArrayAdapter {
                 popup.dismiss();
             }
         });
+
+        if(parentId.contains(groupId)){
+            mTvNichegroups.setVisibility(View.VISIBLE);
+            thirdView.setVisibility(View.VISIBLE);
+        }
+
         //popup.setAnimationStyle(R.style.OverflowMenuStyle);
         popup.setOutsideTouchable(true);
         popup.setFocusable(true);

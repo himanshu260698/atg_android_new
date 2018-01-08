@@ -21,24 +21,11 @@
         android:padding="16sp"
         android:text="Go to groups"
         android:textColor="#000000"/>
-    <!--<View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray"/>
 
-    <com.ATGWorld.World.CustomView.CustomTextView
-        android:id="@+id/tv_report"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Report"
-        android:layout_gravity="center"
-        android:padding="16sp"
-        android:textColor="#000000"
-        app:customFont="@string/str_font_bold"
-        />-->
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:id="@+id/first_hr"
         android:background="@android:color/darker_gray" />
 
     <TextView
@@ -52,6 +39,8 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:id="@+id/second_hr"
+        android:visibility="gone"
         android:background="@android:color/darker_gray" />
 
     <TextView android:id="@+id/tv_invitefrnd"
@@ -67,12 +56,14 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:visibility="gone"
+        android:id="@+id/third_hr"
         android:background="@android:color/darker_gray" />
 
     <TextView android:id="@+id/tv_nichegroups"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="16sp"
+        android:visibility="gone"
         android:text="View Niche Groups"
         android:textColor="#000000" />
 

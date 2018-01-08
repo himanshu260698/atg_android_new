@@ -99,8 +99,9 @@ public class MyGroupFragment extends Fragment {
                 if (result != null) {
                     if (result.getErrorCode().equalsIgnoreCase("0")) {
                         List<GroupDetails> groupDetailsList = result.getArrMyGroups();
+                        List<String> parentId = result.getUserParentGroup();
                         MyGroupsAdapter myGroupsAdapter = new MyGroupsAdapter(getContext(),
-                                groupDetailsList);
+                                groupDetailsList,parentId);
                         mListview.setAdapter(myGroupsAdapter);
                     }
                 }
