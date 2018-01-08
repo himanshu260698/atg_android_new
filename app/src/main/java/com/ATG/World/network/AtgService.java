@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import com.ATG.World.models.DashboardResponse;
 import com.ATG.World.models.JoinLeaveGroupResponse;
 import com.ATG.World.models.MyGroupResponse;
+import com.ATG.World.models.SubGroupResponse;
 import com.ATG.World.models.WsLoginResponse;
 
 import retrofit2.Call;
@@ -67,4 +68,8 @@ public interface AtgService {
     Call<JoinLeaveGroupResponse> joinLeaveGroup(@Field("status") @NonNull String status,
                                                 @Field("user_id") @NonNull String userId,
                                                 @Field("group_id") @NonNull String groupId);
+
+    @GET("ws-sub-group")
+    Call<SubGroupResponse> getSubGroupsData(@Query("id") @NonNull String groupId);
+
 }
