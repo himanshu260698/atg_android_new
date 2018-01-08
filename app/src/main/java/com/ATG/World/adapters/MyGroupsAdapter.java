@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.ATG.World.R;
 import com.ATG.World.models.GroupDetails;
+import com.ATG.World.utilities.GlideApp;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.List;
 
@@ -44,6 +46,16 @@ public class MyGroupsAdapter extends ArrayAdapter {
         View view = inflater.inflate(R.layout.my_group_singlerow,parent,false);
         TextView groupName = (TextView) view.findViewById(R.id.tv_grouptitle);
         TextView groupTag = (TextView) view.findViewById(R.id.tv_tagline);
+        ImageView groupImage = (ImageView) view.findViewById(R.id.imv_groupprofile);
+
+        String profile = this.context.getString(R.string.WS_EXPLOREGROUPICON)+groupDetails.get(position).getImage();
+
+        GlideApp.with(this.context)
+                .load(profile)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .error(R.drawable.ic_avtar_male)
+                .into(groupImage);
+
         groupName.setText(groupDetails.get(position).getName());
         String tagLine = groupDetails.get(position).getTagLine();
         if(tagLine.length()>0)
