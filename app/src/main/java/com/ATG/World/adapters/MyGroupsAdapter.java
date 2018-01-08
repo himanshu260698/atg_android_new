@@ -48,7 +48,8 @@ public class MyGroupsAdapter extends ArrayAdapter {
         TextView groupTag = (TextView) view.findViewById(R.id.tv_tagline);
         ImageView groupImage = (ImageView) view.findViewById(R.id.imv_groupprofile);
 
-        String profile = this.context.getString(R.string.WS_EXPLOREGROUPICON)+groupDetails.get(position).getImage();
+        //String profile = this.context.getString(R.string.WS_EXPLOREGROUPICON)+groupDetails.get(position).getImage();
+        String profile = groupDetails.get(position).getImage();
 
         GlideApp.with(this.context)
                 .load(profile)
