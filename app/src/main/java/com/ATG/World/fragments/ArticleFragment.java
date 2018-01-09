@@ -149,7 +149,8 @@ public class ArticleFragment extends BaseFragment implements ArticleAdapter.OnIt
     public Callback<DashboardResponse> firstFetchCallback = new Callback<DashboardResponse>(){
         @Override
         public void onResponse(Call<DashboardResponse> call, Response<DashboardResponse> response) {
-            mProgressBar.setVisibility(View.GONE);
+            if(mProgressBar!=null)
+                mProgressBar.setVisibility(View.GONE);
             isLoading = false;
 
             if (!response.isSuccessful()){

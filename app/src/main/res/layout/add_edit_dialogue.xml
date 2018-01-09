@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="160dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    >
+
+<LinearLayout
+    android:id="@+id/titlelayout1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/green_400"
+    android:orientation="horizontal"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginLeft="25dp">
+        <TextView
+            android:id="@+id/txttag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:text="My Tagline "
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/colorWhite"
+            android:textSize="18dp"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="9"
+    android:layout_gravity="center_vertical"
+    android:gravity="end">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/SIZE_10"
+        android:id="@+id/tv_remove_tag_line"
+        android:gravity="end"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/ic_remove_black"/>
+</LinearLayout>
+
+</LinearLayout>
+
+        <EditText
+            android:layout_below="@id/titlelayout1"
+            android:id="@+id/edt_tag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/square_drawable"
+            android:layout_marginTop="@dimen/SIZE_8"
+            android:layout_marginBottom="@dimen/SIZE_5"
+            android:layout_marginLeft="@dimen/SIZE_15"
+            android:layout_marginRight="@dimen/SIZE_15"
+            android:hint="Enter your tagline here.."
+            android:padding="@dimen/SIZE_10"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/TEXT_SIZE_16"/>
+
+    <TextView
+        android:layout_below="@id/edt_tag"
+        android:id="@+id/btn_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/SIZE_5"
+        android:layout_marginRight="@dimen/SIZE_10"
+        android:layout_marginTop="@dimen/SIZE_5"
+        android:layout_marginBottom="@dimen/SIZE_10"
+        android:background="@drawable/green_rect_background"
+        android:gravity="center_horizontal"
+        android:paddingLeft="@dimen/SIZE_20"
+        android:paddingRight="@dimen/SIZE_20"
+        android:paddingTop="@dimen/SIZE_5"
+        android:paddingBottom="@dimen/SIZE_5"
+        android:text="Save"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textColor="@color/colorWhite"
+        android:layout_centerHorizontal="true"/>
+</RelativeLayout>
+
