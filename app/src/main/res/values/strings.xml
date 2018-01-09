@@ -104,6 +104,9 @@
         <item>Photos</item>
         <item>Movies</item>
         <item>Notifications</item>
+        <item>Queries</item>
+        <item>Posts</item>
+        <item>Education</item>
         <item>Settings</item>
     </string-array>
 
@@ -125,6 +128,5 @@
     <string name="event">Post Event</string>
     <string name="qrious">Post Qrious</string>
     <!-- Fab Layout String end -->
-
 
 </resources>

@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.ATG.World.R;
 import com.ATG.World.fragments.HomeFragment;
 import com.ATG.World.fragments.MyGroupFragment;
+import com.ATG.World.fragments.SettingsFragment;
 import com.ATG.World.preferences.UserPreferenceManager;
 import com.ATG.World.utilities.GlideApp;
 
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String TAG_MY_GROUPS = "My Groups";
     private static final String TAG_EXPLORE_GROUPS = "Explore Groups";
     private static final String TAG_LOGOUT = "Logout";
-
+    private static final String TAG_SETTINGS="Settings";
     private static String CURRENT_TAG = TAG_HOME;
 
     private Handler mHandler;
@@ -268,6 +269,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 MyGroupFragment myGroupFragment = new MyGroupFragment();
                 return myGroupFragment;
 
+            case 7:
+                SettingsFragment settingsFragment=new SettingsFragment();
+                return settingsFragment;
             default:
                 return new HomeFragment();
         }
@@ -321,7 +325,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         navItemIndex = 6;
                         logOut();
                         return true;
-
+                    case R.id.settings:
+                        navItemIndex=7;
+                        CURRENT_TAG=TAG_SETTINGS;
+                        break;
                     default:
                         navItemIndex = 0;
                 }

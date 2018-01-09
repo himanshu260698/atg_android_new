@@ -45,4 +45,7 @@
 
     <dimen name="TEXT_SIZE_16">16sp</dimen>
     <dimen name="TEXT_SIZE_18">18sp</dimen>
+    <dimen name="list_item">200dp</dimen>
+
+
 </resources>
