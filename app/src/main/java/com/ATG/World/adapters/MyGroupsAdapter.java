@@ -1,5 +1,6 @@
 package com.ATG.World.adapters;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,8 +12,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -22,6 +25,7 @@ import com.ATG.World.R;
 import com.ATG.World.activity.MainActivity;
 import com.ATG.World.activity.SocialLoginActivity;
 import com.ATG.World.activity.SubGroupActivity;
+import com.ATG.World.models.AddEditDialogueResponse;
 import com.ATG.World.models.GroupDetails;
 import com.ATG.World.models.JoinLeaveGroupResponse;
 import com.ATG.World.network.AtgClient;
@@ -46,8 +50,10 @@ public class MyGroupsAdapter extends ArrayAdapter {
     List<GroupDetails> groupDetails;
     List<String> parentId;
     String LEAVE_GROUP_STATUS_CODE = "1";
+    private static final String TAG_MY_GROUPS = "My Groups";
+    private static final int NAV_INDEX_MY_GROUPS = 4;
     private TextView mTvGotoGroups, mTv_AddEditTag, mTvInviteFrnds, mTvNichegroups,mTvLeaveGroup;
-    private View firstView, secondView, thirdView, fourthView;
+    private View secondView, thirdView, fourthView;
 
     public MyGroupsAdapter(Context context, List<GroupDetails> groupDetails,List<String> parentId){
 
@@ -71,6 +77,14 @@ public class MyGroupsAdapter extends ArrayAdapter {
         //String profile = this.context.getString(R.string.WS_EXPLOREGROUPICON)+groupDetails.get(position).getImage();
         String profile = groupDetails.get(position).getImage();
         final String groupId = groupDetails.get(position).getId().toString();
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "Imagine you are viewing "+
+                        groupDetails.get(position).getName()+" group.", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         GlideApp.with(this.context)
                 .load(profile)
@@ -102,13 +116,11 @@ public class MyGroupsAdapter extends ArrayAdapter {
         popup.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
         popup.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
 
-        mTvGotoGroups = (TextView) layout.findViewById(R.id.tv_gotogroups);
         mTv_AddEditTag = (TextView) layout.findViewById(R.id.tv_addedittag);
         mTvInviteFrnds = (TextView) layout.findViewById(R.id.tv_invitefrnd);
         mTvNichegroups = (TextView) layout.findViewById(R.id.tv_nichegroups);
         mTvLeaveGroup = (TextView) layout.findViewById(R.id.tv_leavegroup);
 
-        firstView = layout.findViewById(R.id.first_hr);
         secondView = layout.findViewById(R.id.second_hr);
         thirdView = layout.findViewById(R.id.third_hr);
         fourthView = layout.findViewById(R.id.fourth_hr);
@@ -117,12 +129,7 @@ public class MyGroupsAdapter extends ArrayAdapter {
             @Override
             public void onClick(View v) {
                 popup.dismiss();
-            }
-        });
-        mTvGotoGroups.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popup.dismiss();
+                TagDialogue(groupDetails.get(position));
             }
         });
         mTvNichegroups.setOnClickListener(new View.OnClickListener() {
@@ -194,5 +201,65 @@ public class MyGroupsAdapter extends ArrayAdapter {
             Toast.makeText(getContext(), "Network Error", Toast.LENGTH_SHORT).show();
         }
     };
+
+    private void TagDialogue(final GroupDetails groupDetails) {
+        final Dialog dialog = new Dialog(context);
+        dialog.setCancelable(false);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        LayoutInflater mLayoutInflater = LayoutInflater.from(context);
+        View view = mLayoutInflater.inflate(R.layout.add_edit_dialogue, null);
+
+        dialog.getWindow().setLayout(300, 300);
+        dialog.setContentView(view);
+        final EditText mEdtEntertag = (EditText) dialog.findViewById(R.id.edt_tag);
+        //mEdtForgotPass = (CustomEditText) dialog.findViewById(R.id.edt_forgot_email_id);
+        TextView mBtnsave = (TextView) dialog.findViewById(R.id.btn_save);
+        TextView mTvRemove = (TextView) dialog.findViewById(R.id.tv_remove_tag_line);
+        mTvRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        mBtnsave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String Tagdata = mEdtEntertag.getText().toString();
+                if (mEdtEntertag.getText().toString().equalsIgnoreCase("")) {
+                    Toast.makeText(context, "Please enter tag.", Toast.LENGTH_SHORT).show();
+                } else {
+                    AtgService atgService = AtgClient.getClient().create(AtgService.class);
+                    Call<AddEditDialogueResponse> dialogueResponseCall
+                            = atgService.getTagDialogueResponse(UserPreferenceManager
+                                    .getUserId(context),
+                                    groupDetails.getId().toString(),Tagdata);
+                    Callback<AddEditDialogueResponse> addEditDialogueResponseCallback =
+                            new Callback<AddEditDialogueResponse>() {
+                                @Override
+                                public void onResponse(Call<AddEditDialogueResponse> call, Response<AddEditDialogueResponse> response) {
+                                    AddEditDialogueResponse result = response.body();
+                                    if(result.getErrorCode().equalsIgnoreCase("0")){
+                                        Intent intent = new Intent(getContext(),MainActivity.class);
+                                        intent.putExtra("tag",TAG_MY_GROUPS);
+                                        intent.putExtra("index",NAV_INDEX_MY_GROUPS);
+                                        getContext().startActivity(intent);
+                                        ((MainActivity)getContext()).finish();
+                                    }
+                                    else
+                                        Toast.makeText(context, "Network Error", Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void onFailure(Call<AddEditDialogueResponse> call, Throwable t) {
+                                    Toast.makeText(context, "Network Error", Toast.LENGTH_SHORT).show();
+                                }
+                            };
+                    dialogueResponseCall.enqueue(addEditDialogueResponseCallback);
+                }
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
 
 }

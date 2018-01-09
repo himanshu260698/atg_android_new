@@ -15,19 +15,6 @@
         android:background="@drawable/square_drawable"
         android:layout_height="wrap_content">
 
-    <TextView android:id="@+id/tv_gotogroups"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="16sp"
-        android:text="Go to groups"
-        android:textColor="#000000"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:id="@+id/first_hr"
-        android:background="@android:color/darker_gray" />
-
     <TextView
         android:id="@+id/tv_addedittag"
         android:layout_width="wrap_content"

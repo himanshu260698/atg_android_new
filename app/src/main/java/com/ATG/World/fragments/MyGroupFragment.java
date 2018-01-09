@@ -52,7 +52,6 @@ import retrofit2.Response;
 public class MyGroupFragment extends Fragment {
     private View mview;
     private ListView mListview;
-    private TextView mTvGotoGroups, mTv_AddEditTag, mTvInviteFrnds, mTvNichegroups;
     private TextView mTvTile;
     public ImageView imageView;
     public ProgressBar progressBar;
@@ -115,46 +114,5 @@ public class MyGroupFragment extends Fragment {
             Snackbar.make(getView(),"No Internet Connection",3000);
         }
     };
-
-
-    private void popUpWindowDialog() {
-        final PopupWindow popup = new PopupWindow(getActivity());
-        View layout = getActivity().getLayoutInflater().inflate(R.layout.my_group_popup, null);
-
-        popup.setContentView(layout);
-        popup.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-        popup.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
-        mTvGotoGroups = (TextView) layout.findViewById(R.id.tv_gotogroups);
-        mTv_AddEditTag = (TextView) layout.findViewById(R.id.tv_addedittag);
-        mTvInviteFrnds = (TextView) layout.findViewById(R.id.tv_invitefrnd);
-        mTvNichegroups = (TextView) layout.findViewById(R.id.tv_nichegroups);
-
-        mTv_AddEditTag.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popup.dismiss();
-            }
-        });
-        mTvGotoGroups.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popup.dismiss();
-            }
-        });
-        mTvNichegroups.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popup.dismiss();
-            }
-        });
-        //popup.setAnimationStyle(R.style.OverflowMenuStyle);
-        popup.setOutsideTouchable(true);
-        popup.setFocusable(true);
-        popup.setBackgroundDrawable(new BitmapDrawable());
-        // popup.showAsDropDown(imgdot);
-        // popup.showAsDropDown(imgdot, 100, 10, 4);
-
-        popup.showAsDropDown(imageView,100,10,4);
-    }
 
 }

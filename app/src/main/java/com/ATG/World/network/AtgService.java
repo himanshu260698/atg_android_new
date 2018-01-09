@@ -3,6 +3,7 @@ package com.ATG.World.network;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 
+import com.ATG.World.models.AddEditDialogueResponse;
 import com.ATG.World.models.DashboardResponse;
 import com.ATG.World.models.JoinLeaveGroupResponse;
 import com.ATG.World.models.MyGroupResponse;
@@ -72,5 +73,11 @@ public interface AtgService {
     @GET("ws-sub-niche-groups")
     Call<SubGroupResponse> getSubGroupsData(@Query("user_id") @NonNull String userId,
                                             @Query("group_id") @NonNull String groupId);
+
+    @POST("ws-group-edit-tagline")
+    @FormUrlEncoded
+    Call<AddEditDialogueResponse> getTagDialogueResponse(@Field("user_id") @NonNull String userId,
+                                                         @Field("group_id") @NonNull String groupId,
+                                                         @Field("tag_line") @NonNull String tagLine);
 
 }
