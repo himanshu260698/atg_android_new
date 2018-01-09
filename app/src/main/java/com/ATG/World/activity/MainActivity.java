@@ -27,6 +27,7 @@ import com.ATG.World.fragments.HomeFragment;
 import com.ATG.World.fragments.MyGroupFragment;
 import com.ATG.World.fragments.NotificationFragment;
 import com.ATG.World.fragments.SettingsFragment;
+import com.ATG.World.fragments.SettingsFragment;
 import com.ATG.World.preferences.UserPreferenceManager;
 import com.ATG.World.utilities.GlideApp;
 
@@ -280,6 +281,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 closeSubMenusFab();
                 toggleFab();
                 return settingsFragment;
+
             default:
                 return new HomeFragment();
         }
