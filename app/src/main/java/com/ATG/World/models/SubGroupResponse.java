@@ -12,9 +12,9 @@ public class SubGroupResponse {
     @SerializedName("msg")
     @Expose
     private String msg;
-    @SerializedName("subgroup")
+    @SerializedName("arr_user_groups")
     @Expose
-    private List<Object> subgroup = null;
+    private List<SubGroupDetails> arrUserGroups = null;
 
     public String getErrorCode() {
         return errorCode;
@@ -32,12 +32,12 @@ public class SubGroupResponse {
         this.msg = msg;
     }
 
-    public List<Object> getSubgroup() {
-        return subgroup;
+    public List<SubGroupDetails> getArrUserGroups() {
+        return arrUserGroups;
     }
 
-    public void setSubgroup(List<Object> subgroup) {
-        this.subgroup = subgroup;
+    public void setArrUserGroups(List<SubGroupDetails> arrUserGroups) {
+        this.arrUserGroups = arrUserGroups;
     }
 
 }

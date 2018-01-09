@@ -9,36 +9,36 @@ public class SubGroupDetails {
     @SerializedName("id")
     @Expose
     private Integer id;
-    @SerializedName("icon_img")
-    @Expose
-    private String iconImg;
-    @SerializedName("cover_img")
-    @Expose
-    private String coverImg;
     @SerializedName("parent_id")
     @Expose
     private Integer parentId;
     @SerializedName("group_name")
     @Expose
     private String groupName;
-    @SerializedName("group_description")
+    @SerializedName("icon_img")
     @Expose
-    private String groupDescription;
-    @SerializedName("status")
-    @Expose
-    private String status;
-    @SerializedName("created_at")
-    @Expose
-    private String createdAt;
-    @SerializedName("updated_at")
-    @Expose
-    private String updatedAt;
+    private String iconImg;
     @SerializedName("profession")
     @Expose
     private String profession;
-    @SerializedName("chlid")
+    @SerializedName("status")
     @Expose
-    private List<Object> chlid = null;
+    private String status;
+    @SerializedName("cover_img")
+    @Expose
+    private String coverImg;
+    @SerializedName("img_is_available")
+    @Expose
+    private String imgIsAvailable;
+    @SerializedName("is_join")
+    @Expose
+    private String isJoin;
+    @SerializedName("tag_line")
+    @Expose
+    private String tagLine;
+    @SerializedName("subgroups")
+    @Expose
+    private List<SubGroupDetails> subgroups = null;
 
     public Integer getId() {
         return id;
@@ -46,22 +46,6 @@ public class SubGroupDetails {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getIconImg() {
-        return iconImg;
-    }
-
-    public void setIconImg(String iconImg) {
-        this.iconImg = iconImg;
-    }
-
-    public String getCoverImg() {
-        return coverImg;
-    }
-
-    public void setCoverImg(String coverImg) {
-        this.coverImg = coverImg;
     }
 
     public Integer getParentId() {
@@ -80,36 +64,12 @@ public class SubGroupDetails {
         this.groupName = groupName;
     }
 
-    public String getGroupDescription() {
-        return groupDescription;
+    public String getIconImg() {
+        return iconImg;
     }
 
-    public void setGroupDescription(String groupDescription) {
-        this.groupDescription = groupDescription;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setIconImg(String iconImg) {
+        this.iconImg = iconImg;
     }
 
     public String getProfession() {
@@ -120,12 +80,52 @@ public class SubGroupDetails {
         this.profession = profession;
     }
 
-    public List<Object> getChlid() {
-        return chlid;
+    public String getStatus() {
+        return status;
     }
 
-    public void setChlid(List<Object> chlid) {
-        this.chlid = chlid;
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getCoverImg() {
+        return coverImg;
+    }
+
+    public void setCoverImg(String coverImg) {
+        this.coverImg = coverImg;
+    }
+
+    public String getImgIsAvailable() {
+        return imgIsAvailable;
+    }
+
+    public void setImgIsAvailable(String imgIsAvailable) {
+        this.imgIsAvailable = imgIsAvailable;
+    }
+
+    public String getIsJoin() {
+        return isJoin;
+    }
+
+    public void setIsJoin(String isJoin) {
+        this.isJoin = isJoin;
+    }
+
+    public String getTagLine() {
+        return tagLine;
+    }
+
+    public void setTagLine(String tagLine) {
+        this.tagLine = tagLine;
+    }
+
+    public List<SubGroupDetails> getSubgroups() {
+        return subgroups;
+    }
+
+    public void setSubgroups(List<SubGroupDetails> subgroups) {
+        this.subgroups = subgroups;
     }
 
 }

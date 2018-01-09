@@ -114,8 +114,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setUpNavigationView();
 
         if (savedInstanceState == null) {
-            navItemIndex = 0;
-            CURRENT_TAG = TAG_HOME;
+            Intent intent = getIntent();
+            if(intent.hasExtra("index")){
+                navItemIndex = intent.getIntExtra("index",0);
+                CURRENT_TAG = intent.getStringExtra("tag");
+            }
+            else {
+                navItemIndex = 0;
+                CURRENT_TAG = TAG_HOME;
+            }
             loadHomeFragment();
         }
 

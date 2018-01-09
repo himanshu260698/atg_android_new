@@ -56,10 +56,12 @@ public class MyGroupFragment extends Fragment {
     private TextView mTvTile;
     public ImageView imageView;
     public ProgressBar progressBar;
+    public ViewGroup container;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mview = inflater.inflate(R.layout.my_group_fragment, container, false);
+        this.container = container;
         //View view = mview.findViewById(R.id.firstEngg);
         AtgService atgService = AtgClient.getClient().create(AtgService.class);
         mListview = (ListView)mview.findViewById(R.id.lv_mygrouplist);

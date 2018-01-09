@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.ATG.World.R;
 import com.ATG.World.activity.MainActivity;
 import com.ATG.World.activity.SocialLoginActivity;
+import com.ATG.World.activity.SubGroupActivity;
 import com.ATG.World.models.GroupDetails;
 import com.ATG.World.models.JoinLeaveGroupResponse;
 import com.ATG.World.network.AtgClient;
@@ -59,7 +60,7 @@ public class MyGroupsAdapter extends ArrayAdapter {
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         //return super.getView(position, convertView, parent);
         LayoutInflater inflater = LayoutInflater.from(this.context);
         View view = inflater.inflate(R.layout.my_group_singlerow,parent,false);
@@ -86,14 +87,14 @@ public class MyGroupsAdapter extends ArrayAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                popUpWindowDialog(view,groupId);
+                popUpWindowDialog(view,position);
             }
         });
 
         return view;
     }
 
-    private void popUpWindowDialog(View view, final String groupId) {
+    private void popUpWindowDialog(View view, final int position) {
         final PopupWindow popup = new PopupWindow(getContext());
         View layout = LayoutInflater.from(getContext()).inflate(R.layout.my_group_popup, null);
 
@@ -128,13 +129,19 @@ public class MyGroupsAdapter extends ArrayAdapter {
             @Override
             public void onClick(View v) {
                 popup.dismiss();
+                Intent intent = new Intent(getContext(), SubGroupActivity.class);
+                intent.putExtra("group",groupDetails.get(position).getId().toString());
+                intent.putExtra("name",groupDetails.get(position).getName().toString());
+                intent.putExtra("tag",groupDetails.get(position).getTagLine().toString());
+                getContext().startActivity(intent);
+                ((MainActivity)getContext()).finish();
             }
         });
         mTvLeaveGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
-                mBuilder.setMessage("Are you sure, you want to logout?");
+                mBuilder.setMessage("Are you sure, you want to leave the group?");
                 mBuilder.setCancelable(true);
                 mBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
@@ -143,7 +150,7 @@ public class MyGroupsAdapter extends ArrayAdapter {
                         Call<JoinLeaveGroupResponse> groupResponseCall =
                                 atgService.joinLeaveGroup(LEAVE_GROUP_STATUS_CODE
                                         ,UserPreferenceManager.getUserId(getContext())
-                                        ,groupId);
+                                        ,groupDetails.get(position).getId().toString());
                         groupResponseCall.enqueue(joinLeaveGroupResponseCall);
                     }
                 });
@@ -158,7 +165,7 @@ public class MyGroupsAdapter extends ArrayAdapter {
             }
         });
 
-        if(parentId.contains(groupId)){
+        if(parentId.contains(groupDetails.get(position).getId().toString())){
             mTvNichegroups.setVisibility(View.VISIBLE);
             thirdView.setVisibility(View.VISIBLE);
         }

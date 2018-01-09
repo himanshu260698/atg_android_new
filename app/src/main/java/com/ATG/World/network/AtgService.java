@@ -69,7 +69,8 @@ public interface AtgService {
                                                 @Field("user_id") @NonNull String userId,
                                                 @Field("group_id") @NonNull String groupId);
 
-    @GET("ws-sub-group")
-    Call<SubGroupResponse> getSubGroupsData(@Query("id") @NonNull String groupId);
+    @GET("ws-sub-niche-groups")
+    Call<SubGroupResponse> getSubGroupsData(@Query("user_id") @NonNull String userId,
+                                            @Query("group_id") @NonNull String groupId);
 
 }
