@@ -8,6 +8,7 @@ import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -45,6 +46,13 @@ public class SubGroupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub_group);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        LinearLayout back = (LinearLayout) findViewById(R.id.tv_sub_group_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         setSupportActionBar(toolbar);
         listView = (ListView) findViewById(R.id.rlcontainer);
         tv_description = (TextView) findViewById(R.id.tv_description);
