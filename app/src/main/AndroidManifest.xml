@@ -70,7 +70,8 @@
         </activity>
         <activity android:name=".activity.NotificationActivity" />
         <activity android:name=".activity.SubGroupActivity" />
-        <activity android:name=".activity.GroupDetailsActivity"></activity>
+        <activity android:name=".activity.GroupDetailsActivity"
+            android:parentActivityName=".activity.MainActivity"></activity>
     </application>
 
 </manifest>
