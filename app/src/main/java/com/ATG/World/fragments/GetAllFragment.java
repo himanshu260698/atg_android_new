@@ -202,8 +202,10 @@ public class GetAllFragment extends BaseFragment implements GetAllAdapter.OnItem
                     mProgressBar.setVisibility(View.GONE);
 
                 if (NetworkUtility.isKnownException(t)) {
-                    errorTextView.setText("Can't load data.\nCheck your network connection.");
-                    errorLinearLayout.setVisibility(View.VISIBLE);
+                    if(errorTextView!=null) {
+                        errorTextView.setText("Can't load data.\nCheck your network connection.");
+                        errorLinearLayout.setVisibility(View.VISIBLE);
+                    }
                 }
             }
 
