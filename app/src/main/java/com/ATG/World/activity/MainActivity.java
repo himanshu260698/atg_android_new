@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.ATG.World.R;
 import com.ATG.World.fragments.HomeFragment;
 import com.ATG.World.fragments.MyGroupFragment;
+import com.ATG.World.fragments.NotificationFragment;
 import com.ATG.World.fragments.SettingsFragment;
 import com.ATG.World.preferences.UserPreferenceManager;
 import com.ATG.World.utilities.GlideApp;
@@ -276,6 +277,66 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return new HomeFragment();
         }
     }
+    private void loadNotificationFragment() {
+        //selectNavMenu();
+
+        setToolbarTitle();
+
+        if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
+            drawer.closeDrawers();
+
+            toggleFab();
+            return;
+        }
+
+        // Sometimes, when fragment has huge data, screen seems hanging
+        // when switching between navigation menus
+        // So using runnable, the fragment is loaded with cross fade effect
+        Runnable mPendingRunnable = new Runnable() {
+            @Override
+            public void run() {
+                // update the main content by replacing fragments
+                Fragment fragment = getNotificationFragment();
+                Bundle bundle =new Bundle();
+                bundle.putInt("user_id",1941);
+                fragment.setArguments(bundle);
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                        android.R.anim.fade_out);
+                fragmentTransaction.replace(R.id.main_content, fragment, CURRENT_TAG);
+                fragmentTransaction.commitAllowingStateLoss();
+            }
+        };
+
+        // If mPendingRunnable is not null, then add to the message queue
+        if (mPendingRunnable != null) {
+            mHandler.post(mPendingRunnable);
+        }
+
+        // show or hide the fab button
+        toggleFab();
+
+        //Closing drawer on item click
+        drawer.closeDrawers();
+
+        // refresh toolbar menu
+        invalidateOptionsMenu();
+    }
+
+    private Fragment getNotificationFragment() {
+        switch (navItemIndex) {
+            case 2:
+                // Notification
+                NotificationFragment homeFragment = new NotificationFragment();
+                return homeFragment;
+
+            case 1:
+                logOut();
+
+            default:
+                return new NotificationFragment();
+        }
+    }
 
     private void setToolbarTitle() {
         getSupportActionBar().setTitle(activityTitles[navItemIndex]);
@@ -303,6 +364,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     case R.id.nav_notification:
                         navItemIndex = 2;
                         CURRENT_TAG = TAG_NOTIFICATION;
+                        loadNotificationFragment();
                         break;
 
                     case R.id.nav_my_posts:
