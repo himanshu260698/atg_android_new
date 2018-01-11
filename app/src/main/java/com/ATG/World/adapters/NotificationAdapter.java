@@ -58,7 +58,7 @@ public class NotificationAdapter extends BaseAdapter<Notification> implements Ev
 
     @Override
     protected RecyclerView.ViewHolder createItemViewHolder(ViewGroup parent) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.get_all_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.notification_item1, parent, false);
 
         final NotificationViewHolder holder = new NotificationViewHolder(view);
 
