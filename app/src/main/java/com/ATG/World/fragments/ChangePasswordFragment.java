@@ -1,12 +1,14 @@
 package com.ATG.World.fragments;
 
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.ATG.World.R;
+import com.ATG.World.activity.MainActivity;
 import com.ATG.World.models.User_details;
 import com.ATG.World.models.WsLoginResponse;
 import com.ATG.World.network.AtgClient;
@@ -41,6 +44,7 @@ public class ChangePasswordFragment extends Fragment {
     @BindView(R.id.progressBar_cyclic)ProgressBar progressBar;
     private String nP,nPConfirm;
     private Unbinder unbinder;
+    Button button;
     public ChangePasswordFragment() {
         // Required empty public constructor
     }
@@ -51,9 +55,34 @@ public class ChangePasswordFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView=inflater.inflate(R.layout.fragment_change_password, container, false);
+        button=rootView.findViewById(R.id.change_back_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadSettingsFragment();
+            }
+        });
         unbinder = ButterKnife.bind(this, rootView);
         return rootView;
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+        ((MainActivity) getActivity()).showNButton();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+        ((MainActivity)getActivity()).showBack();
+
+    }
+
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -106,6 +135,16 @@ public class ChangePasswordFragment extends Fragment {
         else {
             return true;
         }
+    }
+    private void loadSettingsFragment(){
+        SettingsFragment settingsFragment=new SettingsFragment();
+        Fragment fragment = settingsFragment;
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                android.R.anim.fade_out);
+        fragmentTransaction.replace(R.id.main_content, fragment);
+        fragmentTransaction.commitAllowingStateLoss();
+
     }
     private void loadHomeFragment(){
         HomeFragment homeFragment=new HomeFragment();

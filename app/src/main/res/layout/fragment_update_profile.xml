@@ -7,12 +7,44 @@
     tools:context="com.ATG.World.fragments.UpdateProfileFragment">
 
     <!-- TODO: Update blank fragment layout -->
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="4dp">
 
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar2"
+            android:elevation="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" >
+            <Button
+                android:id="@+id/update_back_button"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="0dp"
+                android:background="@drawable/back_arrow"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="20sp"
+                android:textAlignment="textStart"
+                android:paddingTop="12dp"
+                android:paddingStart="8dp"
+                android:layout_weight="1"
+                android:textColor="#ffffff"
+                android:text="Update profile" />
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
+        android:layout_marginTop="?attr/actionBarSize"
         android:orientation="vertical">
 
         <ScrollView

@@ -86,10 +86,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String TAG_LOGOUT = "Logout";
     private static final String TAG_SETTINGS="Settings";
     private static String CURRENT_TAG = TAG_HOME;
-
+    private boolean mToolBarNavigationListenerIsRegistered = false;
     private Handler mHandler;
     private boolean shouldLoadHomeFragmentOnBackPress = true;
-
+    ActionBarDrawerToggle toggle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // load toolbar titles from string resources
         activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+         toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
@@ -136,6 +136,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
+        getSupportActionBar().show();
     }
 
     @Override
@@ -205,6 +206,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 navItemIndex = 0;
                 CURRENT_TAG = TAG_HOME;
                 loadHomeFragment();
+                getSupportActionBar().show();
                 return;
             }
         }
@@ -272,6 +274,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case 7:
                 SettingsFragment settingsFragment=new SettingsFragment();
+                closeSubMenusFab();
+                toggleFab();
                 return settingsFragment;
             default:
                 return new HomeFragment();
@@ -487,7 +491,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fab.setImageResource(R.drawable.ic_clear_black_24px);
         fabExpanded = true;
     }
-
+    public void showBack(){
+        toggle.setDrawerIndicatorEnabled(false);
+        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        toggle.onDrawerStateChanged(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        toggle.syncState();
+    }
+    public void showNButton(){
+        toggle.setDrawerIndicatorEnabled(true);
+        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        toggle.onDrawerStateChanged(DrawerLayout.LOCK_MODE_UNLOCKED);
+        toggle.syncState();
+    }
     @Override
     public void onClick(View view) {
 

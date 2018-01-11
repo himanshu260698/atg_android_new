@@ -22,6 +22,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +37,7 @@ import android.widget.Toast;
 
 
 import com.ATG.World.R;
+import com.ATG.World.activity.MainActivity;
 import com.ATG.World.models.User_details;
 
 import com.ATG.World.network.AtgClient;
@@ -94,6 +96,7 @@ public class UpdateProfileFragment extends Fragment {
     @BindView(R.id.progressBar_cyclic)ProgressBar progressBar;
     CircleImageView circleImageView;
     Button saveUpdate;
+    Button button;
     private Unbinder unbinder;
     private List<String> listProfession;
     private ArrayAdapter<String> adapter;
@@ -115,6 +118,13 @@ public class UpdateProfileFragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_update_profile, container, false);
         circleImageView=view.findViewById(R.id.e_profileimage);
         permissions=new RxPermissions(getActivity());
+        button=view.findViewById(R.id.update_back_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadSettingsFragment();
+            }
+        });
         unbinder= ButterKnife.bind(this,view);
         circleImageView.setOnClickListener(v -> checkPermissions());
         saveUpdate=view.findViewById(R.id.updateProfileButton);
@@ -608,6 +618,32 @@ public class UpdateProfileFragment extends Fragment {
         Matcher matcher = pattern.matcher(email.getText().toString());
         return matcher.matches();
     }
+    private void loadSettingsFragment(){
+        SettingsFragment settingsFragment=new SettingsFragment();
+        Fragment fragment = settingsFragment;
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                android.R.anim.fade_out);
+        fragmentTransaction.replace(R.id.main_content, fragment);
+        fragmentTransaction.commitAllowingStateLoss();
+
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+        ((MainActivity) getActivity()).showNButton();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+        ((MainActivity)getActivity()).showBack();
+
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
