@@ -7,6 +7,7 @@ import com.ATG.World.models.AddEditDialogueResponse;
 import com.ATG.World.models.DashboardResponse;
 import com.ATG.World.models.JoinLeaveGroupResponse;
 import com.ATG.World.models.MyGroupResponse;
+import com.ATG.World.models.SignUpResponse;
 import com.ATG.World.models.SubGroupResponse;
 import com.ATG.World.models.User_details;
 import com.ATG.World.models.WsLoginResponse;
@@ -47,6 +48,10 @@ public interface AtgService {
     @GET("ws-social-media")
     Call<WsLoginResponse> getTwitterLogin(@Query("twitter_id") String fbid, @Query("user_name") String username, @Query("registration_id") String regid,
                                           @Query("device_name") int devname);
+
+    @GET("ws-register-user")
+    Call<SignUpResponse> getEmailSignUp(@Query("first_name") String fname,@Query("last_name") String lname,
+                                        @Query("email") String email,@Query("password") String password,@Query("device_name") String dev_name);
 
     /**
      * This API call will be used for getting data for Homepage.
