@@ -6,10 +6,14 @@ import android.support.annotation.NonNull;
 import com.ATG.World.models.AddEditDialogueResponse;
 import com.ATG.World.models.DashboardResponse;
 import com.ATG.World.models.JoinLeaveGroupResponse;
+import com.ATG.World.models.MarkNotificationResponse;
 import com.ATG.World.models.MyGroupResponse;
+import com.ATG.World.models.NotificationRes;
 import com.ATG.World.models.SubGroupResponse;
 import com.ATG.World.models.User_details;
 import com.ATG.World.models.WsLoginResponse;
+
+import java.util.List;
 
 import okhttp3.MultipartBody;
 import okhttp3.Request;
@@ -103,5 +107,10 @@ public interface AtgService {
     Call<AddEditDialogueResponse> getTagDialogueResponse(@Field("user_id") @NonNull String userId,
                                                          @Field("group_id") @NonNull String groupId,
                                                          @Field("tag_line") @NonNull String tagLine);
+    @GET("ws-get-notification-list")
+    Call<NotificationRes> getNotificationList(@Query("user_id") String user_id);
 
+
+    @POST("ws-mark-notifications-read")
+    Call<MarkNotificationResponse> markNotificationRead(@Field("user_id") @NonNull int user_id);
 }
