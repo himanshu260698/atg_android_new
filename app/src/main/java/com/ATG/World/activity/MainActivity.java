@@ -38,7 +38,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private View headerLayout;
-
     @BindView(R.id.layoutFabJob)
     LinearLayout layoutFabjob;
     @BindView(R.id.layoutFabMeetup)
@@ -199,6 +198,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // This code loads home fragment when back key is pressed
         // when user is in other fragment than home
+        if(getSupportFragmentManager().getBackStackEntryCount()>0){
+            getSupportFragmentManager().popBackStack();
+            return;
+        }
         if (shouldLoadHomeFragmentOnBackPress) {
             // checking if user is on other navigation menu
             // rather than home

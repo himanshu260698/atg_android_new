@@ -87,6 +87,7 @@ public class SettingsFragment extends Fragment {
 
     }
 
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -103,7 +104,8 @@ public class SettingsFragment extends Fragment {
         fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
                 android.R.anim.fade_out);
         fragmentTransaction.replace(R.id.main_content, fragment);
-        fragmentTransaction.commitAllowingStateLoss();
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
 
     }
     @Override

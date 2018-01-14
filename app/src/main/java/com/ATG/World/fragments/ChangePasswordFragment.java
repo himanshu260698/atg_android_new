@@ -45,6 +45,7 @@ public class ChangePasswordFragment extends Fragment {
     private String nP,nPConfirm;
     private Unbinder unbinder;
     Button button;
+
     public ChangePasswordFragment() {
         // Required empty public constructor
     }

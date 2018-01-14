@@ -106,6 +106,7 @@ public class UpdateProfileFragment extends Fragment {
     private byte[] byteArray;
     private int spinPosition;
     private Uri realUri;
+
     public UpdateProfileFragment() {
         // Required empty public constructor
     }
