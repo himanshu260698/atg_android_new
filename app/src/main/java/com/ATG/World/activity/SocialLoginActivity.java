@@ -396,10 +396,12 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
                 signInGoogle();
                 break;
             case R.id.sign_up_email:
+                Intent intent=new Intent(SocialLoginActivity.this,SignupActivity.class);
+                startActivity(intent);
                 break;
             case R.id.login_email:
-                Intent intent=new Intent(SocialLoginActivity.this,LoginActivity.class);
-                startActivity(intent);
+                Intent intent1=new Intent(SocialLoginActivity.this,LoginActivity.class);
+                startActivity(intent1);
                 break;
         }
     }
