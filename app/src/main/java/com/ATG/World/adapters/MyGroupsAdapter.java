@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ATG.World.R;
+import com.ATG.World.activity.GroupDetailsActivity;
 import com.ATG.World.activity.MainActivity;
 import com.ATG.World.activity.SocialLoginActivity;
 import com.ATG.World.activity.SubGroupActivity;
@@ -81,8 +82,15 @@ public class MyGroupsAdapter extends ArrayAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "Imagine you are viewing "+
+                /*Toast.makeText(context, "Imagine you are viewing "+
                         groupDetails.get(position).getName()+" group.", Toast.LENGTH_SHORT).show();
+                        */
+                Intent intent = new Intent(getContext(), GroupDetailsActivity.class);
+                intent.putExtra("name",groupDetails.get(position).getName());
+                intent.putExtra("id",groupDetails.get(position).getId().toString());
+                intent.putExtra("image",groupDetails.get(position).getImage());
+                intent.putExtra("tag",groupDetails.get(position).getTagLine());
+                context.startActivity(intent);
             }
         });
 
