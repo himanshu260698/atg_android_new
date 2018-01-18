@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import com.ATG.World.models.AddEditDialogueResponse;
 import com.ATG.World.models.DashboardResponse;
 import com.ATG.World.models.JoinLeaveGroupResponse;
+import com.ATG.World.models.LocationDetails;
 import com.ATG.World.models.MarkNotificationResponse;
 import com.ATG.World.models.MyGroupResponse;
 import com.ATG.World.models.NotificationRes;
@@ -71,6 +72,13 @@ public interface AtgService {
     Call<DashboardResponse> getDashboardData(@Field("filter") @NonNull int filterOption,
                                              @Field("page_number") @NonNull int pageNumber,
                                              @Field("user_id") @NonNull int userId);
+
+    @POST("ws-update-user-location")
+    @FormUrlEncoded
+    Call<LocationDetails> Postlocation(
+            @Field("user_id") @NonNull String userId,
+            @Field("latitude") @NonNull Double latitude,
+            @Field("longitude") @NonNull Double longitude);
 
     /*@GET("ws-get-notification-list")
     Call<> getNotificationList(@Field("user_id") int user_id);
