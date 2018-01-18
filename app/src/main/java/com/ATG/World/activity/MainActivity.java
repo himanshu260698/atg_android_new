@@ -29,6 +29,7 @@ import com.ATG.World.fragments.NotificationFragment;
 import com.ATG.World.fragments.SettingsFragment;
 import com.ATG.World.fragments.SettingsFragment;
 import com.ATG.World.preferences.UserPreferenceManager;
+import com.ATG.World.utilities.GPSTracker;
 import com.ATG.World.utilities.GlideApp;
 
 import butterknife.BindView;
@@ -52,7 +53,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.layoutFabQrious)
     LinearLayout layoutFabQrious;
 
+
     private boolean fabExpanded = false;
+    private int FlagLocation=1;
+
+
     //private FloatingActionButton fab;
     //private Toolbar toolbar;
     //private NavigationView navigationView;
@@ -90,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Handler mHandler;
     private boolean shouldLoadHomeFragmentOnBackPress = true;
     ActionBarDrawerToggle toggle;
+    GPSTracker gps;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,6 +132,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 CURRENT_TAG = TAG_HOME;
             }
             loadHomeFragment();
+        }
+        if(FlagLocation==1){
+
+            Location();
         }
 
         headerLayout = navigationView.getHeaderView(0);
@@ -346,7 +356,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return new NotificationFragment();
         }
     }
+    public void Location() {
 
+
+        gps = new GPSTracker(MainActivity.this);
+
+
+    }
     private void setToolbarTitle() {
         getSupportActionBar().setTitle(activityTitles[navItemIndex]);
     }
