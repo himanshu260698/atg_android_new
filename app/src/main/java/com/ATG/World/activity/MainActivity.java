@@ -348,7 +348,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void setToolbarTitle() {
-        getSupportActionBar().setTitle(activityTitles[navItemIndex]);
+        getSupportActionBar().setTitle(CURRENT_TAG);
     }
 
     private void setNavMenu() {
