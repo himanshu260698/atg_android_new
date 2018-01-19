@@ -246,7 +246,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         };
 
-        // If mPendingRunnable is not null, then add to the message queue
+        //If mPendingRunnable is not null, then add to the message queue
         if (mPendingRunnable != null) {
             mHandler.post(mPendingRunnable);
         }
@@ -304,7 +304,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Runnable mPendingRunnable = new Runnable() {
             @Override
             public void run() {
-                // update the main content by replacing fragments
+                //Update the main content by replacing fragments
                 Fragment fragment = getNotificationFragment();
                 Bundle bundle =new Bundle();
                 bundle.putInt("user_id",1941);
