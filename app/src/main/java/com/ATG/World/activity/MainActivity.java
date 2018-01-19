@@ -6,18 +6,18 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,7 +26,6 @@ import com.ATG.World.R;
 import com.ATG.World.fragments.HomeFragment;
 import com.ATG.World.fragments.MyGroupFragment;
 import com.ATG.World.fragments.NotificationFragment;
-import com.ATG.World.fragments.SettingsFragment;
 import com.ATG.World.fragments.SettingsFragment;
 import com.ATG.World.preferences.UserPreferenceManager;
 import com.ATG.World.utilities.GlideApp;
@@ -84,12 +83,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String TAG_MY_GROUPS = "My Groups";
     private static final String TAG_EXPLORE_GROUPS = "Explore Groups";
     private static final String TAG_LOGOUT = "Logout";
-    private static final String TAG_SETTINGS="Settings";
+    private static final String TAG_SETTINGS = "Settings";
     private static String CURRENT_TAG = TAG_HOME;
     private boolean mToolBarNavigationListenerIsRegistered = false;
     private Handler mHandler;
     private boolean shouldLoadHomeFragmentOnBackPress = true;
     ActionBarDrawerToggle toggle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // load toolbar titles from string resources
         activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
 
-         toggle = new ActionBarDrawerToggle(
+        toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
@@ -117,11 +117,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (savedInstanceState == null) {
             Intent intent = getIntent();
-            if(intent.hasExtra("index")){
-                navItemIndex = intent.getIntExtra("index",0);
+            if (intent.hasExtra("index")) {
+                navItemIndex = intent.getIntExtra("index", 0);
                 CURRENT_TAG = intent.getStringExtra("tag");
-            }
-            else {
+            } else {
                 navItemIndex = 0;
                 CURRENT_TAG = TAG_HOME;
             }
@@ -199,7 +198,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // This code loads home fragment when back key is pressed
         // when user is in other fragment than home
-        if(getSupportFragmentManager().getBackStackEntryCount()>0){
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager().popBackStack();
             return;
         }
@@ -277,7 +276,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return myGroupFragment;
 
             case 7:
-                SettingsFragment settingsFragment=new SettingsFragment();
+                SettingsFragment settingsFragment = new SettingsFragment();
                 closeSubMenusFab();
                 toggleFab();
                 return settingsFragment;
@@ -286,6 +285,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return new HomeFragment();
         }
     }
+
     private void loadNotificationFragment() {
         //selectNavMenu();
 
@@ -306,8 +306,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void run() {
                 //Update the main content by replacing fragments
                 Fragment fragment = getNotificationFragment();
-                Bundle bundle =new Bundle();
-                bundle.putInt("user_id",1941);
+                Bundle bundle = new Bundle();
+                bundle.putInt("user_id", 1941);
                 fragment.setArguments(bundle);
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
@@ -359,6 +359,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                closeSubMenusFab();
                 switch (item.getItemId()) {
                     case R.id.nav_home:
                         navItemIndex = 0;
@@ -397,8 +399,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         logOut();
                         return true;
                     case R.id.settings:
-                        navItemIndex=7;
-                        CURRENT_TAG=TAG_SETTINGS;
+                        navItemIndex = 7;
+                        CURRENT_TAG = TAG_SETTINGS;
                         break;
                     default:
                         navItemIndex = 0;
@@ -496,26 +498,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fab.setImageResource(R.drawable.ic_clear_black_24px);
         fabExpanded = true;
     }
-    public void showBack(){
+
+    public void showBack() {
         toggle.setDrawerIndicatorEnabled(false);
         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         toggle.onDrawerStateChanged(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         toggle.syncState();
     }
-    public void showNButton(){
+
+    public void showNButton() {
         toggle.setDrawerIndicatorEnabled(true);
         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         toggle.onDrawerStateChanged(DrawerLayout.LOCK_MODE_UNLOCKED);
         toggle.syncState();
     }
+
     @Override
     public void onClick(View view) {
 
     }
 
-    public void changeFrame(Fragment fragment, int id){
+    public void changeFrame(Fragment fragment, int id) {
         toolbar.setTitle(id);
-        fragmentTransaction = getSupportFragmentManager().beginTransaction().replace(R.id.main_content,fragment);
+        fragmentTransaction = getSupportFragmentManager().beginTransaction().replace(R.id.main_content, fragment);
         fragmentTransaction.commit();
     }
 
