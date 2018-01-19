@@ -174,7 +174,7 @@ public class GPSTracker extends Service implements LocationListener {
                     // progressBar.setVisibility(View.GONE);
                     int responseCode = response.code();
                     if (responseCode == 200) {
-                        Toast.makeText(mContext, "Successfully Location Updated by "+means, Toast.LENGTH_SHORT).show();
+
                         Log.i("","Location uploaded by"+means+latitude+longitude);
                        // loadHomeFragment();
                     }
@@ -183,12 +183,12 @@ public class GPSTracker extends Service implements LocationListener {
                 @Override
                 public void onFailure(Call<LocationDetails> call, Throwable t) {
                     if (call.isCanceled()) {
-                        Toast.makeText(mContext, "Failed to update Location", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(mContext, "Failed to update Location", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
         }else {
-            Toast.makeText(mContext, "Network not available", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(mContext, "Network not available", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -245,7 +245,7 @@ public class GPSTracker extends Service implements LocationListener {
         alertDialog.setTitle("Location Access Required");
 
         // Setting Dialog Message
-        alertDialog.setMessage("GPS is not enabled. Do you want to go to settings menu?");
+        alertDialog.setMessage("ATG need GPS access to show you nearby events, jobs, meetups and education. Go to settings menu to enable Location Services?");
 
         // On pressing Settings button
         alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
