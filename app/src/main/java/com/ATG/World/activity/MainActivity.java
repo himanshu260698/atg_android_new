@@ -79,8 +79,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // Tags used to attach fragments
     private static final String TAG_HOME = "Home";
     private static final String TAG_POST = "Post";
-    private static final String TAG_NOTIFICATION = "Notification";
-    private static final String TAG_MY_POST = "My Post";
+    private static final String TAG_NOTIFICATION = "Notifications";
+    private static final String TAG_MY_POST = "My Posts";
     private static final String TAG_MY_GROUPS = "My Groups";
     private static final String TAG_EXPLORE_GROUPS = "Explore Groups";
     private static final String TAG_LOGOUT = "Logout";
@@ -239,8 +239,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 // update the main content by replacing fragments
                 Fragment fragment = getHomeFragment();
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                        android.R.anim.fade_out);
+                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
                 fragmentTransaction.replace(R.id.main_content, fragment, CURRENT_TAG);
                 fragmentTransaction.commitAllowingStateLoss();
             }
