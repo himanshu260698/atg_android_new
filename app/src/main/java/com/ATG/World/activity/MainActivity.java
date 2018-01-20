@@ -76,7 +76,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // toolbar titles respected to selected nav menu item
     private String[] activityTitles;
 
-    // Tags used to attach fragments
+
+    //Tags used to attach fragments
     private static final String TAG_HOME = "Home";
     private static final String TAG_POST = "Post";
     private static final String TAG_NOTIFICATION = "Notifications";
