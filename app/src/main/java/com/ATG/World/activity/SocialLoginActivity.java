@@ -209,11 +209,15 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
         retrofit2.Callback<WsLoginResponse> callback=new retrofit2.Callback<WsLoginResponse>() {
             @Override
             public void onResponse(Call<WsLoginResponse> call, Response<WsLoginResponse> response) {
+                Log.e("CHECK",response.message());
+                Log.e("CHECK",call.toString());
                 WsLoginResponse wsLoginResponse =response.body();
 
-                         if (wsLoginResponse.getError_code()==0) {
-                        Toast.makeText(SocialLoginActivity.this, "Logged in successfully.", Toast.LENGTH_SHORT).show();
-                        User_details userDetails=wsLoginResponse.getUser_details();
+                if(wsLoginResponse != null) {
+
+                    if (wsLoginResponse.getError_code() == 0) {
+                        Toast.makeText(SocialLoginActivity.this, "Sign up successful", Toast.LENGTH_SHORT).show();
+                        User_details userDetails = wsLoginResponse.getUser_details();
 
                         if (userDetails.getLast_name() != null)
                             mStrLastNAME = userDetails.getLast_name();
@@ -250,18 +254,14 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
                                 userDetails.getEmail(),
                                 ""
                         );
-                        Intent intent = new Intent(SocialLoginActivity.this, MainActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putString("flg", "1");
-                        intent.putExtras(bundle);
+                        Intent intent = new Intent(SocialLoginActivity.this, GroupSelectionActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         finish();
                         startActivity(intent);
-                    }
-                    else if (wsLoginResponse.getError_code()==1) {
+                    } else if (wsLoginResponse.getError_code() == 1) {
                         Toast.makeText(SocialLoginActivity.this, "Logged in successfully.", Toast.LENGTH_SHORT).show();
 
-                        User_details userDetails=wsLoginResponse.getUser_details();
+                        User_details userDetails = wsLoginResponse.getUser_details();
 
                         if (userDetails.getLast_name() != null)
                             mStrLastNAME = userDetails.getLast_name();
@@ -299,21 +299,61 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
                                 userDetails.getMob_no()
                         );
                         Intent intent = new Intent(SocialLoginActivity.this, MainActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putString("flg", "1");
-                        intent.putExtras(bundle);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         finish();
                         startActivity(intent);
-                    } else if (wsLoginResponse.getError_code()==2) {
+                    } else if (wsLoginResponse.getError_code() == 2) {
+
+                        User_details userDetails = wsLoginResponse.getUser_details();
+
+                        if (userDetails.getLast_name() != null)
+                            mStrLastNAME = userDetails.getLast_name();
+
+                        if (socialFlag == 1) {
+                            mStrFBLogin = "1";
+                        } else {
+                            mStrFBLogin = "0";
+                        }
+                        if (socialFlag == 2) {
+                            mStrGoogleLogin = "1";
+                        } else {
+                            mStrGoogleLogin = "0";
+                        }
+                        if (socialFlag == 3) {
+                            mStrTwitterLogin = "1";
+                        } else {
+                            mStrTwitterLogin = "0";
+                        }
+
+                        UserPreferenceManager.login(SocialLoginActivity.this,
+                                userDetails.getId(),
+                                userDetails.getFirst_name(),
+                                userDetails.getLast_name(),
+                                userDetails.getUser_type(),
+                                "",
+                                userDetails.getProfile_picture(),
+                                "",
+                                userDetails.getLocation(),
+                                mStrFBLogin,
+                                mStrGoogleLogin,
+                                userDetails.getLinkdin_login(),
+                                mStrTwitterLogin,
+                                userDetails.getEmail(),
+                                userDetails.getMob_no()
+                        );
                         Toast.makeText(SocialLoginActivity.this, "Please select groups.", Toast.LENGTH_SHORT).show();
-                       /* Intent intent = new Intent(SocialLoginActivity.this, SelectGroupActivity.class);
+                        Intent intent = new Intent(SocialLoginActivity.this, GroupSelectionActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         finish();
                         startActivity(intent);
-                        */
+
+
+                    } else if (wsLoginResponse.getError_code() == 2) {
+                        Toast.makeText(SocialLoginActivity.this, "Junk data recived", Toast.LENGTH_SHORT).show();
 
                     }
+                }
+                Toast.makeText(SocialLoginActivity.this,"Error",Toast.LENGTH_SHORT).show();
 
 
                 showProgress(false);

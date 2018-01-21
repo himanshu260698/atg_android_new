@@ -7,12 +7,15 @@ import com.ATG.World.models.AddEditDialogueResponse;
 import com.ATG.World.models.DashboardResponse;
 import com.ATG.World.models.JoinLeaveGroupResponse;
 import com.ATG.World.models.LocationDetails;
+import com.ATG.World.models.MainGroup;
 import com.ATG.World.models.MarkNotificationResponse;
 import com.ATG.World.models.MyGroupResponse;
+import com.ATG.World.models.NicheGroupResponse;
 import com.ATG.World.models.NotificationRes;
 import com.ATG.World.models.SignUpResponse;
 import com.ATG.World.models.SubGroupResponse;
 import com.ATG.World.models.User_details;
+import com.ATG.World.models.WsJoinLeaveGroupResponse;
 import com.ATG.World.models.WsLoginResponse;
 
 import java.util.List;
@@ -60,6 +63,16 @@ public interface AtgService {
     @GET("ws-register-user")
     Call<SignUpResponse> getEmailSignUp(@Query("first_name") String fname,@Query("last_name") String lname,
                                         @Query("email") String email,@Query("password") String password,@Query("device_name") String dev_name);
+
+    @GET("ws-group")
+    Call<MainGroup> getmainGroup();
+
+    @GET("ws-sub-group")
+    Call<NicheGroupResponse> getNicheGroup(@Query("id") int id);
+
+    @GET("ws-join-leave-group")
+    Call<WsJoinLeaveGroupResponse> joinLeaveGroup(@Query("status") int status,@Query("group_id") String group_id
+                                                    ,@Query("user_id") String user_id);
 
     /**
      * This API call will be used for getting data for Homepage.
