@@ -1,7 +1,6 @@
 package com.ATG.World.fragments;
 
 
-
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -35,11 +34,9 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-
 import com.ATG.World.R;
 import com.ATG.World.activity.MainActivity;
 import com.ATG.World.models.User_details;
-
 import com.ATG.World.network.AtgClient;
 import com.ATG.World.network.AtgService;
 import com.ATG.World.preferences.UserPreferenceManager;
@@ -75,25 +72,36 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-
 /**
  * A simple {@link Fragment} subclass.
  */
 public class UpdateProfileFragment extends Fragment {
 
 
-    @BindView(R.id.e_username)EditText username;
-    @BindView(R.id.e_firstname)EditText firstName;
-    @BindView(R.id.e_lastname)EditText lastName;
-    @BindView(R.id.e_email)EditText email;
-    @BindView(R.id.e_mobile)EditText mobileNo;
-    @BindView(R.id.e_phone)EditText phoneNo;
-    @BindView(R.id.e_location)EditText location;
-    @BindView(R.id.e_aboutme)EditText aboutMe;
-    @BindView(R.id.e_profiletag)EditText profileTag;
-    @BindView(R.id.spinner)Spinner spinner;
-    @BindView(R.id.e_profession)EditText profession;
-    @BindView(R.id.progressBar_cyclic)ProgressBar progressBar;
+    @BindView(R.id.e_username)
+    EditText username;
+    @BindView(R.id.e_firstname)
+    EditText firstName;
+    @BindView(R.id.e_lastname)
+    EditText lastName;
+    @BindView(R.id.e_email)
+    EditText email;
+    @BindView(R.id.e_mobile)
+    EditText mobileNo;
+    @BindView(R.id.e_phone)
+    EditText phoneNo;
+    @BindView(R.id.e_location)
+    EditText location;
+    @BindView(R.id.e_aboutme)
+    EditText aboutMe;
+    @BindView(R.id.e_profiletag)
+    EditText profileTag;
+    @BindView(R.id.spinner)
+    Spinner spinner;
+    @BindView(R.id.e_profession)
+    EditText profession;
+    @BindView(R.id.progressBar_cyclic)
+    ProgressBar progressBar;
     CircleImageView circleImageView;
     Button saveUpdate;
     Button button;
@@ -116,19 +124,19 @@ public class UpdateProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view=inflater.inflate(R.layout.fragment_update_profile, container, false);
-        circleImageView=view.findViewById(R.id.e_profileimage);
-        permissions=new RxPermissions(getActivity());
-        button=view.findViewById(R.id.update_back_button);
+        View view = inflater.inflate(R.layout.fragment_update_profile, container, false);
+        circleImageView = view.findViewById(R.id.e_profileimage);
+        permissions = new RxPermissions(getActivity());
+        button = view.findViewById(R.id.update_back_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loadSettingsFragment();
             }
         });
-        unbinder= ButterKnife.bind(this,view);
+        unbinder = ButterKnife.bind(this, view);
         circleImageView.setOnClickListener(v -> checkPermissions());
-        saveUpdate=view.findViewById(R.id.updateProfileButton);
+        saveUpdate = view.findViewById(R.id.updateProfileButton);
         saveUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -157,10 +165,10 @@ public class UpdateProfileFragment extends Fragment {
                 spinner.setSelection(0);
             }
         });
-        if(NetworkUtility.isNetworkAvailable(getActivity())) {
+        if (NetworkUtility.isNetworkAvailable(getActivity())) {
             GetData getData = new GetData();
             getData.execute("http://atg.party/ws-account-setting?user_id=" + UserPreferenceManager.getUserId(getActivity()));
-        }else {
+        } else {
             Toast.makeText(getActivity(), "Network not available", Toast.LENGTH_SHORT).show();
         }
         atgService = AtgClient.getClient().create(AtgService.class);
@@ -239,8 +247,9 @@ public class UpdateProfileFragment extends Fragment {
         */
 
     }
+
     @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
-    private class GetData extends AsyncTask<String,Void,String>{
+    private class GetData extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... urls) {
@@ -270,17 +279,17 @@ public class UpdateProfileFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
 
-            Log.d(getActivity().getLocalClassName(), "onPostExecute: "+s);
+            Log.d(getActivity().getLocalClassName(), "onPostExecute: " + s);
             try {
-                JSONObject topObject=new JSONObject(s);
-                String accountSetting=topObject.getString("AccountSetting");
-                JSONObject acObject=new JSONObject(accountSetting);
-                String profilePic=getString(R.string.WS_PROFILE_IMAGE_PATH)+UserPreferenceManager.getUserId(getActivity())+
-                        "/"+"thumb/"+acObject.getString("profile_picture");
+                JSONObject topObject = new JSONObject(s);
+                String accountSetting = topObject.getString("AccountSetting");
+                JSONObject acObject = new JSONObject(accountSetting);
+                String profilePic = getString(R.string.WS_PROFILE_IMAGE_PATH) + UserPreferenceManager.getUserId(getActivity()) +
+                        "/" + "thumb/" + acObject.getString("profile_picture");
 
-                    Glide.with(getActivity())
-                            .load(profilePic)
-                            .into(circleImageView);
+                Glide.with(getActivity())
+                        .load(profilePic)
+                        .into(circleImageView);
                 if (!acObject.getString("user_name").equals("")) {
                     username.setText(acObject.getString("user_name"));
                 }
@@ -324,33 +333,35 @@ public class UpdateProfileFragment extends Fragment {
         }
     }
 
-    private void checkPermissions(){
-        permissions.request(Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE)
-                .subscribe(granted->{
-                    if (granted){
-                            selectImage();
+    private void checkPermissions() {
+        permissions.request(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+                .subscribe(granted -> {
+                    if (granted) {
+                        selectImage();
 
-                    }else {
+                    } else {
                         Toast.makeText(getActivity(), "Please give the permission(s)", Toast.LENGTH_SHORT).show();
-                           checkPermissions();
+                        checkPermissions();
                     }
                 });
 
     }
-    private void permissionAvailable(){
-        permissions.request(Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE)
-                .subscribe(granted->{
-                    if (granted){
-                        if(validation()){
+
+    private void permissionAvailable() {
+        permissions.request(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+                .subscribe(granted -> {
+                    if (granted) {
+                        if (validation()) {
                             updateData();
                         }
-                    }else {
+                    } else {
                         Toast.makeText(getActivity(), "Please give the permission(s)", Toast.LENGTH_SHORT).show();
                         checkPermissions();
                     }
                 });
     }
-    private void selectImage(){
+
+    private void selectImage() {
         final CharSequence[] items = {"Take Photo", "Choose from Library", "Cancel"};
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Add Photo!");
@@ -373,6 +384,7 @@ public class UpdateProfileFragment extends Fragment {
         });
         builder.show();
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -385,31 +397,32 @@ public class UpdateProfileFragment extends Fragment {
                 String capturedImageFilePath = cursor.getString(column_index_data);
                 Uri imageuri = Uri.parse("file:///" + capturedImageFilePath);
                 circleImageView.setImageBitmap(compressImage(imageuri));
-                realUri=Uri.parse(getRealPathFromURI(data.getData()));
+                realUri = Uri.parse(getRealPathFromURI(data.getData()));
             }
 
         } else if (requestCode == 200) {
-            uri=data.getData();
+            uri = data.getData();
             circleImageView.setImageBitmap(compressImage(uri));
         } else {
             Toast.makeText(getActivity(), "Something went wrong ", Toast.LENGTH_SHORT).show();
         }
     }
-    private Bitmap compressImage(Uri imageU){
-        InputStream inputStream=null;
-        try{
-            inputStream=getActivity().getContentResolver().openInputStream(imageU);
+
+    private Bitmap compressImage(Uri imageU) {
+        InputStream inputStream = null;
+        try {
+            inputStream = getActivity().getContentResolver().openInputStream(imageU);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        final BitmapFactory.Options options=new BitmapFactory.Options();
-        options.inJustDecodeBounds=true;
-        Bitmap bitmap=BitmapFactory.decodeStream(inputStream);
-        ByteArrayOutputStream byteArrayOutputStream=new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG,20,byteArrayOutputStream);
-       byteArray = byteArrayOutputStream.toByteArray();
-       try {
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream);
+        byteArray = byteArrayOutputStream.toByteArray();
+        try {
             byteArrayOutputStream.close();
             byteArrayOutputStream = null;
         } catch (IOException e) {
@@ -427,24 +440,26 @@ public class UpdateProfileFragment extends Fragment {
         uri = getActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
     }
 
-    private int spinnerItemSelect(String k){
-        if(k.equals("1")){
+    private int spinnerItemSelect(String k) {
+        if (k.equals("1")) {
             return 1;
-        }else if(k.equals("2")){
+        } else if (k.equals("2")) {
             return 2;
-        }else if(k.equals("3")){
+        } else if (k.equals("3")) {
             return 3;
-        }else if (k.equals("4")){
+        } else if (k.equals("4")) {
             return 4;
-        }else return 0;
+        } else return 0;
     }
-    private void additems(){
+
+    private void additems() {
         listProfession.add("User type");
         listProfession.add("Student");
         listProfession.add("Admin");
         listProfession.add("Professional");
         listProfession.add("Company");
     }
+
     private byte[] getImageByteArray(Bitmap bmp) {
         byte[] byteArray = null;
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -453,9 +468,10 @@ public class UpdateProfileFragment extends Fragment {
         byteArray = stream.toByteArray();
         return byteArray;
     }
-    private void updateData(){
-        if(NetworkUtility.isNetworkAvailable(getActivity())) {
-            if(validation()) {
+
+    private void updateData() {
+        if (NetworkUtility.isNetworkAvailable(getActivity())) {
+            if (validation()) {
                 progressBar.setVisibility(View.VISIBLE);
                 try {
                     // File imageFIle = new File(String.valueOf(realUri));
@@ -483,7 +499,7 @@ public class UpdateProfileFragment extends Fragment {
                             int code = response.code();
                             if (code == 200) {
                                 Toast.makeText(getActivity(), "Profile updated successfully", Toast.LENGTH_SHORT).show();
-                                loadHomeFragment();
+                                //loadHomeFragment();
                             } else {
                                 Toast.makeText(getActivity(), "Failed to update profile " + code, Toast.LENGTH_SHORT).show();
                             }
@@ -498,24 +514,27 @@ public class UpdateProfileFragment extends Fragment {
                     Toast.makeText(getActivity(), "Failed to update profile", Toast.LENGTH_SHORT).show();
                 }
             }
-        }else {
+        } else {
             Toast.makeText(getActivity(), "Network not available", Toast.LENGTH_SHORT).show();
         }
     }
+
     public String getRealPathFromURI(Uri contentUri) {
         String res = null;
-        String[] proj = { MediaStore.Images.Media.DATA };
+        String[] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = getActivity().getContentResolver().query(contentUri, proj, null, null, null);
         assert cursor != null;
-        if(cursor.moveToFirst()){;
+        if (cursor.moveToFirst()) {
+            ;
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             res = cursor.getString(column_index);
         }
         cursor.close();
         return res;
     }
-    private void loadHomeFragment(){
-        HomeFragment homeFragment=new HomeFragment();
+
+    private void loadHomeFragment() {
+        HomeFragment homeFragment = new HomeFragment();
         Fragment fragment = homeFragment;
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
@@ -524,6 +543,7 @@ public class UpdateProfileFragment extends Fragment {
         fragmentTransaction.commitAllowingStateLoss();
 
     }
+
     private boolean validation() {
         byte[] abc = null;
         try {
@@ -550,8 +570,7 @@ public class UpdateProfileFragment extends Fragment {
             lastName.requestFocus();
             lastName.setError("Please enter last name.");
             return false;
-        }
-         else if (email.getText().toString().equalsIgnoreCase("")) {
+        } else if (email.getText().toString().equalsIgnoreCase("")) {
             email.requestFocus();
             email.setError("Please enter email address.");
             return false;
@@ -590,37 +609,36 @@ public class UpdateProfileFragment extends Fragment {
             spinner.requestFocus();
             Toast.makeText(getActivity(), "Please select user type.", Toast.LENGTH_SHORT).show();
             return false;
-        } else if (mobileNo.getText().toString().length()==0){
+        } else if (mobileNo.getText().toString().length() == 0) {
             mobileNo.requestFocus();
             mobileNo.setError("Please enter mobile or phone number.");
             return false;
-        }
-         else if(phoneNo.getText().toString().length()<10||phoneNo.getText().toString().length()>12){
-                phoneNo.requestFocus();
-                phoneNo.setError("Phone number must be 10 to 12 digit.");
-                return false;
-        }
-          else if(mobileNo.getText().toString().length()<10||mobileNo.getText().toString().length()>12){
-                mobileNo.requestFocus();
-                mobileNo.setError("Mobile number must be 10 to 12 digit.");
-                return false;
+        } else if (phoneNo.getText().toString().length() < 10 || phoneNo.getText().toString().length() > 12) {
+            phoneNo.requestFocus();
+            phoneNo.setError("Phone number must be 10 to 12 digit.");
+            return false;
+        } else if (mobileNo.getText().toString().length() < 10 || mobileNo.getText().toString().length() > 12) {
+            mobileNo.requestFocus();
+            mobileNo.setError("Mobile number must be 10 to 12 digit.");
+            return false;
 
-        }else if(!emailValidation()){
-              email.requestFocus();
-              email.setError("Enter a valid email address");
+        } else if (!emailValidation()) {
+            email.requestFocus();
+            email.setError("Enter a valid email address");
         }
         return true;
     }
 
-    private boolean emailValidation(){
+    private boolean emailValidation() {
         String regex = "^(.+)@(.+)$";
 
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email.getText().toString());
         return matcher.matches();
     }
-    private void loadSettingsFragment(){
-        SettingsFragment settingsFragment=new SettingsFragment();
+
+    private void loadSettingsFragment() {
+        SettingsFragment settingsFragment = new SettingsFragment();
         Fragment fragment = settingsFragment;
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
@@ -629,10 +647,11 @@ public class UpdateProfileFragment extends Fragment {
         fragmentTransaction.commitAllowingStateLoss();
 
     }
+
     @Override
     public void onStop() {
         super.onStop();
-        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
         ((MainActivity) getActivity()).showNButton();
 
     }
@@ -640,8 +659,8 @@ public class UpdateProfileFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
-        ((MainActivity)getActivity()).showBack();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+        ((MainActivity) getActivity()).showBack();
 
     }
 

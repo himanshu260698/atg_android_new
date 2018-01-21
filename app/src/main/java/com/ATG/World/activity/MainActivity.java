@@ -81,11 +81,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // toolbar titles respected to selected nav menu item
     private String[] activityTitles;
 
-    // Tags used to attach fragments
+
+    //Tags used to attach fragments
     private static final String TAG_HOME = "Home";
     private static final String TAG_POST = "Post";
-    private static final String TAG_NOTIFICATION = "Notification";
-    private static final String TAG_MY_POST = "My Post";
+    private static final String TAG_NOTIFICATION = "Notifications";
+    private static final String TAG_MY_POST = "My Posts";
     private static final String TAG_MY_GROUPS = "My Groups";
     private static final String TAG_EXPLORE_GROUPS = "Explore Groups";
     private static final String TAG_LOGOUT = "Logout";
@@ -249,14 +250,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 // update the main content by replacing fragments
                 Fragment fragment = getHomeFragment();
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                        android.R.anim.fade_out);
+                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
                 fragmentTransaction.replace(R.id.main_content, fragment, CURRENT_TAG);
                 fragmentTransaction.commitAllowingStateLoss();
             }
         };
 
-        // If mPendingRunnable is not null, then add to the message queue
+        //If mPendingRunnable is not null, then add to the message queue
         if (mPendingRunnable != null) {
             mHandler.post(mPendingRunnable);
         }
@@ -314,7 +314,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Runnable mPendingRunnable = new Runnable() {
             @Override
             public void run() {
-                // update the main content by replacing fragments
+                //Update the main content by replacing fragments
                 Fragment fragment = getNotificationFragment();
                 Bundle bundle =new Bundle();
                 bundle.putInt("user_id",1941);
@@ -364,7 +364,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
     private void setToolbarTitle() {
-        getSupportActionBar().setTitle(activityTitles[navItemIndex]);
+        getSupportActionBar().setTitle(CURRENT_TAG);
     }
 
     private void setNavMenu() {
