@@ -137,9 +137,6 @@ public class LoginActivity extends AppCompatActivity {
                                 userDetails.getMob_no()
                         );
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putString("flg", "1");
-                        intent.putExtras(bundle);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         finish();
                         startActivity(intent);

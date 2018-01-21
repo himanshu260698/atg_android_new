@@ -79,8 +79,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ATG.World.activity.SocialLoginActivity" />
         </activity>
-        <activity android:name=".activity.GroupDetailsActivity"
-            android:parentActivityName=".activity.MainActivity"></activity>
+        <activity
+            android:name=".activity.GroupDetailsActivity"
+            android:parentActivityName=".activity.MainActivity" />
+        <activity android:name=".activity.GroupSelectionActivity"
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>

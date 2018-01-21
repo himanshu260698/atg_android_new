@@ -3,6 +3,7 @@ package com.ATG.World.activity;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Build;
@@ -148,7 +149,6 @@ public class SignupActivity extends AppCompatActivity {
                 public void onResponse(Call<SignUpResponse> call, Response<SignUpResponse> response) {
                     SignUpResponse signUpResponse=response.body();
                     if (signUpResponse.getError_code().equals("0")) {
-                        Toast.makeText(SignupActivity.this, "Signup successyfully but wait for next page.Under development", Toast.LENGTH_SHORT).show();
 
                         User_details userDetails=signUpResponse.getUser_details();
 
@@ -168,13 +168,11 @@ public class SignupActivity extends AppCompatActivity {
                                 userDetails.getEmail(),
                                 userDetails.getMob_no()
                         );
-                        /*
-                        Intent intent = new Intent(SignupActivity.this, MainActivity.class);
-                        Bundle bundle = new Bundle();
+
+                        Intent intent = new Intent(SignupActivity.this, GroupSelectionActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         finish();
                         startActivity(intent);
-                        */
                     } else if (signUpResponse.getError_code().equals("1")) {
                         Toast.makeText(SignupActivity.this, "Email already exist.", Toast.LENGTH_SHORT).show();
 
