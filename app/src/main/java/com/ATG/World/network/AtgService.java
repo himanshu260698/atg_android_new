@@ -48,17 +48,14 @@ public interface AtgService {
 
     @GET("ws-social-media")
     Call<WsLoginResponse> getFacebookLogin(@Query("fb_id") String fbid, @Query("first_name") String firstname,
-                                           @Query("last_name") String lastname, @Query("email") String email, @Query("registration_id") String regid,
-                                           @Query("device_name") int devname);
+                                           @Query("last_name") String lastname, @Query("email") String email);
 
     @GET("ws-social-media")
     Call<WsLoginResponse> getGoogleLogin(@Query("google_id") String fbid, @Query("first_name") String firstname,
-                                         @Query("last_name") String lastname, @Query("email") String email, @Query("registration_id") String regid,
-                                         @Query("device_name") int devname);
+                                         @Query("last_name") String lastname, @Query("email") String email);
 
     @GET("ws-social-media")
-    Call<WsLoginResponse> getTwitterLogin(@Query("twitter_id") String fbid, @Query("user_name") String username, @Query("registration_id") String regid,
-                                          @Query("device_name") int devname);
+    Call<WsLoginResponse> getTwitterLogin(@Query("twitter_id") String fbid, @Query("user_name") String username);
 
     @GET("ws-register-user")
     Call<SignUpResponse> getEmailSignUp(@Query("first_name") String fname,@Query("last_name") String lname,
