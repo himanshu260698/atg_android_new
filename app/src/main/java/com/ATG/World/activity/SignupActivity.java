@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -148,39 +149,44 @@ public class SignupActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<SignUpResponse> call, Response<SignUpResponse> response) {
                     SignUpResponse signUpResponse=response.body();
-                    if (signUpResponse.getError_code().equals("0")) {
+                    if(signUpResponse !=null) {
 
-                        User_details userDetails=signUpResponse.getUser_details();
+                        if (signUpResponse.getError_code().equals("0")) {
 
-                        UserPreferenceManager.login(SignupActivity.this,
-                                userDetails.getId(),
-                                userDetails.getFirst_name(),
-                                userDetails.getLast_name(),
-                                userDetails.getUser_type(),
-                                "",
-                                userDetails.getProfile_picture(),
-                                "",
-                                userDetails.getLocation(),
-                                userDetails.getFb_login(),
-                                userDetails.getGoogle_login(),
-                                userDetails.getLinkdin_login(),
-                                userDetails.getTwitter_login(),
-                                userDetails.getEmail(),
-                                userDetails.getMob_no()
-                        );
+                            User_details userDetails = signUpResponse.getUser_details();
 
-                        Intent intent = new Intent(SignupActivity.this, GroupSelectionActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        finish();
-                        startActivity(intent);
-                    } else if (signUpResponse.getError_code().equals("1")) {
-                        Toast.makeText(SignupActivity.this, "Email already exist.", Toast.LENGTH_SHORT).show();
+                            UserPreferenceManager.login(SignupActivity.this,
+                                    userDetails.getId(),
+                                    userDetails.getFirst_name(),
+                                    userDetails.getLast_name(),
+                                    userDetails.getUser_type(),
+                                    "",
+                                    userDetails.getProfile_picture(),
+                                    "",
+                                    userDetails.getLocation(),
+                                    userDetails.getFb_login(),
+                                    userDetails.getGoogle_login(),
+                                    userDetails.getLinkdin_login(),
+                                    userDetails.getTwitter_login(),
+                                    userDetails.getEmail(),
+                                    userDetails.getMob_no()
+                            );
 
-                    } else if (signUpResponse.getError_code().equals("2")) {
-                        Toast.makeText(SignupActivity.this, "User email already exist.", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(SignupActivity.this, GroupSelectionActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            finish();
+                            startActivity(intent);
+                        } else if (signUpResponse.getError_code().equals("1")) {
+                            Toast.makeText(SignupActivity.this, "Email already exist.", Toast.LENGTH_SHORT).show();
 
-                    } else if (signUpResponse.getError_code().equals("3")) {
-                        Toast.makeText(SignupActivity.this, "This error i don't know", Toast.LENGTH_SHORT).show();
+                        } else if (signUpResponse.getError_code().equals("2")) {
+                            Toast.makeText(SignupActivity.this, "User email already exist.", Toast.LENGTH_SHORT).show();
+
+                        } else if (signUpResponse.getError_code().equals("3")) {
+                            Toast.makeText(SignupActivity.this, "This error i don't know", Toast.LENGTH_SHORT).show();
+                        }
+                    }else {
+                        Toast.makeText(SignupActivity.this,"Error",Toast.LENGTH_SHORT).show();
                     }
 
                     showProgress(false);

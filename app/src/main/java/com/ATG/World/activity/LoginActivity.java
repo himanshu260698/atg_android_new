@@ -45,8 +45,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        retrofit= AtgClient.getClient().create(AtgService.class);
-       //setupActionBar();
+        retrofit = AtgClient.getClient().create(AtgService.class);
+        //setupActionBar();
         mEmailView = findViewById(R.id.email);
 
         mPasswordView = (EditText) findViewById(R.id.password);
@@ -72,6 +72,7 @@ public class LoginActivity extends AppCompatActivity {
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
     }
+
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private void setupActionBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -111,47 +112,51 @@ public class LoginActivity extends AppCompatActivity {
             focusView.requestFocus();
         } else {
             showProgress(true);
-            Call<WsLoginResponse> call = retrofit.getEmailLogin(email,password,"0","");
+            Call<WsLoginResponse> call = retrofit.getEmailLogin(email, password, "0", "");
             call.enqueue(new Callback<WsLoginResponse>() {
                 @Override
                 public void onResponse(Call<WsLoginResponse> call, Response<WsLoginResponse> response) {
-                    WsLoginResponse wsLoginResponse=response.body();
+                    WsLoginResponse wsLoginResponse = response.body();
+                    if (wsLoginResponse != null) {
 
-                    if (wsLoginResponse.getError_code()==0) {
-                        User_details userDetails=wsLoginResponse.getUser_details();
+                        if (wsLoginResponse.getError_code() == 0) {
+                            User_details userDetails = wsLoginResponse.getUser_details();
 
-                        UserPreferenceManager.login(LoginActivity.this,
-                                userDetails.getId(),
-                                userDetails.getFirst_name(),
-                                userDetails.getLast_name(),
-                                userDetails.getUser_type(),
-                                "",
-                                userDetails.getProfile_picture(),
-                                "",
-                                userDetails.getLocation(),
-                                userDetails.getFb_login(),
-                                userDetails.getGoogle_login(),
-                                userDetails.getLinkdin_login(),
-                                userDetails.getTwitter_login(),
-                                userDetails.getEmail(),
-                                userDetails.getMob_no()
-                        );
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        finish();
-                        startActivity(intent);
-                    } else if (wsLoginResponse.getError_code()==1) {
-                        Toast.makeText(LoginActivity.this, "Please check your credentials.", Toast.LENGTH_SHORT).show();
+                            UserPreferenceManager.login(LoginActivity.this,
+                                    userDetails.getId(),
+                                    userDetails.getFirst_name(),
+                                    userDetails.getLast_name(),
+                                    userDetails.getUser_type(),
+                                    "",
+                                    userDetails.getProfile_picture(),
+                                    "",
+                                    userDetails.getLocation(),
+                                    userDetails.getFb_login(),
+                                    userDetails.getGoogle_login(),
+                                    userDetails.getLinkdin_login(),
+                                    userDetails.getTwitter_login(),
+                                    userDetails.getEmail(),
+                                    userDetails.getMob_no()
+                            );
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            finish();
+                            startActivity(intent);
+                        } else if (wsLoginResponse.getError_code() == 1) {
+                            Toast.makeText(LoginActivity.this, "Please check your credentials.", Toast.LENGTH_SHORT).show();
 
-                    } else if (wsLoginResponse.getError_code()==2) {
-                        Toast.makeText(LoginActivity.this, "This email is not registered with this site.", Toast.LENGTH_SHORT).show();
+                        } else if (wsLoginResponse.getError_code() == 2) {
+                            Toast.makeText(LoginActivity.this, "This email is not registered with this site.", Toast.LENGTH_SHORT).show();
 
-                    } else if (wsLoginResponse.getError_code()==3) {
-                        Toast.makeText(LoginActivity.this, "Your account has been blocked by administrator!.Please contact administrator to activate your account.", Toast.LENGTH_SHORT).show();
+                        } else if (wsLoginResponse.getError_code() == 3) {
+                            Toast.makeText(LoginActivity.this, "Your account has been blocked by administrator!.Please contact administrator to activate your account.", Toast.LENGTH_SHORT).show();
 
-                    } else if (wsLoginResponse.getError_code()==4) {
-                        Toast.makeText(LoginActivity.this, "Please activate your account.", Toast.LENGTH_SHORT).show();
+                        } else if (wsLoginResponse.getError_code() == 4) {
+                            Toast.makeText(LoginActivity.this, "Please activate your account.", Toast.LENGTH_SHORT).show();
 
+                        }
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
                     }
 
                     showProgress(false);
@@ -161,7 +166,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<WsLoginResponse> call, Throwable t) {
-                    Toast.makeText(LoginActivity.this,"FAil",Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "FAil", Toast.LENGTH_LONG).show();
                     showProgress(false);
 
 
