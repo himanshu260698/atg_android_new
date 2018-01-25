@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.ATG.World.models.AddEditDialogueResponse;
 import com.ATG.World.models.DashboardResponse;
+import com.ATG.World.models.GroupPostListResponse;
 import com.ATG.World.models.JoinLeaveGroupResponse;
 import com.ATG.World.models.LocationDetails;
 import com.ATG.World.models.MainGroup;
@@ -139,4 +140,10 @@ public interface AtgService {
 
     @POST("ws-mark-notifications-read")
     Call<MarkNotificationResponse> markNotificationRead(@Field("user_id") @NonNull int user_id);
+
+    @POST("ws-single-group-post-list")
+    @FormUrlEncoded
+    Call<GroupPostListResponse> getGroupPosts(@Field("user_id") @NonNull String user_id,
+                                              @Field("group_id") @NonNull String group_id,
+                                              @Field("type") @NonNull String type);
 }
