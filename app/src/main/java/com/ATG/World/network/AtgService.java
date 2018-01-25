@@ -9,6 +9,8 @@ import com.ATG.World.models.JoinLeaveGroupResponse;
 import com.ATG.World.models.MarkNotificationResponse;
 import com.ATG.World.models.MyGroupResponse;
 import com.ATG.World.models.NotificationRes;
+import com.ATG.World.models.PostArticleDetails;
+import com.ATG.World.models.PostArticleResponse;
 import com.ATG.World.models.SignUpResponse;
 import com.ATG.World.models.SubGroupResponse;
 import com.ATG.World.models.User_details;
@@ -121,4 +123,17 @@ public interface AtgService {
 
     @POST("ws-mark-notifications-read")
     Call<MarkNotificationResponse> markNotificationRead(@Field("user_id") @NonNull int user_id);
+
+    //Post article calls
+
+    @POST("ws-post-article-step-one")
+    @FormUrlEncoded
+    Call<PostArticleResponse> postArticleStepOne(@Field("user_id")@NonNull String userId, @Field("group_id")@NonNull int groupId,
+                                                @Field("already_exist_article_id")String already_exist_article_id,
+                                                @Field("title")@NonNull String title, @Field("description")@NonNull String description);
+    @Multipart
+    @POST("ws-post-article-step-two")
+    Call<PostArticleResponse> postArticleStepTwo(@Part("user_id")RequestBody userId,@Part("article_id")RequestBody articleId,
+                                                 @Part("tags")RequestBody tags, @Part MultipartBody.Part file,
+                                                 @Part("title")RequestBody title);
 }
