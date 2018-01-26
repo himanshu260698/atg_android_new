@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 
 import com.ATG.World.models.DashboardResponse;
+import com.ATG.World.models.FeedDetailResponse;
+import com.ATG.World.models.UpvoteDownvoteResponse;
 import com.ATG.World.models.WsLoginResponse;
 
 import retrofit2.Call;
@@ -55,5 +57,25 @@ public interface AtgService {
 
     @POST("ws-mark-notifications-read")
     Call<> markNotificationRead(@Field("user_id") int user_id);*/
+
+    /**
+     * This API is used to fetch details of a particular feed
+     *
+     * @param postType Article, Events, etc
+     * @param feedId   A feed have a unique id
+     * @param userId   Id of logged User
+     * @return
+     */
+    @POST("ws-feed-detail")
+    @FormUrlEncoded
+    Call<FeedDetailResponse> getFeedDetails(@Field("type") String postType,
+                                            @Field("feed_id") int feedId,
+                                            @Field("user_id") int userId);
+
+    @GET("ws-upvote-downvote")
+    Call<UpvoteDownvoteResponse> setUpvoteDownvote(@Query("status") int status,
+                                                   @Query("type") String postType,
+                                                   @Query("feed_id") int feedId,
+                                                   @Query("user_id") int userId);
 
 }

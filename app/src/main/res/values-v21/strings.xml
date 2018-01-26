@@ -14,4 +14,7 @@
     <string name="my_posts">My Posts</string>
     <string name="my_groups">My Groups</string>
     <string name="explore_groups">Explore Groups</string>
+    <string name="comment_here">Comment Here</string>
+    <string name="user_image_path">https://www.atg.world/public/assets/Frontend/user/profile_pics/</string>
+    <string name="activity_post_details">Post Details</string>
 </resources>

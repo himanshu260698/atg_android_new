@@ -270,4 +270,29 @@ public class EducationFragment extends BaseFragment implements EducationAdapter.
 
     }
 
+    /*@OnClick(R.id.tv_likes)
+    public void onLikesImageViewClicked(final View view){
+
+    }
+
+    @OnClick(R.id.tv_unlikes)
+    public void onUnLikesImageViewClicked(final View view){
+
+    }
+
+    @OnClick(R.id.tv_comments)
+    public void onCommentsImageViewClicked(final View view){
+        Intent intent = new Intent(getActivity(), CommentsActivity.class);
+
+        Bundle bundle = new Bundle();
+        intent.putExtras(bundle);
+
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.tv_share)
+    public void onShareImageViewClicked(final View view){
+
+    }*/
+
 }

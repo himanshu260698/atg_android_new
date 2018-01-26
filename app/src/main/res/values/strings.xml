@@ -124,7 +124,10 @@
     <string name="education">Post Education</string>
     <string name="event">Post Event</string>
     <string name="qrious">Post Qrious</string>
+    <string name="comment_here">Comment Here</string>
     <!-- Fab Layout String end -->
-
+    <string name="user_image_path">https://www.atg.world/public/assets/Frontend/user/profile_pics/</string>
+    <string name="article_details_image_path">https://www.atg.world/public/assets/Frontend/images/article_image/thumb/</string>
+    <string name="activity_post_details">Post Details</string>
 
 </resources>

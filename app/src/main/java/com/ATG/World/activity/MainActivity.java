@@ -18,8 +18,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.animation.Animation;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -31,7 +29,6 @@ import com.ATG.World.utilities.GlideApp;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
-
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -247,7 +244,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 HomeFragment homeFragment = new HomeFragment();
                 return homeFragment;
 
-            case 1:
+            /*case 1:
+                // Call Post Fragment
+                return ;
+
+            case 2:
+                // Call Notification Fragment
+                return ;
+
+            case 3:
+                // Call My Posts
+                return ;
+
+            case 4:
+                // Call My Groups
+                return ;
+
+            case 5:
+                // Call Explore Groups
+                return ;*/
+
+            case 6:
                 logOut();
 
             default:

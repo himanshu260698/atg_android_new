@@ -1,7 +1,9 @@
 package com.ATG.World.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +13,22 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ATG.World.R;
 import com.ATG.World.models.Dashboard;
+import com.ATG.World.models.UpvoteDownvoteResponse;
+import com.ATG.World.network.AtgClient;
+import com.ATG.World.network.AtgService;
+import com.ATG.World.preferences.UserPreferenceManager;
 import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Chetan on 22-12-2017.
@@ -26,9 +37,35 @@ import butterknife.ButterKnife;
 public class ArticleAdapter extends BaseAdapter<Dashboard> {
 
     private FooterViewHolder footerViewHolder;
+    private Context mContext;
+    private static boolean isUpvoted = false;
+    private static boolean isDownvoted = false;
+
+    public Dashboard dashboard;
+    private onUpvoteClickListener onUpvoteClickListener;
+    private onDownvoteClickListener onDownvoteClickListener;
+    private ArticleAdapter adapter;
 
     public ArticleAdapter() {
         super();
+    }
+
+    public ArticleAdapter(Context context) {
+        super();
+        mContext = context;
+    }
+
+    public ArticleAdapter(Dashboard dashboard) {
+        super();
+        this.dashboard = dashboard;
+    }
+
+    public interface onUpvoteClickListener {
+        void onUpvoteClick(TextView upvoted);
+    }
+
+    public interface onDownvoteClickListener {
+        void onDownvoteClick(TextView upvoted);
     }
 
     @Override
@@ -45,8 +82,19 @@ public class ArticleAdapter extends BaseAdapter<Dashboard> {
     protected RecyclerView.ViewHolder createItemViewHolder(ViewGroup parent) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.get_all_layout, parent, false);
 
-        final ArticleViewHolder holder = new ArticleViewHolder(view);
+        final ArticleViewHolder holder = new ArticleViewHolder(view, mContext);
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int adapterPos = holder.getAdapterPosition();
+                if (adapterPos != RecyclerView.NO_POSITION) {
+                    if (onItemClickListener != null) {
+                        onItemClickListener.onItemClick(adapterPos, holder.itemView);
+                    }
+                }
+            }
+        });
 
         return holder;
     }
@@ -110,6 +158,22 @@ public class ArticleAdapter extends BaseAdapter<Dashboard> {
         add(new Dashboard());
     }
 
+    public static boolean isUpvoted() {
+        return isUpvoted;
+    }
+
+    public static void setIsUpvoted(boolean isUp) {
+        isUpvoted = isUp;
+    }
+
+    public static boolean isDownvoted() {
+        return isDownvoted;
+    }
+
+    public static void setIsDownvoted(boolean isDown) {
+        isDownvoted = isDown;
+    }
+
     public static class ArticleViewHolder extends RecyclerView.ViewHolder {
 
         /*@BindView(R.id.iv_dashboard_user_img)
@@ -124,19 +188,26 @@ public class ArticleAdapter extends BaseAdapter<Dashboard> {
         TextView postType;
         @BindView(R.id.tv_title_get_all)
         TextView postTitle;
-        @BindView(R.id.tv_likes)
+        /*@BindView(R.id.tv_likes)
         TextView postLikes;
         @BindView(R.id.tv_unlikes)
         TextView postUnlikes;
         @BindView(R.id.tv_comments)
         TextView postComments;
         @BindView(R.id.tv_share)
-        TextView postShare;
+        TextView postShare;*/
+        private int SET_LIKE = 0;
+        private int SET_UNLIKE = 1;
 
-        public ArticleViewHolder(View itemView) {
+        Context context;
+        int feedId;
+
+        public ArticleViewHolder(View itemView, Context context) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            this.context = context;
         }
+
 
         private void bind(Dashboard article) {
             //setupUserImage(postUserProfilePicture, article);
@@ -145,15 +216,90 @@ public class ArticleAdapter extends BaseAdapter<Dashboard> {
             setupPostType(postType, article);
             setupPostImage(postImage, article);
             setupPostTitle(postTitle, article);
-            setupPostLikes(postLikes, article);
-            setupPostUnlikes(postUnlikes, article);
+            /*setupLikesCount(postLikes, article);
+            setupUnLikesCount(postUnlikes, article);
             setupPostComments(postComments, article);
-            setupPostShares(postShare, article);
+            setupPostShares(postShare, article);*/
             int adapterPos = getAdapterPosition();
+            feedId = article.getId();
         }
 
+
+        /*public void onLikesImageViewClicked() {
+            if (isUpvoted) {
+                Toast.makeText(context, "Already Upvoted", Toast.LENGTH_SHORT).show();
+
+            } else {
+                AtgService atgService = AtgClient.getClient().create(AtgService.class);
+                Call<UpvoteDownvoteResponse> call = atgService.setUpvoteDownvote(SET_LIKE, "article", feedId, Integer.parseInt(UserPreferenceManager.getUserId(context)));
+                call.enqueue(setPostLike);
+            }
+        }
+
+
+        public void onUnLikesImageViewClicked() {
+
+            if (isDownvoted) {
+                Toast.makeText(context, "Already Downvoted", Toast.LENGTH_SHORT).show();
+            } else {
+                AtgService atgService = AtgClient.getClient().create(AtgService.class);
+                Call<UpvoteDownvoteResponse> call = atgService.setUpvoteDownvote(SET_UNLIKE, "article", feedId, Integer.parseInt(UserPreferenceManager.getUserId(context)));
+                call.enqueue(setPostUnLike);
+            }
+        }
+
+        public Callback<UpvoteDownvoteResponse> setPostLike = new Callback<UpvoteDownvoteResponse>() {
+            @Override
+            public void onResponse(Call<UpvoteDownvoteResponse> call, Response<UpvoteDownvoteResponse> response) {
+                if (!response.isSuccessful()) {
+
+                }
+
+                UpvoteDownvoteResponse upvoteDownvoteResponse = response.body();
+                if (upvoteDownvoteResponse != null) {
+                    int status = upvoteDownvoteResponse.getUpvoteCount();
+                    if (status == 1) {
+                        setIsUpvoted(true);
+                        Toast.makeText(context, "Liked Successfully", Toast.LENGTH_LONG).show();
+                        postLikes.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_thumb_up_blue_24dp, 0, 0, 0);
+
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<UpvoteDownvoteResponse> call, Throwable t) {
+
+            }
+        };
+
+        public Callback<UpvoteDownvoteResponse> setPostUnLike = new Callback<UpvoteDownvoteResponse>() {
+            @Override
+            public void onResponse(Call<UpvoteDownvoteResponse> call, Response<UpvoteDownvoteResponse> response) {
+                if (!response.isSuccessful()) {
+
+                }
+
+                UpvoteDownvoteResponse upvoteDownvoteResponse = response.body();
+                if (upvoteDownvoteResponse != null) {
+                    int status = upvoteDownvoteResponse.getDownvoteCount();
+                    if (status == 1) {
+                        setIsDownvoted(true);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpvoteDownvoteResponse> call, Throwable t) {
+
+            }
+        };*/
+
         private void setupUserName(TextView postUserName, Dashboard dashboard) {
-            int user_id = dashboard.getId();
+            if (!TextUtils.isEmpty(dashboard.getFirstName())) {
+                postUserName.setText(dashboard.getFirstName() + " " + dashboard.getLastName());
+            }
         }
 
         /*private void setupUserImage(ImageView postUserProfilePicture, Dashboard dashboard) {
@@ -183,13 +329,19 @@ public class ArticleAdapter extends BaseAdapter<Dashboard> {
 
         private void setupPostImage(ImageView postImage, Dashboard dashboard) {
             String imagetitle = dashboard.getImage();
-            if (!TextUtils.isEmpty(imagetitle)){
+            if (!TextUtils.isEmpty(imagetitle)) {
                 Glide.with(postImage.getContext())
-                        .load("https://www.atg.world/public/assets/Frontend/images/article_image/thumb/" + imagetitle)
+                        .load("https://www.atg.world/" + imagetitle)
                         .into(postImage);
             }
         }
 
+        /**
+         * This function is used to get title of the article from data and set it in a text view
+         *
+         * @param postTitle Title of article
+         * @param dashboard used to access response of api
+         */
         private void setupPostTitle(TextView postTitle, Dashboard dashboard) {
             String title = dashboard.getTitle();
             if (!TextUtils.isEmpty(title)) {
@@ -197,24 +349,59 @@ public class ArticleAdapter extends BaseAdapter<Dashboard> {
             }
         }
 
-        private void setupPostLikes(TextView postLikes, Dashboard dashboard) {
-            int likes = dashboard.getUpvoteCount();
-            postLikes.setText(""+likes);
+        /*private void setupLikesCount(TextView like, Dashboard detail) {
+            int likesCount = detail.getUpvoteCount();
+            if (likesCount == 0) {
+                like.setText("");
+            } else {
+                like.setText("" + likesCount);
+            }
+            if (detail.getUserUpvoteCount() == 1) {
+                setIsUpvoted(true);
+                like.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_thumb_up_blue_24dp, 0, 0, 0);
+            }
+        }
 
+        private void setupUnLikesCount(TextView unlike, Dashboard detail) {
+            int unlikesCount = detail.getDownvoteCount();
+            if (unlikesCount == 0) {
+                unlike.setText("");
+            } else {
+                unlike.setText("" + unlikesCount);
+            }
+            if (detail.getUserDownvoteCount() == 1) {
+                setIsDownvoted(true);
+            }
+        }*/
+
+       /* private void setupPostLikes(TextView tvLike, Dashboard dashboard) {
+            int like = dashboard.getUpvoteCount();
+            if (like == 0) {
+                tvLike.setText("");
+            } else {
+                int userLike = dashboard.getUserUpvoteCount();
+                if (userLike == 1) {
+                    tvLike.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_thumb_up_blue_24dp, 0, 0, 0);
+                    tvLike.setText("" + like);
+                }
+                tvLike.setText("" + like);
+            }
         }
 
         private void setupPostUnlikes(TextView postUnlikes, Dashboard dashboard) {
-            int unlikes = dashboard.getDownvoteCount();
-            postUnlikes.setText(""+unlikes);
-
-        }
+            int unlike = dashboard.getDownvoteCount();
+            if (unlike > 0) {
+                int userDislikeStatus = dashboard.getUserDownvoteCount();
+                postUnlikes.setText("" + unlike);
+            } else {
+                postLikes.setText("");
+            }
+        }*/
 
         private void setupPostComments(TextView postComments, Dashboard dashboard) {
-            postComments.setText("0");
         }
 
         private void setupPostShares(TextView postShare, Dashboard dashboard) {
-            postShare.setText("0");
         }
     }
 

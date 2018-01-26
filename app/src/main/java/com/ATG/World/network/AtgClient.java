@@ -16,7 +16,7 @@ public class AtgClient {
     public static Retrofit getClient () {
         if (retrofit == null){
             retrofit = new Retrofit.Builder()
-                    .baseUrl(LIVE_BASE_URL)
+                    .baseUrl(TEST_BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build() ;
         }

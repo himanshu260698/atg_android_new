@@ -1,5 +1,6 @@
 package com.ATG.World.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,11 +14,14 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ATG.World.R;
+import com.ATG.World.activity.PostDetailActivity;
 import com.ATG.World.adapters.ArticleAdapter;
 import com.ATG.World.models.Dashboard;
 import com.ATG.World.models.DashboardResponse;
+import com.ATG.World.models.UpvoteDownvoteResponse;
 import com.ATG.World.network.AtgClient;
 import com.ATG.World.network.AtgService;
 import com.ATG.World.preferences.UserPreferenceManager;
@@ -29,6 +33,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -62,10 +67,13 @@ public class ArticleFragment extends BaseFragment implements ArticleAdapter.OnIt
     private int mCurrentPage = PAGE_START;
     private Unbinder unbinder;
     private ArticleAdapter mArticleAdapter;
+    private int SET_LIKE = 0;
+    private int SET_UNLIKE = 1;
 
-    public ArticleFragment(){}
+    public ArticleFragment() {
+    }
 
-    public static ArticleFragment newInstance(){
+    public static ArticleFragment newInstance() {
         return new ArticleFragment();
     }
 
@@ -90,7 +98,7 @@ public class ArticleFragment extends BaseFragment implements ArticleAdapter.OnIt
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
-        mArticleAdapter = new ArticleAdapter();
+        mArticleAdapter = new ArticleAdapter(getContext());
         mArticleAdapter.setOnItemClickListener(this);
         mArticleAdapter.setOnReloadClickListener(this);
 
@@ -139,22 +147,22 @@ public class ArticleFragment extends BaseFragment implements ArticleAdapter.OnIt
     private void loadMoreItems() {
         isLoading = true;
         mCurrentPage = mCurrentPage + 1;
-        Log.d(TAG, "loadMoreItems: "+ mCurrentPage);
+        Log.d(TAG, "loadMoreItems: " + mCurrentPage);
         AtgService atgService = AtgClient.getClient().create(AtgService.class);
-        Call<DashboardResponse> call = atgService.getDashboardData(1, mCurrentPage,Integer.parseInt(UserPreferenceManager.getUserId(getActivity())));
+        Call<DashboardResponse> call = atgService.getDashboardData(1, mCurrentPage, Integer.parseInt(UserPreferenceManager.getUserId(getActivity())));
         call.enqueue(nextFetchCallback);
-        Log.d(TAG,"loadMoreItems: " + call);
+        Log.d(TAG, "loadMoreItems: " + call);
     }
 
-    public Callback<DashboardResponse> firstFetchCallback = new Callback<DashboardResponse>(){
+    public Callback<DashboardResponse> firstFetchCallback = new Callback<DashboardResponse>() {
         @Override
         public void onResponse(Call<DashboardResponse> call, Response<DashboardResponse> response) {
             mProgressBar.setVisibility(View.GONE);
             isLoading = false;
 
-            if (!response.isSuccessful()){
+            if (!response.isSuccessful()) {
                 int responseCode = response.code();
-                if(responseCode == 504) { // 504 Unsatisfiable Request (only-if-cached)
+                if (responseCode == 504) { // 504 Unsatisfiable Request (only-if-cached)
                     errorTextView.setText("Can't load data.\nCheck your network connection.");
                     errorLinearLayout.setVisibility(View.VISIBLE);
                 }
@@ -163,10 +171,10 @@ public class ArticleFragment extends BaseFragment implements ArticleAdapter.OnIt
 
             DashboardResponse dashboardResponse = response.body();
             Log.d(TAG, "onResponse: " + dashboardResponse);
-            if (dashboardResponse != null){
+            if (dashboardResponse != null) {
                 List<Dashboard> dashboardList = dashboardResponse.getDashboard();
-                if (dashboardList != null){
-                    if (dashboardList.size() > 0){
+                if (dashboardList != null) {
+                    if (dashboardList.size() > 0) {
                         mArticleAdapter.addAll(dashboardList);
                     } else {
                         isLastPage = true;
@@ -180,10 +188,10 @@ public class ArticleFragment extends BaseFragment implements ArticleAdapter.OnIt
         public void onFailure(retrofit2.Call call, Throwable t) {
             NetworkLogUtility.logFailure(call, t);
 
-            if (!call.isCanceled()){
+            if (!call.isCanceled()) {
                 isLoading = false;
 
-                if(NetworkUtility.isKnownException(t)){
+                if (NetworkUtility.isKnownException(t)) {
                     errorTextView.setText("Can't load data.\nCheck your network connection.");
                     errorLinearLayout.setVisibility(View.VISIBLE);
                 }
@@ -191,7 +199,7 @@ public class ArticleFragment extends BaseFragment implements ArticleAdapter.OnIt
 
         }
     };
-    public Callback<DashboardResponse> nextFetchCallback = new Callback<DashboardResponse>(){
+    public Callback<DashboardResponse> nextFetchCallback = new Callback<DashboardResponse>() {
         @Override
         public void onResponse(Call<DashboardResponse> call, Response<DashboardResponse> response) {
             mArticleAdapter.removeFooter();
@@ -199,7 +207,7 @@ public class ArticleFragment extends BaseFragment implements ArticleAdapter.OnIt
 
             if (!response.isSuccessful()) {
                 int responseCode = response.code();
-                switch (responseCode){
+                switch (responseCode) {
                     case 504: // 504 Unsatisfiable Request (only-if-cached)
                         break;
                     case 400:
@@ -213,9 +221,10 @@ public class ArticleFragment extends BaseFragment implements ArticleAdapter.OnIt
             if (dashboardResponse != null) {
                 List<Dashboard> dashboardList = dashboardResponse.getDashboard();
                 if (dashboardList != null) {
-                    if(dashboardList.size()>0)
+                    if (dashboardList.size() > 0) {
                         mArticleAdapter.addAll(dashboardList);
-
+                        mArticleAdapter.notifyDataSetChanged();
+                    }
                     if (dashboardList.size() >= PAGE_SIZE) {
                         mArticleAdapter.addFooter();
                     } else {
@@ -229,20 +238,28 @@ public class ArticleFragment extends BaseFragment implements ArticleAdapter.OnIt
         public void onFailure(retrofit2.Call call, Throwable t) {
             NetworkLogUtility.logFailure(call, t);
 
-            if (!call.isCanceled()){
-                if(NetworkUtility.isKnownException(t)){
+            if (!call.isCanceled()) {
+                if (NetworkUtility.isKnownException(t)) {
                     mArticleAdapter.updateFooter(ArticleAdapter.FooterType.ERROR);
                 }
             }
 
         }
     };
+
     @Override
     public void onItemClick(int position, View view) {
+        Log.d(TAG, "onItemClick: " + position);
         // Get Item position
+        Intent intent = new Intent(getActivity(), PostDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("Type", mArticleAdapter.getItem(position).getType());
+        bundle.putInt("FeedId", mArticleAdapter.getItem(position).getId());
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
-    private void removeListeners(){
+    private void removeListeners() {
         mRecyclerView.removeOnScrollListener(recyclerViewOnScrollListener);
     }
 

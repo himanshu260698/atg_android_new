@@ -315,4 +315,5 @@
 
     <color name="colorBlack">#000000</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="likeButton">#4267B2</color>
 </resources>

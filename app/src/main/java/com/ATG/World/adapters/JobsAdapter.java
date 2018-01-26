@@ -29,13 +29,13 @@ public class JobsAdapter extends BaseAdapter<Dashboard> {
 
     private FooterViewHolder footerViewHolder;
 
-    public JobsAdapter(){
+    public JobsAdapter() {
         super();
     }
 
     @Override
     public int getItemViewType(int position) {
-        return ( isLastPosition(position) &&  isFooterAdded ) ? FOOTER : ITEM ;
+        return (isLastPosition(position) && isFooterAdded) ? FOOTER : ITEM;
     }
 
     @Override
@@ -49,6 +49,17 @@ public class JobsAdapter extends BaseAdapter<Dashboard> {
 
         final JobsViewHolder holder = new JobsViewHolder(view);
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int adapterPos = holder.getAdapterPosition();
+                if (adapterPos != RecyclerView.NO_POSITION) {
+                    if (onItemClickListener != null) {
+                        onItemClickListener.onItemClick(adapterPos, holder.itemView);
+                    }
+                }
+            }
+        });
 
         return holder;
     }
@@ -79,7 +90,7 @@ public class JobsAdapter extends BaseAdapter<Dashboard> {
         final JobsViewHolder holder = (JobsViewHolder) viewHolder;
 
         final Dashboard jobs = getItem(position);
-        if (jobs != null){
+        if (jobs != null) {
             holder.bind(jobs);
         }
     }
@@ -92,7 +103,7 @@ public class JobsAdapter extends BaseAdapter<Dashboard> {
 
     @Override
     protected void displayLoadMoreFooter() {
-        if(footerViewHolder!= null){
+        if (footerViewHolder != null) {
             footerViewHolder.errorRelativeLayout.setVisibility(View.GONE);
             footerViewHolder.loadingFrameLayout.setVisibility(View.VISIBLE);
         }
@@ -100,7 +111,7 @@ public class JobsAdapter extends BaseAdapter<Dashboard> {
 
     @Override
     protected void displayErrorFooter() {
-        if(footerViewHolder!= null){
+        if (footerViewHolder != null) {
             footerViewHolder.loadingFrameLayout.setVisibility(View.GONE);
             footerViewHolder.errorRelativeLayout.setVisibility(View.VISIBLE);
         }
@@ -126,14 +137,14 @@ public class JobsAdapter extends BaseAdapter<Dashboard> {
         TextView postType;
         @BindView(R.id.tv_title_get_all)
         TextView postTitle;
-        @BindView(R.id.tv_likes)
+        /*@BindView(R.id.tv_likes)
         TextView postLikes;
         @BindView(R.id.tv_unlikes)
         TextView postUnlikes;
         @BindView(R.id.tv_comments)
         TextView postComments;
         @BindView(R.id.tv_share)
-        TextView postShare;
+        TextView postShare;*/
 
         public JobsViewHolder(View itemView) {
             super(itemView);
@@ -147,15 +158,17 @@ public class JobsAdapter extends BaseAdapter<Dashboard> {
             setupPostType(postType, article);
             setupPostImage(postImage, article);
             setupPostTitle(postTitle, article);
-            setupPostLikes(postLikes, article);
+            /*setupPostLikes(postLikes, article);
             setupPostUnlikes(postUnlikes, article);
             setupPostComments(postComments, article);
-            setupPostShares(postShare, article);
+            setupPostShares(postShare, article);*/
             int adapterPos = getAdapterPosition();
         }
 
         private void setupUserName(TextView postUserName, Dashboard dashboard) {
-            int user_id = dashboard.getId();
+            if (!TextUtils.isEmpty(dashboard.getFirstName())) {
+                postUserName.setText(dashboard.getFirstName() + " " + dashboard.getLastName());
+            }
         }
 
         /*private void setupUserImage(ImageView postUserProfilePicture, Dashboard dashboard) {
@@ -193,17 +206,28 @@ public class JobsAdapter extends BaseAdapter<Dashboard> {
             }
         }
 
-        private void setupPostLikes(TextView postLikes, Dashboard dashboard) {
-            int likes = dashboard.getUpvoteCount();
-            postLikes.setText(""+likes);
-
+        /*private void setupPostLikes(TextView likes, Dashboard dashboard) {
+            int like = dashboard.getUpvoteCount();
+            if (like > 0) {
+                int userLike = dashboard.getUserUpvoteCount();
+                likes.setText("" + like);
+                if (userLike == 1) {
+                    likes.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_thumb_up_blue_24dp, 0, 0, 0);
+                }
+            } else {
+                likes.setText("");
+            }
         }
 
         private void setupPostUnlikes(TextView postUnlikes, Dashboard dashboard) {
-            int unlikes = dashboard.getDownvoteCount();
-            postUnlikes.setText(""+unlikes);
-
-        }
+            int unlike = dashboard.getDownvoteCount();
+            if (unlike > 0) {
+                int userDislikeStatus = dashboard.getUserDownvoteCount();
+                postUnlikes.setText("" + unlike);
+            } else {
+                postLikes.setText("");
+            }
+        }*/
 
         private void setupPostComments(TextView postComments, Dashboard dashboard) {
             postComments.setText("0");
