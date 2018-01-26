@@ -7,7 +7,7 @@
     <!-- Start Intro Slider -->
     <dimen name="dots_height">30dp</dimen>
     <dimen name="dots_margin_bottom">20dp</dimen>
-    <dimen name="img_width_height">80dp</dimen>
+    <dimen name="img_width_height">60dp</dimen>
     <dimen name="slide_title">30sp</dimen>
     <dimen name="slide_desc">16sp</dimen>
     <dimen name="desc_padding">40dp</dimen>
@@ -27,7 +27,7 @@
     <dimen name="drawable_padding">8dp</dimen>
     <dimen name="dashboard_user_image_width">80dp</dimen>
     <dimen name="dashboard_user_image_height">80dp</dimen>
-    <dimen name="dashboard_card_margin">4dp</dimen>
+    <dimen name="dashboard_card_margin">1dp</dimen>
     <dimen name="dashboard_card_padding">4dp</dimen>
 
     <dimen name="heading_text_size">18sp</dimen>
@@ -49,4 +49,5 @@
     <dimen name="list_item">200dp</dimen>
 
 
+    <dimen name="post_cover_height">150dp</dimen>
 </resources>

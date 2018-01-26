@@ -16,16 +16,16 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     protected static final int ITEM = 1;
     protected static final int FOOTER = 2;
 
-    protected List<T> items ;
+    protected List<T> items;
     protected OnItemClickListener onItemClickListener;
     protected OnReloadClickListener onReloadClickListener;
     protected boolean isFooterAdded = false;
 
-    public interface OnItemClickListener{
+    public interface OnItemClickListener {
         void onItemClick(int position, View view);
     }
 
-    public interface OnReloadClickListener{
+    public interface OnReloadClickListener {
         void onReloadClick();
     }
 
@@ -132,7 +132,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     }
 
     public boolean isLastPosition(int position) {
-        return (position == items.size()-1);
+        return (position == items.size() - 1);
     }
 
     public void removeFooter() {
@@ -147,7 +147,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
-    public void updateFooter(FooterType footerType){
+    public void updateFooter(FooterType footerType) {
         switch (footerType) {
             case LOAD_MORE:
                 displayLoadMoreFooter();

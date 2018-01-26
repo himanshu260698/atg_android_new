@@ -14,7 +14,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_atg_main"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -68,7 +68,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ATG.World.activity.SocialLoginActivity" />
         </activity>
-        <activity android:name=".activity.NotificationActivity" />
+        <activity
+            android:name=".activity.NotificationActivity"
+            android:label="@string/activity_notification" />
+        <activity
+            android:name=".activity.PostDetailActivity"
+            android:parentActivityName=".activity.MainActivity"
+            android:label="@string/activity_post_details" />
+        <activity android:name=".activity.CommentsActivity"></activity>
         <activity android:name=".activity.SubGroupActivity" />
         <activity
             android:name=".activity.SignupActivity"

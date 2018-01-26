@@ -35,7 +35,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private View headerLayout;
@@ -51,7 +50,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     LinearLayout layoutFabEvent;
     @BindView(R.id.layoutFabQrious)
     LinearLayout layoutFabQrious;
-
 
     private boolean fabExpanded = false;
     private int FlagLocation=1;
@@ -80,12 +78,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // toolbar titles respected to selected nav menu item
     private String[] activityTitles;
 
-
-    //Tags used to attach fragments
+    // Tags used to attach fragments
     private static final String TAG_HOME = "Home";
     private static final String TAG_POST = "Post";
-    private static final String TAG_NOTIFICATION = "Notifications";
-    private static final String TAG_MY_POST = "My Posts";
+    private static final String TAG_NOTIFICATION = "Notification";
+    private static final String TAG_MY_POST = "My Post";
     private static final String TAG_MY_GROUPS = "My Groups";
     private static final String TAG_EXPLORE_GROUPS = "Explore Groups";
     private static final String TAG_LOGOUT = "Logout";
@@ -277,13 +274,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 HomeFragment homeFragment = new HomeFragment();
                 return homeFragment;
 
-            case 1:
-                logOut();
-                return null;
+            /*case 1:
+                // Call Post Fragment
+                return ;
+
+            case 2:
+                // Call Notification Fragment
+                return ;
+
+            case 3:
+                // Call My Posts
+                return ;
 
             case 4:
+                // Call My Groups
                 MyGroupFragment myGroupFragment = new MyGroupFragment();
                 return myGroupFragment;
+
+            case 5:
+                // Call Explore Groups
+                return ;*/
+
+            case 6:
+                logOut();
+                return null;
 
             case 7:
                 SettingsFragment settingsFragment = new SettingsFragment();
