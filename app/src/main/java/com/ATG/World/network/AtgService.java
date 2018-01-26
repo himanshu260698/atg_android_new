@@ -9,6 +9,7 @@ import com.ATG.World.models.FeedDetailResponse;
 import com.ATG.World.models.UpvoteDownvoteResponse;
 import com.ATG.World.models.FeedDetailResponse;
 import com.ATG.World.models.UpvoteDownvoteResponse;
+import com.ATG.World.models.GroupPostListResponse;
 import com.ATG.World.models.JoinLeaveGroupResponse;
 import com.ATG.World.models.LocationDetails;
 import com.ATG.World.models.MainGroup;
@@ -166,4 +167,9 @@ public interface AtgService {
                                                    @Query("feed_id") int feedId,
                                                    @Query("user_id") int userId);
 
+    @POST("ws-single-group-post-list")
+    @FormUrlEncoded
+    Call<GroupPostListResponse> getGroupPosts(@Field("user_id") @NonNull String user_id,
+                                              @Field("group_id") @NonNull String group_id,
+                                              @Field("type") @NonNull String type);
 }
