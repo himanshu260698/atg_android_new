@@ -14,6 +14,15 @@ public class Dashboard {
     @SerializedName("gender")
     @Expose
     private String gender;
+    @SerializedName("user_name")
+    @Expose
+    private String userName;
+    @SerializedName("first_name")
+    @Expose
+    private String firstName;
+    @SerializedName("last_name")
+    @Expose
+    private String lastName;
     @SerializedName("profile_picture")
     @Expose
     private String profilePicture;
@@ -72,9 +81,6 @@ public class Dashboard {
     @Expose
     private String question;
 
-    public Dashboard() {
-    }
-
     public Integer getUserId() {
         return userId;
     }
@@ -89,6 +95,30 @@ public class Dashboard {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getProfilePicture() {
@@ -242,4 +272,5 @@ public class Dashboard {
     public void setQuestion(String question) {
         this.question = question;
     }
+
 }

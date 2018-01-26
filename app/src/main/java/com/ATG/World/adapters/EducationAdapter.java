@@ -27,7 +27,8 @@ public class EducationAdapter extends BaseAdapter<Dashboard> {
 
     private FooterViewHolder footerViewHolder;
 
-    public EducationAdapter(){}
+    public EducationAdapter() {
+    }
 
     @Override
     public int getItemViewType(int position) {
@@ -44,6 +45,18 @@ public class EducationAdapter extends BaseAdapter<Dashboard> {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.get_all_layout, parent, false);
 
         final EducationViewHolder holder = new EducationViewHolder(view);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int adapterPos = holder.getAdapterPosition();
+                if (adapterPos != RecyclerView.NO_POSITION) {
+                    if (onItemClickListener != null) {
+                        onItemClickListener.onItemClick(adapterPos, holder.itemView);
+                    }
+                }
+            }
+        });
 
         return holder;
     }
@@ -121,14 +134,14 @@ public class EducationAdapter extends BaseAdapter<Dashboard> {
         TextView postType;
         @BindView(R.id.tv_title_get_all)
         TextView postTitle;
-        @BindView(R.id.tv_likes)
+        /*@BindView(R.id.tv_likes)
         TextView postLikes;
         @BindView(R.id.tv_unlikes)
         TextView postUnlikes;
         @BindView(R.id.tv_comments)
         TextView postComments;
         @BindView(R.id.tv_share)
-        TextView postShare;
+        TextView postShare;*/
 
         public EducationViewHolder(View itemView) {
             super(itemView);
@@ -142,15 +155,17 @@ public class EducationAdapter extends BaseAdapter<Dashboard> {
             setupPostType(postType, article);
             setupPostImage(postImage, article);
             setupPostTitle(postTitle, article);
-            setupPostLikes(postLikes, article);
-            setupPostUnlikes(postUnlikes, article);
-            setupPostComments(postComments, article);
-            setupPostShares(postShare, article);
+            //setupPostLikes(postLikes, article);
+            //setupPostUnlikes(postUnlikes, article);
+            //setupPostComments(postComments, article);
+            //setupPostShares(postShare, article);
             int adapterPos = getAdapterPosition();
         }
 
         private void setupUserName(TextView postUserName, Dashboard dashboard) {
-            int user_id = dashboard.getId();
+            if (!TextUtils.isEmpty(dashboard.getFirstName())) {
+                postUserName.setText(dashboard.getFirstName() + " " + dashboard.getLastName());
+            }
         }
 
         /*private void setupUserImage(ImageView postUserProfilePicture, Dashboard dashboard) {
@@ -188,17 +203,28 @@ public class EducationAdapter extends BaseAdapter<Dashboard> {
             }
         }
 
-        private void setupPostLikes(TextView postLikes, Dashboard dashboard) {
-            int likes = dashboard.getUpvoteCount();
-            postLikes.setText(""+likes);
-
+        /*private void setupPostLikes(TextView likes, Dashboard dashboard) {
+            int like = dashboard.getUpvoteCount();
+            if (like > 0) {
+                int userLike = dashboard.getUserUpvoteCount();
+                likes.setText("" + like);
+                if (userLike == 1) {
+                    likes.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_thumb_up_blue_24dp, 0, 0, 0);
+                }
+            } else {
+                likes.setText("");
+            }
         }
 
         private void setupPostUnlikes(TextView postUnlikes, Dashboard dashboard) {
-            int unlikes = dashboard.getDownvoteCount();
-            postUnlikes.setText(""+unlikes);
-
-        }
+            int unlike = dashboard.getDownvoteCount();
+            if (unlike > 0) {
+                int userDislikeStatus = dashboard.getUserDownvoteCount();
+                postUnlikes.setText("" + unlike);
+            } else {
+                postLikes.setText("");
+            }
+        }*/
 
         private void setupPostComments(TextView postComments, Dashboard dashboard) {
             postComments.setText("0");

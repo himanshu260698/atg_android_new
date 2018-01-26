@@ -1,6 +1,7 @@
 package com.ATG.World.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,14 +9,17 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ATG.World.R;
+import com.ATG.World.activity.PostDetailActivity;
 import com.ATG.World.adapters.GetAllAdapter;
 import com.ATG.World.models.Dashboard;
 import com.ATG.World.models.DashboardResponse;
@@ -41,6 +45,7 @@ import retrofit2.Response;
  */
 public class GetAllFragment extends BaseFragment implements GetAllAdapter.OnItemClickListener, GetAllAdapter.OnReloadClickListener {
 
+    private static final String TAG = GetAllFragment.class.getSimpleName();
     public static final int PAGE_SIZE = 7;
     public static final int GET_ALL_FILTER = 1;
     @BindView(R.id.recycler_view)
@@ -69,6 +74,13 @@ public class GetAllFragment extends BaseFragment implements GetAllAdapter.OnItem
 
     public static GetAllFragment newInstance() {
         return new GetAllFragment();
+    }
+
+    public static GetAllFragment newInstance(Bundle extras) {
+        GetAllFragment fragment = new GetAllFragment();
+        Bundle bundle = new Bundle();
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override
@@ -232,11 +244,11 @@ public class GetAllFragment extends BaseFragment implements GetAllAdapter.OnItem
             DashboardResponse dashboardResponse = response.body();
             if (dashboardResponse != null) {
                 List<Dashboard> dashboardList = dashboardResponse.getDashboard();
-                if (dashboardList != null){
-                    if (dashboardList.size() > 0 )
+                if (dashboardList != null) {
+                    if (dashboardList.size() > 0)
                         mGetAllAdapter.addAll(dashboardList);
 
-                    if (dashboardList.size() >= PAGE_SIZE){
+                    if (dashboardList.size() >= PAGE_SIZE) {
                         mGetAllAdapter.addFooter();
                     } else {
                         isLastPage = true;
@@ -261,6 +273,18 @@ public class GetAllFragment extends BaseFragment implements GetAllAdapter.OnItem
     @Override
     public void onItemClick(int position, View view) {
         // Get Item position
+        Log.d(TAG, "onItemClick: " + position);
+        // Get Item position
+        try {
+            Intent intent = new Intent(getActivity(), PostDetailActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("Type", mGetAllAdapter.getItem(position).getType());
+            bundle.putInt("FeedId", mGetAllAdapter.getItem(position).getId());
+            intent.putExtras(bundle);
+            startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void removeListeners() {
@@ -271,4 +295,29 @@ public class GetAllFragment extends BaseFragment implements GetAllAdapter.OnItem
     public void onReloadClick() {
 
     }
+
+    /*@OnClick(R.id.tv_likes)
+    public void onLikesImageViewClicked(final View view){
+
+    }
+
+    @OnClick(R.id.tv_unlikes)
+    public void onUnLikesImageViewClicked(final View view){
+
+    }
+
+    @OnClick(R.id.tv_comments)
+    public void onCommentsImageViewClicked(final View view){
+        Intent intent = new Intent(getActivity(), CommentsActivity.class);
+
+        Bundle bundle = new Bundle();
+        intent.putExtras(bundle);
+
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.tv_share)
+    public void onShareImageViewClicked(final View view){
+
+    }*/
 }
