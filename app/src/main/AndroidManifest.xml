@@ -69,21 +69,11 @@
                 android:value="com.ATG.World.activity.SocialLoginActivity" />
         </activity>
         <activity
-            android:name=".activity.NotificationActivity"
-            android:label="@string/activity_notification" />
-        <activity
             android:name=".activity.PostDetailActivity"
-            android:parentActivityName=".activity.MainActivity"
-            android:label="@string/activity_post_details" />
+            android:label="@string/activity_post_details"
+            android:parentActivityName=".activity.MainActivity" />
         <activity android:name=".activity.CommentsActivity"></activity>
-        <activity
-            android:name=".activity.NotificationActivity"
-            android:label="@string/activity_notification" />
-        <activity
-            android:name=".activity.PostDetailActivity"
-            android:parentActivityName=".activity.MainActivity"
-            android:label="@string/activity_post_details" />
-        <activity android:name=".activity.CommentsActivity"></activity>
+
         <activity android:name=".activity.SubGroupActivity" />
         <activity
             android:name=".activity.SignupActivity"
@@ -97,8 +87,9 @@
         <activity
             android:name=".activity.GroupDetailsActivity"
             android:parentActivityName=".activity.MainActivity" />
-        <activity android:name=".activity.GroupSelectionActivity"
-            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".activity.GroupSelectionActivity"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

@@ -62,8 +62,8 @@ public interface AtgService {
     Call<WsLoginResponse> getTwitterLogin(@Query("twitter_id") String fbid, @Query("user_name") String username);
 
     @GET("ws-register-user")
-    Call<SignUpResponse> getEmailSignUp(@Query("first_name") String fname,@Query("last_name") String lname,
-                                        @Query("email") String email,@Query("password") String password,@Query("device_name") String dev_name);
+    Call<SignUpResponse> getEmailSignUp(@Query("first_name") String fname, @Query("last_name") String lname,
+                                        @Query("email") String email, @Query("password") String password, @Query("device_name") String dev_name);
 
     @GET("ws-group")
     Call<MainGroup> getmainGroup();
@@ -72,8 +72,8 @@ public interface AtgService {
     Call<NicheGroupResponse> getNicheGroup(@Query("id") int id);
 
     @GET("ws-join-leave-group")
-    Call<WsJoinLeaveGroupResponse> joinLeaveGroup(@Query("status") int status,@Query("group_id") String group_id
-                                                    ,@Query("user_id") String user_id);
+    Call<WsJoinLeaveGroupResponse> joinLeaveGroup(@Query("status") int status, @Query("group_id") String group_id
+            , @Query("user_id") String user_id);
 
     /**
      * This API call will be used for getting data for Homepage.
@@ -104,7 +104,8 @@ public interface AtgService {
      */
     @FormUrlEncoded
     @POST("ws-change-password")
-    Call<WsLoginResponse> postChangedPassword(@Field("user_id") String userId,@Field("new_password")String newPassword);
+    Call<WsLoginResponse> postChangedPassword(@Field("user_id") String userId, @Field("new_password") String newPassword);
+
     /*
     @FormUrlEncoded
     @POST("ws-account-setting")
@@ -112,11 +113,11 @@ public interface AtgService {
       */
     @Multipart
     @POST("ws-edit-account-setting")
-    Call<User_details> updateUserDetails(@Part("user_id") RequestBody userId,@Part MultipartBody.Part file,  @Part("user_name") RequestBody userName, @Part("first_name") RequestBody firstName,
-                                          @Part("last_name")RequestBody lastName, @Part("tagline")RequestBody tagLine,
-                                          @Part("email")RequestBody email, @Part("profession")RequestBody profession,
-                                          @Part("about_me")RequestBody aboutMe, @Part("mob_no")RequestBody mobileNo, @Part("phone_no")RequestBody phNo,
-                                          @Part("location")RequestBody location, @Part("user_type")RequestBody userType);
+    Call<User_details> updateUserDetails(@Part("user_id") RequestBody userId, @Part MultipartBody.Part file, @Part("user_name") RequestBody userName, @Part("first_name") RequestBody firstName,
+                                         @Part("last_name") RequestBody lastName, @Part("tagline") RequestBody tagLine,
+                                         @Part("email") RequestBody email, @Part("profession") RequestBody profession,
+                                         @Part("about_me") RequestBody aboutMe, @Part("mob_no") RequestBody mobileNo, @Part("phone_no") RequestBody phNo,
+                                         @Part("location") RequestBody location, @Part("user_type") RequestBody userType);
 
     @POST("ws-my-groups")
     @FormUrlEncoded
@@ -137,31 +138,13 @@ public interface AtgService {
     Call<AddEditDialogueResponse> getTagDialogueResponse(@Field("user_id") @NonNull String userId,
                                                          @Field("group_id") @NonNull String groupId,
                                                          @Field("tag_line") @NonNull String tagLine);
+
     @GET("ws-get-notification-list")
     Call<NotificationRes> getNotificationList(@Query("user_id") String user_id);
 
 
     @POST("ws-mark-notifications-read")
     Call<MarkNotificationResponse> markNotificationRead(@Field("user_id") @NonNull int user_id);
-    /**
-     * This API is used to fetch details of a particular feed
-     *
-     * @param postType Article, Events, etc
-     * @param feedId   A feed have a unique id
-     * @param userId   Id of logged User
-     * @return
-     */
-    @POST("ws-feed-detail")
-    @FormUrlEncoded
-    Call<FeedDetailResponse> getFeedDetails(@Field("type") String postType,
-                                            @Field("feed_id") int feedId,
-                                            @Field("user_id") int userId);
-
-    @GET("ws-upvote-downvote")
-    Call<UpvoteDownvoteResponse> setUpvoteDownvote(@Query("status") int status,
-                                                   @Query("type") String postType,
-                                                   @Query("feed_id") int feedId,
-                                                   @Query("user_id") int userId);
 
     /**
      * This API is used to fetch details of a particular feed

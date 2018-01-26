@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     LinearLayout layoutFabQrious;
 
     private boolean fabExpanded = false;
-    private int FlagLocation=1;
+    private int FlagLocation = 1;
 
 
     //private FloatingActionButton fab;
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             loadHomeFragment();
         }
-        if(FlagLocation==1){
+        if (FlagLocation == 1) {
 
             Location();
         }
@@ -276,12 +276,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             /*case 1:
                 // Call Post Fragment
-                return ;
+                return ; */
 
             case 2:
                 // Call Notification Fragment
-                return ;
-
+                NotificationFragment notificationFragment = new NotificationFragment();
+                return notificationFragment;
+            /*
             case 3:
                 // Call My Posts
                 return ;
@@ -290,7 +291,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 // Call My Groups
                 MyGroupFragment myGroupFragment = new MyGroupFragment();
                 return myGroupFragment;
-
+            /*
             case 5:
                 // Call Explore Groups
                 return ;*/
@@ -370,6 +371,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return new NotificationFragment();
         }
     }
+
     public void Location() {
 
 
@@ -377,6 +379,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     }
+
     private void setToolbarTitle() {
         getSupportActionBar().setTitle(CURRENT_TAG);
     }
