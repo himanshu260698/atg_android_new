@@ -36,6 +36,7 @@
     <dimen name="drawable_margin">8dp</dimen>
     <dimen name="drawable_text_size">20sp</dimen>
     <dimen name="text_padding">4dp</dimen>
+    <dimen name="post_cover_height">150dp</dimen>
 
     <dimen name="SIZE_5">5dp</dimen>
     <dimen name="SIZE_8">8dp</dimen>
@@ -47,7 +48,4 @@
     <dimen name="TEXT_SIZE_18">18sp</dimen>
     <dimen name="TEXT_SIZE_25">25sp</dimen>
     <dimen name="list_item">200dp</dimen>
-
-
-    <dimen name="post_cover_height">150dp</dimen>
 </resources>

@@ -76,6 +76,14 @@
             android:parentActivityName=".activity.MainActivity"
             android:label="@string/activity_post_details" />
         <activity android:name=".activity.CommentsActivity"></activity>
+        <activity
+            android:name=".activity.NotificationActivity"
+            android:label="@string/activity_notification" />
+        <activity
+            android:name=".activity.PostDetailActivity"
+            android:parentActivityName=".activity.MainActivity"
+            android:label="@string/activity_post_details" />
+        <activity android:name=".activity.CommentsActivity"></activity>
         <activity android:name=".activity.SubGroupActivity" />
         <activity
             android:name=".activity.SignupActivity"

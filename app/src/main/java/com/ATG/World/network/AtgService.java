@@ -7,6 +7,8 @@ import com.ATG.World.models.AddEditDialogueResponse;
 import com.ATG.World.models.DashboardResponse;
 import com.ATG.World.models.FeedDetailResponse;
 import com.ATG.World.models.UpvoteDownvoteResponse;
+import com.ATG.World.models.FeedDetailResponse;
+import com.ATG.World.models.UpvoteDownvoteResponse;
 import com.ATG.World.models.JoinLeaveGroupResponse;
 import com.ATG.World.models.LocationDetails;
 import com.ATG.World.models.MainGroup;
@@ -141,6 +143,26 @@ public interface AtgService {
 
     @POST("ws-mark-notifications-read")
     Call<MarkNotificationResponse> markNotificationRead(@Field("user_id") @NonNull int user_id);
+    /**
+     * This API is used to fetch details of a particular feed
+     *
+     * @param postType Article, Events, etc
+     * @param feedId   A feed have a unique id
+     * @param userId   Id of logged User
+     * @return
+     */
+    @POST("ws-feed-detail")
+    @FormUrlEncoded
+    Call<FeedDetailResponse> getFeedDetails(@Field("type") String postType,
+                                            @Field("feed_id") int feedId,
+                                            @Field("user_id") int userId);
+
+    @GET("ws-upvote-downvote")
+    Call<UpvoteDownvoteResponse> setUpvoteDownvote(@Query("status") int status,
+                                                   @Query("type") String postType,
+                                                   @Query("feed_id") int feedId,
+                                                   @Query("user_id") int userId);
+
     /**
      * This API is used to fetch details of a particular feed
      *

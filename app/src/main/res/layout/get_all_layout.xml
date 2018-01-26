@@ -105,7 +105,6 @@
             android:textSize="18sp"
             android:drawableStart="@drawable/ic_thumb_down_black_24dp"
             android:onClick="onUnLikesImageViewClicked"
-            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/tv_likes"
             app:layout_constraintTop_toBottomOf="@id/view_separater" />
