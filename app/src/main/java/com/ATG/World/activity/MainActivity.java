@@ -2,6 +2,8 @@ package com.ATG.World.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -91,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private boolean mToolBarNavigationListenerIsRegistered = false;
     private Handler mHandler;
     private boolean shouldLoadHomeFragmentOnBackPress = true;
+    private boolean isInternetAvailable=false;
     ActionBarDrawerToggle toggle;
     GPSTracker gps;
 
@@ -131,6 +134,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             loadHomeFragment();
         }
         if (FlagLocation == 1) {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+
+        isInternetAvailable=netInfo!= null && netInfo.isConnectedOrConnecting();
+        if(FlagLocation==1){
 
             Location();
         }
@@ -138,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         headerLayout = navigationView.getHeaderView(0);
         UpdateNavProfile();
 
+    }
     }
 
     @Override
@@ -375,7 +385,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void Location() {
 
 
-        gps = new GPSTracker(MainActivity.this);
+        gps = new GPSTracker(MainActivity.this,isInternetAvailable);
 
 
     }

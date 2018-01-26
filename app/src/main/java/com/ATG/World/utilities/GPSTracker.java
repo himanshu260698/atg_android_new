@@ -12,6 +12,8 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -46,6 +48,7 @@ public class GPSTracker extends Service implements LocationListener {
 
     // flag for network status
     boolean isNetworkEnabled = false;
+    boolean isInternetAvailable=false;
 
     // flag for GPS status
     boolean canGetLocation = false;
@@ -63,9 +66,9 @@ public class GPSTracker extends Service implements LocationListener {
     // Declaring a Location Manager
     protected LocationManager locationManager;
 
-    public GPSTracker(Context context) {
+    public GPSTracker(Context context,boolean isIn) {
         this.mContext = context;
-
+        this.isInternetAvailable=isIn;
         locationManager = (LocationManager) mContext.getSystemService(LOCATION_SERVICE);
 
         // getting GPS status
@@ -89,9 +92,7 @@ public class GPSTracker extends Service implements LocationListener {
 
 
 
-
     }
-
 
 
     public Location getLocation() {
@@ -260,8 +261,11 @@ public class GPSTracker extends Service implements LocationListener {
             public void onClick(DialogInterface dialog, int which) {
 
                 //LocationNetwork();
-                new RetriveByIP().execute();
 
+               if(isInternetAvailable) {
+                    Log.i("state","sent by ip ");
+                    new RetriveByIP().execute();
+                }
                 dialog.cancel();
             }
         });
