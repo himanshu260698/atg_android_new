@@ -148,6 +148,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         UpdateNavProfile();
 
     }
+    }
 
     @Override
     protected void onResume() {
