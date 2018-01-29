@@ -166,7 +166,7 @@ public class NotificationAdapter extends BaseAdapter<Notification> implements Ev
         @BindView(R.id.noti_subject)
         TextView nsub;
         @BindView(R.id.user_name)
-        TextView nuid;
+        TextView nname;
         @BindView(R.id.noti_time)
         TextView ntime;
         @BindView(R.id.user_image)
@@ -176,16 +176,13 @@ public class NotificationAdapter extends BaseAdapter<Notification> implements Ev
             ButterKnife.bind(this,itemView);
         }
         private void bind(Notification article) {
-            setupUserId(nuid, article);
+           // setupUserId(nuid, article);
             setupUserImage(uImage, article);
             setupMessage(nmess, article);
             setupSubject(nsub, article);
             setupTime(ntime, article);
+            setupName(nname,article);
             int adapterPos = getAdapterPosition();
-        }
-        private void setupUserId(TextView t,Notification article)
-        {
-            t.setText(article.getUser_id());
         }
         private void setupMessage(TextView t,Notification article)
         {
@@ -198,6 +195,10 @@ public class NotificationAdapter extends BaseAdapter<Notification> implements Ev
         private void setupTime(TextView t,Notification article)
         {
             t.setText(article.getCreated_at());
+        }
+        private void setupName(TextView t,Notification article)
+        {
+            t.setText(article.getFirst_name()+""+article.getLast_name());
         }
         private void setupUserImage(ImageView i,Notification  article)
         {

@@ -308,19 +308,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 HomeFragment homeFragment = new HomeFragment();
                 return homeFragment;
 
-            /*case 1:
-                // Call Post Fragment
-                return ; */
-
+            case 1:
+                logOut();
+                return null;
             case 2:
-                // Call Notification Fragment
-                NotificationFragment notificationFragment = new NotificationFragment();
-                return notificationFragment;
-            /*
+                NotificationFragment myNotificationFragment=new NotificationFragment();
+                return myNotificationFragment;
             case 3:
                 // Call My Posts
                 return ;
-
             case 4:
                 // Call My Groups
                 MyGroupFragment myGroupFragment = new MyGroupFragment();
