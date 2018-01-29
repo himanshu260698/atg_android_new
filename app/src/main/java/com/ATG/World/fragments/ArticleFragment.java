@@ -192,9 +192,13 @@ public class ArticleFragment extends BaseFragment implements ArticleAdapter.OnIt
             if (!call.isCanceled()) {
                 isLoading = false;
 
-                if (NetworkUtility.isKnownException(t)) {
-                    errorTextView.setText("Can't load data.\nCheck your network connection.");
-                    errorLinearLayout.setVisibility(View.VISIBLE);
+                if(NetworkUtility.isKnownException(t)){
+                    try {
+                        errorLinearLayout.setVisibility(View.VISIBLE);
+                        errorTextView.setText("Can't load data.\nCheck your network connection.");
+                    }catch (Exception e){
+                        Log.d(TAG, "onFailure: "+e);
+                    }
                 }
             }
 
