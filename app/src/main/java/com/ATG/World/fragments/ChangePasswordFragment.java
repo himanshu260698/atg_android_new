@@ -1,7 +1,6 @@
 package com.ATG.World.fragments;
 
 
-import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,7 +18,6 @@ import android.widget.Toast;
 
 import com.ATG.World.R;
 import com.ATG.World.activity.MainActivity;
-import com.ATG.World.models.User_details;
 import com.ATG.World.models.WsLoginResponse;
 import com.ATG.World.network.AtgClient;
 import com.ATG.World.network.AtgService;
@@ -105,8 +103,8 @@ public class ChangePasswordFragment extends Fragment {
                         progressBar.setVisibility(View.GONE);
                         int responseCode = response.code();
                         if (responseCode == 200) {
-                            Toast.makeText(getActivity(), "Successfully changed password", Toast.LENGTH_SHORT).show();
-                            loadHomeFragment();
+                            Toast.makeText(getActivity(), "Password successfully changed", Toast.LENGTH_SHORT).show();
+                            //loadHomeFragment();
                         }
                     }
 
