@@ -1,47 +1,64 @@
 package com.ATG.World.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.ATG.World.R;
-import com.ATG.World.preferences.UserPreferenceManager;
 
 public class SplashActivity extends AppCompatActivity {
 
+    //    private ImageView splash_layout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_splash);
 
-        if(UserPreferenceManager.getUserId(SplashActivity.this).equalsIgnoreCase("")){
-            startActivity(new Intent(SplashActivity.this, SocialLoginActivity.class));
-            finish();
+//        splash_layout=findViewById(R.id.splash_layout);
 
-        }
-        else {
-            startActivity(new Intent(SplashActivity.this, MainActivity.class));
-            finish();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window w = getWindow();
+            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }
 
+        Intent intent = new Intent(this, SocialLoginActivity.class);
 
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    synchronized (this) {
+                        wait(3000);
+                        startActivity(intent);
+                        finish();
+                    }
+                } catch (InterruptedException ex) {
+                }
 
-        /*if (SessionClass.getUserId(SplashScreenActivity.this).equalsIgnoreCase("")) {
-            it.putExtra("key", "1");
-            it.setClass(SplashScreenActivity.this, GetStartedActivity.class);
-        } else {
-            Bundle bundle = new Bundle();
+                // TODO
+            }
+        };
 
-            it.setClass(SplashScreenActivity.this, MainActivity.class);
-            bundle.putString("flg", "1");
-            it.putExtras(bundle);
-
-        }
-        startActivity(it);
-        overridePendingTransition(R.anim.anim_left_in, R.anim.anim_left_out);
-        finish();
-        */
-
-
+        thread.start();
     }
 }
+
+
+
+//        if(UserPreferenceManager.getUserId(SplashActivity.this).equalsIgnoreCase("")){
+//            startActivity(new Intent(SplashActivity.this, SocialLoginActivity.class));
+//            finish();
+//
+//        }
+//        else {
+//            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+//            finish();
+//        }
+
+
+
+
