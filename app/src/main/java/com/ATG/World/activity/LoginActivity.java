@@ -4,14 +4,19 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,8 +29,6 @@ import com.ATG.World.models.WsLoginResponse;
 import com.ATG.World.network.AtgClient;
 import com.ATG.World.network.AtgService;
 import com.ATG.World.preferences.UserPreferenceManager;
-
-import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,13 +43,33 @@ public class LoginActivity extends AppCompatActivity {
     private View mProgressView;
     private View mLoginFormView;
     private AtgService retrofit;
+    private Button sign_up_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        retrofit = AtgClient.getClient().create(AtgService.class);
-        //setupActionBar();
+
+        // Make Sign Up Green And Bold
+        sign_up_button = findViewById(R.id.sign_up_button);
+        SpannableString text = new SpannableString("Don't have an account? Sign Up");
+
+        text.setSpan(new ForegroundColorSpan(Color.BLACK), 0, 22, 0);
+
+        text.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.social_notification_bar)), 23, 30, 0);
+
+        text.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 23, 30, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        sign_up_button.setText(text, TextView.BufferType.SPANNABLE);
+
+        // To make notification bar transparent
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window w = getWindow(); // in Activity's onCreate() for instance
+            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
+
+        retrofit= AtgClient.getClient().create(AtgService.class);
+       //setupActionBar();
         mEmailView = findViewById(R.id.email);
 
         mPasswordView = (EditText) findViewById(R.id.password);
@@ -58,6 +81,16 @@ public class LoginActivity extends AppCompatActivity {
                     return true;
                 }
                 return false;
+            }
+        });
+
+        //Sign Up Button Action
+        sign_up_button.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this,SocialLoginActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 

@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
@@ -117,12 +118,16 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
         loginEmailButton.setOnClickListener(this);
         signupButton.setOnClickListener(this);
 
-        SpannableString text = new SpannableString("Already have an account? Sign in");
-        // make "Clicks" (characters 0 to 5) Red
+        // Make Sign In Green And Bold
+
+        SpannableString text = new SpannableString("Already have an account? Sign In");
+
         text.setSpan(new ForegroundColorSpan(Color.BLACK), 0, 24, 0);
-        // make "Here" (characters 6 to 10) Blue
+
         text.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.social_notification_bar)), 25, 32, 0);
-        // shove our styled text into the Button
+
+        text.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 25, 32, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
         loginEmailButton.setText(text, TextView.BufferType.SPANNABLE);
 
         // To make notification bar transparent
