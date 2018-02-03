@@ -61,8 +61,8 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
     private String mStrLastNAME = "";
     private String mStrFBLogin = "0", mStrGoogleLogin = "0", mStrTwitterLogin = "0";
 
-    private Button button_fb_login;
-    private Button twitter_custom_button;
+    private Button loginFacebookButton;
+    private Button twitterLoginButton;
     private GoogleSignInClient mGoogleSignInClient;
     private static int RC_FB_SIGN_IN;
     private static int RC_SIGN_IN = 100;
@@ -97,26 +97,26 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
         Twitter.initialize(this);
         setContentView(R.layout.activity_social_login);
 
-        retrofit = AtgClient.getClient().create(AtgService.class);
-        initTwitter();
-        initGoogleLogin();
-        initFacebookLogin();
-        setUI();
-    }
+        // More options button action
+        more_options_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-    private void setUI() {
-        loginEmailButton = findViewById(R.id.login_email);
-        signupButton = findViewById(R.id.sign_up_email);
+                if (more_options_button.getText().equals("More options")) {
+                    loginFacebookButton.setVisibility(View.VISIBLE);
+                    twitterLoginButton.setVisibility(View.VISIBLE);
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+
+                    params.setMargins(0, 110, 0, 0);
+                    loginEmailButton.setLayoutParams(params);
+                    loginEmailButton.requestLayout();
+                    more_options_button.setVisibility(View.GONE);
+                }
 
 
-        loginEmailButton=findViewById(R.id.login_email);
-        signupButton=findViewById(R.id.sign_up_email);
-        more_options_button =findViewById(R.id.more_options);
-
-        mLoginView = findViewById(R.id.login_view);
-        mProgressView = findViewById(R.id.login_progress_home);
-        loginEmailButton.setOnClickListener(this);
-        signupButton.setOnClickListener(this);
+            }
+        });
 
         // Make Sign In Green And Bold
 
@@ -137,65 +137,51 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
             w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }
 
-        // More options button action
+        // Facebook login button action
+        loginFacebookButton = findViewById(R.id.login_button);
+        loginFacebookButton.setOnClickListener(new View.OnClickListener() {
 
-        more_options_button.setOnClickListener(new View.OnClickListener() {
-            @Override
+            public void failure(TwitterException exception) {
+                Toast.makeText(SocialLoginActivity.this, "Network problem", Toast.LENGTH_SHORT).show();
+            }
 
-            public void success(Result<TwitterSession> result) {
-                showProgress(true);
-                TwitterSession user = result.data;
-                twitterId = String.valueOf(user.getUserId());
-                twitterUsername = user.getUserName();
-                Log.e("twitter", twitterId + twitterUsername);
-                socialFlag = 3;
-                socialLogin();
-
-            public void onClick(View view) {
-
-                if(more_options_button.getText().equals("More options")) {
-                    button_fb_login.setVisibility(View.VISIBLE);
-                    twitter_custom_button.setVisibility(View.VISIBLE);
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-
-                    params.setMargins(0,110,0,0);
-                    loginEmailButton.setLayoutParams(params);
-                    loginEmailButton.requestLayout();
-                    more_options_button.setVisibility(View.GONE);
-                }
-
-
-
+            public void onClick(View v) {
+                fbLoginManager.logInWithReadPermissions(SocialLoginActivity.this, Arrays.asList("public_profile", "email"));
             }
         });
 
-        retrofit= AtgClient.getClient().create(AtgService.class);
+
+
+
+        retrofit = AtgClient.getClient().create(AtgService.class);
         initTwitter();
         initGoogleLogin();
         initFacebookLogin();
+        setUI();
+    }
 
-        // Facebook login button action
+    private void setUI() {
+        loginEmailButton = findViewById(R.id.login_email);
+        signupButton = findViewById(R.id.sign_up_email);
 
-        button_fb_login = findViewById(R.id.login_button);
-        button_fb_login.setOnClickListener(new View.OnClickListener() {
-            @Override
+        loginFacebookButton = findViewById(R.id.login_button);
 
-            public void failure(TwitterException exception) {
-                Toast.makeText(SocialLoginActivity.this, "Network prob", Toast.LENGTH_SHORT).show();
+        loginEmailButton = findViewById(R.id.login_email);
+        signupButton = findViewById(R.id.sign_up_email);
+        more_options_button = findViewById(R.id.more_options);
 
-            public void onClick(View v) {
-                fbLoginManager.logInWithReadPermissions(SocialLoginActivity.this, Arrays.asList( "public_profile","email"));
-            }
-        });
+        mLoginView = findViewById(R.id.login_view);
+        mProgressView = findViewById(R.id.login_progress_home);
+        loginEmailButton.setOnClickListener(this);
+        signupButton.setOnClickListener(this);
     }
 
 
     private void initTwitter() {
 
         mTwitterAuthClient= new TwitterAuthClient();
-        twitter_custom_button = findViewById(R.id.login_button_twitter);
-        twitter_custom_button.setOnClickListener(new View.OnClickListener() {
+        twitterLoginButton = findViewById(R.id.login_button_twitter);
+        twitterLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mTwitterAuthClient.authorize(SocialLoginActivity.this, new com.twitter.sdk.android.core.Callback<TwitterSession>() {
@@ -234,10 +220,6 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void initFacebookLogin() {
-
-        loginFacebookButton = findViewById(R.id.login_button);
-        RC_FB_SIGN_IN = loginFacebookButton.getRequestCode();
-
 
         fbLoginManager = com.facebook.login.LoginManager.getInstance();
 
@@ -282,9 +264,9 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
 
             @Override
 
-            public void onError(FacebookException exception) {
-                Toast.makeText(SocialLoginActivity.this, "Network prob", Toast.LENGTH_SHORT).show();
-                // App code
+//            public void onError(FacebookException exception) {
+//                Toast.makeText(SocialLoginActivity.this, "Network prob", Toast.LENGTH_SHORT).show();
+//                // App code
 
             public void onError(FacebookException e) {
                 Toast.makeText(SocialLoginActivity.this,"Network problem",Toast.LENGTH_SHORT).show();
@@ -537,7 +519,7 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
             callbackManager.onActivityResult(requestCode, resultCode, data);
 
         } else if (requestCode == TwitterAuthConfig.DEFAULT_AUTH_REQUEST_CODE) {
-            twitterLoginButton.onActivityResult(requestCode, resultCode, data);
+            mTwitterAuthClient.onActivityResult(requestCode, resultCode, data);
 
         }else if (requestCode==TwitterAuthConfig.DEFAULT_AUTH_REQUEST_CODE){
             mTwitterAuthClient.onActivityResult(requestCode, resultCode, data);
