@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import com.ATG.World.models.AddEditDialogueResponse;
 import com.ATG.World.models.DashboardResponse;
 import com.ATG.World.models.FeedDetailResponse;
+import com.ATG.World.models.PostQriousResponse;
 import com.ATG.World.models.UpvoteDownvoteResponse;
 import com.ATG.World.models.FeedDetailResponse;
 import com.ATG.World.models.UpvoteDownvoteResponse;
@@ -184,6 +185,19 @@ public interface AtgService {
     @Multipart
     @POST("ws-post-article-step-two")
     Call<PostArticleResponse> postArticleStepTwo(@Part("user_id")RequestBody userId,@Part("article_id")RequestBody articleId,
+                                                 @Part("tags")RequestBody tags, @Part MultipartBody.Part file,
+                                                 @Part("title")RequestBody title);
+    //Post qrious calls
+
+    @POST("ws-post-qrious-step-one")
+    @FormUrlEncoded
+    Call<PostQriousResponse> postQriousStepOne(@Field("user_id")@NonNull String userId, @Field("group_id")@NonNull int groupId,
+                                               @Field("already_exist_qrious_id")String already_exist_qrious_id,
+                                               @Field("title")@NonNull String title, @Field("description")@NonNull String description);
+
+    @Multipart
+    @POST("ws-post-qrious-step-two")
+    Call<PostQriousResponse> postQriousStepTwo(@Part("user_id")RequestBody userId,@Part("qrious_id")RequestBody articleId,
                                                  @Part("tags")RequestBody tags, @Part MultipartBody.Part file,
                                                  @Part("title")RequestBody title);
 }

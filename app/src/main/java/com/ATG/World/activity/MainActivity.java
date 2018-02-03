@@ -31,6 +31,9 @@ import com.ATG.World.fragments.NotificationFragment;
 import com.ATG.World.fragments.PostArticlePartOne;
 import com.ATG.World.fragments.PostArticlePartThree;
 import com.ATG.World.fragments.PostArticlePartTwo;
+import com.ATG.World.fragments.PostQriousOne;
+import com.ATG.World.fragments.PostQriousThree;
+import com.ATG.World.fragments.PostQriousTwo;
 import com.ATG.World.fragments.SettingsFragment;
 import com.ATG.World.preferences.UserPreferenceManager;
 import com.ATG.World.utilities.GPSTracker;
@@ -44,7 +47,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener,PostArticlePartOne.SendGroupData,PostArticlePartTwo.SendArticleData{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener,PostArticlePartOne.SendGroupData,PostArticlePartTwo.SendArticleData,PostQriousOne.SendQriousGroupData,PostQriousTwo.SendQriousData{
 
     private View headerLayout;
     @BindView(R.id.layoutFabJob)
@@ -167,7 +170,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             fragmentTransaction.commitAllowingStateLoss();
         }
     });
+
     }
+    layoutFabQrious.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            closeSubMenusFab();
+            fab.hide();
+            PostQriousOne postQriousOne=new PostQriousOne();
+            Fragment fragment = postQriousOne;
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                    android.R.anim.fade_out);
+            fragmentTransaction.replace(R.id.main_content, fragment);
+            fragmentTransaction.commitAllowingStateLoss();
+        }
+    });
     }
 
     @Override
@@ -183,11 +201,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onDestroy();
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode,resultCode,data);
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_content);
         if (fragment != null) {
-            fragment.onActivityResult(requestCode, resultCode, data);
+           fragment.onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -316,7 +336,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return myNotificationFragment;
             case 3:
                 // Call My Posts
-                return ;
+            //    return ;
             case 4:
                 // Call My Groups
                 MyGroupFragment myGroupFragment = new MyGroupFragment();
@@ -616,5 +636,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
         postArticlePartThree.receiveArticleData(articleID,title);
+    }
+
+    @Override
+    public void sendQriousData(List<String> qlist) {
+        Log.d("Inside qrious data", "sendQriousData: ");
+        PostQriousTwo postQriousTwo=new PostQriousTwo();
+        Fragment fragment = postQriousTwo;
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                android.R.anim.fade_out);
+        fragmentTransaction.replace(R.id.main_content, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+        postQriousTwo.receivedQriousGroupData(qlist);
+    }
+
+    @Override
+    public void transferQriousData(String articleID, String title) {
+        PostQriousThree postQriousThree=new PostQriousThree();
+        Fragment fragment = postQriousThree;
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                android.R.anim.fade_out);
+        fragmentTransaction.replace(R.id.main_content, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+        postQriousThree.receiveQriousData(articleID,title);
     }
 }
