@@ -149,7 +149,7 @@ public class PostQriousOne extends Fragment {
                                 return textView;
                             }
 
-                            @Override
+                            /*@Override
                             public void onSelected(int position, View view) {
                                 super.onSelected(position, view);
                                 // Toast.makeText(getActivity(), "Selected " + groupDetailsList.get(position).getName() + groupDetailsList.get(position).getId(), Toast.LENGTH_SHORT).show();
@@ -161,7 +161,7 @@ public class PostQriousOne extends Fragment {
                                 super.unSelected(position, view);
                                 //   Toast.makeText(getActivity(), "Deselected " + groupDetailsList.get(position).getName() + groupDetailsList.get(position).getId(), Toast.LENGTH_SHORT).show();
                                 listqrious.remove(position);
-                            }
+                            }*/
                         });
                     } else {
                         Toast.makeText(getActivity(), "Join group(s) to post qrious", Toast.LENGTH_SHORT).show();

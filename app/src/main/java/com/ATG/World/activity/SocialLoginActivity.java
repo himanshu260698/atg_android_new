@@ -96,6 +96,11 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         Twitter.initialize(this);
         setContentView(R.layout.activity_social_login);
+        more_options_button = findViewById(R.id.more_options);
+        loginFacebookButton = findViewById(R.id.login_button);
+        twitterLoginButton = findViewById(R.id.login_button_twitter);
+        loginEmailButton = findViewById(R.id.login_email);
+        signupButton = findViewById(R.id.sign_up_email);
 
         // More options button action
         more_options_button.setOnClickListener(new View.OnClickListener() {
@@ -138,7 +143,6 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
         }
 
         // Facebook login button action
-        loginFacebookButton = findViewById(R.id.login_button);
         loginFacebookButton.setOnClickListener(new View.OnClickListener() {
 
             public void failure(TwitterException exception) {
@@ -180,7 +184,6 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
     private void initTwitter() {
 
         mTwitterAuthClient= new TwitterAuthClient();
-        twitterLoginButton = findViewById(R.id.login_button_twitter);
         twitterLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
