@@ -96,6 +96,10 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         Twitter.initialize(this);
         setContentView(R.layout.activity_social_login);
+        initTwitter();
+        initGoogleLogin();
+        initFacebookLogin();
+        setUI();
 
         // More options button action
         more_options_button.setOnClickListener(new View.OnClickListener() {
@@ -154,10 +158,7 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
 
 
         retrofit = AtgClient.getClient().create(AtgService.class);
-        initTwitter();
-        initGoogleLogin();
-        initFacebookLogin();
-        setUI();
+
     }
 
     private void setUI() {
