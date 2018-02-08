@@ -96,10 +96,11 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         Twitter.initialize(this);
         setContentView(R.layout.activity_social_login);
+        setUI();
         initTwitter();
         initGoogleLogin();
         initFacebookLogin();
-        setUI();
+
 
         // More options button action
         more_options_button.setOnClickListener(new View.OnClickListener() {
@@ -163,13 +164,10 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
     private void setUI() {
         loginEmailButton = findViewById(R.id.login_email);
         signupButton = findViewById(R.id.sign_up_email);
-
         loginFacebookButton = findViewById(R.id.login_button);
-
         loginEmailButton = findViewById(R.id.login_email);
         signupButton = findViewById(R.id.sign_up_email);
         more_options_button = findViewById(R.id.more_options);
-
         mLoginView = findViewById(R.id.login_view);
         mProgressView = findViewById(R.id.login_progress_home);
         loginEmailButton.setOnClickListener(this);
@@ -178,7 +176,7 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
 
 
     private void initTwitter() {
-
+        twitterLoginButton = findViewById(R.id.login_button_twitter);
         mTwitterAuthClient= new TwitterAuthClient();
         twitterLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
