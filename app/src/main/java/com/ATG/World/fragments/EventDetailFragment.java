@@ -32,6 +32,7 @@ import com.ATG.World.network.AtgClient;
 import com.ATG.World.network.AtgService;
 import com.ATG.World.preferences.UserPreferenceManager;
 import com.ATG.World.utilities.GlideApp;
+//import com.ATG.World.utilities.GlideApp;
 
 import java.util.List;
 
@@ -43,44 +44,61 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class ArticleDetailFragment extends Fragment {
+
+public class EventDetailFragment extends Fragment {
 
     final static String FEED_ID = "";
-    private static final String TAG = ArticleDetailFragment.class.getSimpleName();
-
+    private static final String TAG = EventDetailFragment.class.getSimpleName();
     @BindView(R.id.iv_cover_post_details)
     ImageView mCoverPicture;
-    @BindView(R.id.tv_article_title)
-    TextView mArticleTitle;
+    @BindView(R.id.tv_event_title)
+    TextView mEventTitle;
     @BindView(R.id.iv_user_picture)
     ImageView mUserPicture;
     @BindView(R.id.tv_user_name)
     TextView mUserName;
     @BindView(R.id.rv_post_tags)
     RecyclerView tagsRecycler;
+    @BindView(R.id.e_profession)
+    TextView mProfession;
+    @BindView(R.id.con_phone)
+    TextView mPhone;
+    @BindView(R.id.email)
+    TextView mEmail;
+    @BindView(R.id.website)
+    TextView mWebsite;
+    @BindView(R.id.venue)
+    TextView mVenue;
+    @BindView(R.id.city)
+    TextView mCity;
+    @BindView(R.id.start_date)
+    TextView mStartDate;
+    @BindView(R.id.start_time)
+    TextView mStartTime;
+    @BindView(R.id.end_date)
+    TextView mEndDate;
+    @BindView(R.id.end_time)
+    TextView mEndTime;
     @BindView(R.id.wv_post_description)
     WebView postDescription;
-    /*@BindView(R.id.iv_user_comment)
+   /*@BindView(R.id.iv_user_comment)
+           @Nullable
     ImageView mCommenterPicture;
     @BindView(R.id.et_comment)
     EditText mComment;
     @BindView(R.id.iv_send_comment)
-    ImageView mCommentButton;
-    */
+    ImageView mCommentButton;*/
+
     @BindView(R.id.tv_likes)
     TextView mPostLikes;
     @BindView(R.id.tv_unlikes)
     TextView mPostUnLikes;
-    @BindView(R.id.tv_comments)
-    TextView mPostComments;
+    //@BindView(R.id.tv_comments)
+    // TextView mPostComments;
     @BindView(R.id.tv_share)
     TextView mPostShare;
-    @BindView(R.id.progress_bar)
-    ProgressBar progressBar;
-
+    /*@BindView(R.id.progress_bar)
+    ProgressBar progressBar;*/
     private FeedDetailResponse feedDetail;
     private PostDetail postDetail;
     private PostedBy postedBy;
@@ -94,18 +112,18 @@ public class ArticleDetailFragment extends Fragment {
 
     private Unbinder unbinder;
 
-    public ArticleDetailFragment() {
+    public EventDetailFragment() {
         // Required empty public constructor
     }
 
-    public static ArticleDetailFragment newInstance(Bundle extras) {
-        ArticleDetailFragment fragment = new ArticleDetailFragment();
+    public static EventDetailFragment newInstance(Bundle extras) {
+        EventDetailFragment fragment = new EventDetailFragment();
         fragment.setArguments(extras);
         return fragment;
     }
 
-    public static ArticleDetailFragment newInstance() {
-        ArticleDetailFragment fragment = new ArticleDetailFragment();
+    public static EventDetailFragment newInstance() {
+        EventDetailFragment fragment = new EventDetailFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -116,7 +134,9 @@ public class ArticleDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate: ");
         if (getArguments() != null) {
-            feedId = (int) getArguments().get("FeedId");
+            feedId = (int) getArguments().get("feed_id");
+            Log.e("feed_id_event_details:",""+feedId);
+
         }
     }
 
@@ -125,9 +145,8 @@ public class ArticleDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView: ");
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_event_detail, container, false);
         unbinder = ButterKnife.bind(this, rootView);
-
         return rootView;
     }
 
@@ -143,15 +162,11 @@ public class ArticleDetailFragment extends Fragment {
         Log.d(TAG, "onViewCreated: ");
 
         AtgService atgService = AtgClient.getClient().create(AtgService.class);
-        Call<FeedDetailResponse> call = atgService.getFeedDetails("article", feedId, Integer.parseInt(UserPreferenceManager.getUserId(getActivity())));
+        Call<FeedDetailResponse> call = atgService.getFeedDetails("event", feedId, Integer.parseInt(UserPreferenceManager.getUserId(getActivity())));
         call.enqueue(fetchPostDetails);
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        tagsRecycler.setLayoutManager(linearLayoutManager);
-
         tagsAdapter = new TagsAdapter();
 
-        tagsRecycler.setItemAnimator(new DefaultItemAnimator());
+
 
     }
 
@@ -257,26 +272,69 @@ public class ArticleDetailFragment extends Fragment {
     };
 
     public void setData() {
-        progressBar.setVisibility(View.GONE);
-        setupPostCoverImage(mCoverPicture, postDetail);
+      //  progressBar.setVisibility(View.GONE);
+        //setupPostCoverImage(mCoverPicture, postDetail);
         setupPostUserImage(mUserPicture, postDetail);
         setupPostUserName(mUserName, postDetail);
-        setupArticleTitle(mArticleTitle, postDetail);
+        setupEventTitle(mEventTitle, postDetail);
         setupPostDescription(postDescription, postDetail);
         setupLikesCount(mPostLikes, postDetail);
         setupUnLikesCount(mPostUnLikes, postDetail);
+        setupContact(mPhone, postDetail);
+        setupEmail(mEmail, postDetail);
+        setupWebsite(mWebsite, postDetail);
+        setupProfession(mProfession, postDetail);
+        setupVenue(mVenue, postDetail);
+        setupCity(mCity, postDetail);
+        setupStartTime(mStartTime, postDetail);
+        setupEndTime(mEndTime, postDetail);
+        setupStartDate(mStartDate, postDetail);
+        setupEndDate(mEndDate, postDetail);
         setupTags();
     }
-
-    private void setupPostCoverImage(ImageView cover, PostDetail detail) {
-        String url = getResources().getString(R.string.article_details_image_path) + detail.getProfile_image();
+    private void setupEventTitle(TextView title,PostDetail postDetail)
+    {
+        title.setText(postDetail.getTitle());
+    }
+    private void setupContact(TextView contact, PostDetail postDetail) {
+        contact.setText(postDetail.getContact_number());
+    }
+    private void setupEmail(TextView email, PostDetail postDetail) {
+        email.setText(postDetail.getEmail_address());
+    }
+    private void setupWebsite(TextView website, PostDetail postDetail) {
+        website.setText(postDetail.getWebsite());
+    }
+    private void setupProfession(TextView profession, PostDetail postDetail) {
+        profession.setText(postDetail.getProfession());
+    }
+    private void setupVenue(TextView venue, PostDetail postDetail) {
+        venue.setText(postDetail.getVenue());
+    }
+    private void setupCity(TextView city, PostDetail postDetail) {
+        city.setText(postDetail.getUser_city());
+    }
+    private void setupStartTime(TextView startTime, PostDetail postDetail) {
+        startTime.setText(postDetail.getStart_time());
+    }
+    private void setupStartDate(TextView startDate, PostDetail postDetail) {
+        startDate.setText(postDetail.getStart_date());
+    }
+    private void setupEndTime(TextView endTime, PostDetail postDetail) {
+        endTime.setText(postDetail.getEnd_time());
+    }
+    private void setupEndDate(TextView endDate, PostDetail postDetail) {
+        endDate.setText(postDetail.getEnd_date());
+    }
+    /*private void setupPostCoverImage(ImageView cover, PostDetail detail) {
+        String url = getResources().getString(R.string.event_details_image_path) + detail.getProfile_image();
         if (!TextUtils.isEmpty(detail.getProfile_image())) {
             mUserPicture.setVisibility(View.VISIBLE);
             GlideApp.with(cover.getContext())
                     .load(url)
                     .into(cover);
         }
-    }
+    }*/
 
     private void setupPostUserImage(ImageView image, PostDetail detail) {
         mUserPicture.setVisibility(View.VISIBLE);
@@ -288,13 +346,7 @@ public class ArticleDetailFragment extends Fragment {
 
     }
 
-    private void setupArticleTitle(TextView title, PostDetail detail) {
-        String articleTitle = detail.getTitle();
-        if (articleTitle != null) {
-            mArticleTitle.setVisibility(View.VISIBLE);
-            title.setText(articleTitle);
-        }
-    }
+
 
     private void setupPostUserName(TextView username, PostDetail detail) {
         String user = detail.getFirst_name();
@@ -342,6 +394,9 @@ public class ArticleDetailFragment extends Fragment {
     }
 
     private void setupTags() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        tagsRecycler.setLayoutManager(linearLayoutManager);
+        tagsRecycler.setItemAnimator(new DefaultItemAnimator());
         tagsRecycler.setAdapter(tagsAdapter);
     }
 
@@ -351,7 +406,7 @@ public class ArticleDetailFragment extends Fragment {
             Toast.makeText(getActivity(), "This post is already Upvoted by you.", Toast.LENGTH_LONG).show();
         } else {
             AtgService atgService = AtgClient.getClient().create(AtgService.class);
-            Call<UpvoteDownvoteResponse> call = atgService.setUpvoteDownvote(SET_LIKE, "article", feedId, Integer.parseInt(UserPreferenceManager.getUserId(getActivity())));
+            Call<UpvoteDownvoteResponse> call = atgService.setUpvoteDownvote(SET_LIKE, "event", feedId, Integer.parseInt(UserPreferenceManager.getUserId(getActivity())));
             call.enqueue(setPostLike);
         }
     }
@@ -365,7 +420,7 @@ public class ArticleDetailFragment extends Fragment {
             Toast.makeText(getActivity(), "You already downvoted this post.", Toast.LENGTH_LONG).show();
         } else {
             AtgService atgService = AtgClient.getClient().create(AtgService.class);
-            Call<UpvoteDownvoteResponse> call = atgService.setUpvoteDownvote(SET_UNLIKE, "article", feedId, Integer.parseInt(UserPreferenceManager.getUserId(getActivity())));
+            Call<UpvoteDownvoteResponse> call = atgService.setUpvoteDownvote(SET_UNLIKE, "event", feedId, Integer.parseInt(UserPreferenceManager.getUserId(getActivity())));
             call.enqueue(setPostUnLike);
         }
 
