@@ -1,0 +1,104 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.ATG.World.fragments.PostJobOne">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:padding="5dp"
+            android:fontFamily="sans-serif-smallcaps"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:text="Select group(s)"
+            android:textAlignment="center"
+            android:textSize="30sp" />
+        <android.support.v4.widget.NestedScrollView
+            android:layout_below="@id/textView"
+            android:layout_width="match_parent"
+            android:layout_marginTop="30dp"
+            android:background="#ffffff"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_height="300dp"
+            android:id="@+id/nestedScrollView">
+
+
+            <com.zhy.view.flowlayout.TagFlowLayout
+                android:id="@+id/tag_flow_layout_job"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textView"
+                android:elevation="4dp"
+                android:textAlignment="center"
+                android:padding="18dp">
+
+
+            </com.zhy.view.flowlayout.TagFlowLayout>
+        </android.support.v4.widget.NestedScrollView>
+        <Button
+            android:id="@+id/nextButtonJob"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/button_grey"
+            android:textSize="20sp"
+            android:text="Next" />
+
+    </RelativeLayout>
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="4dp">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:elevation="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#1A4D33"
+            app:popupTheme="@style/AppTheme.PopupOverlay" >
+
+            <Button
+                android:id="@+id/change_back_button_job"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="0dp"
+                android:background="@drawable/back_arrow"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="20sp"
+                android:textAlignment="textStart"
+                android:paddingTop="12dp"
+                android:paddingStart="8dp"
+                android:layout_weight="1"
+                android:textColor="#000000"
+                android:text="Post job" />
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+    <ProgressBar
+        android:id="@+id/progressBar_cyclic_one_job"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:elevation="6dp"
+        android:layout_gravity="center"
+        android:indeterminateTint="#000000" />
+
+
+
+</FrameLayout>

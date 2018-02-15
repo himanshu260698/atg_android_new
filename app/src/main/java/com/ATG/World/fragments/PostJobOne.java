@@ -13,20 +13,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ATG.World.R;
 import com.ATG.World.activity.MainActivity;
-import com.ATG.World.models.DashboardResponse;
 import com.ATG.World.models.GroupDetails;
 import com.ATG.World.models.MyGroupResponse;
 import com.ATG.World.network.AtgClient;
 import com.ATG.World.network.AtgService;
 import com.ATG.World.preferences.UserPreferenceManager;
-import com.ATG.World.utilities.NetworkLogUtility;
 import com.ATG.World.utilities.NetworkUtility;
 import com.google.gson.Gson;
 import com.zhy.view.flowlayout.FlowLayout;
@@ -43,17 +40,15 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PostQriousOne extends Fragment {
-    private TagFlowLayout tagFlowLayoutqrious;
+public class PostJobOne extends Fragment {
+    private TagFlowLayout tagFlowLayout;
     List<GroupDetails> groupDetailsList;
-    Button backButtonqrious,nextButtonqrious,reload;
-    LinearLayout errorlinearLayout;
-    private boolean isLoading = false;
-    TextView errorText;
-    List<String> listqrious;
-    ProgressBar progressBar_cyclic_qrious_one;
-    SendQriousGroupData sendQriousGroupData;
-    public PostQriousOne() {
+    Button backButton,nextButton;
+    SendJobGroupData sendJobGroupData;
+    List<String> list;
+    ProgressBar progressBar_cyclic_job;
+
+    public PostJobOne() {
         // Required empty public constructor
     }
 
@@ -62,51 +57,49 @@ public class PostQriousOne extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_post_qrious_one, container, false);
-        tagFlowLayoutqrious=view.findViewById(R.id.tag_flow_layout_qrious);
-        tagFlowLayoutqrious.setMaxSelectCount(5);
-        progressBar_cyclic_qrious_one=view.findViewById(R.id.progressBar_cyclic_one_qrious);
-        listqrious=new ArrayList<>();
+        View view=inflater.inflate(R.layout.fragment_post_article_part_one, container, false);
+        tagFlowLayout=view.findViewById(R.id.tag_flow_layout);
+        tagFlowLayout.setMaxSelectCount(5);
+        progressBar_cyclic_job=view.findViewById(R.id.progressBar_cyclic_one);
+        list=new ArrayList<>();
         AtgService atgService= AtgClient.getClient().create(AtgService.class);
         if(NetworkUtility.isNetworkAvailable(getActivity())) {
-            progressBar_cyclic_qrious_one.setVisibility(View.VISIBLE);
+            progressBar_cyclic_job.setVisibility(View.VISIBLE);
             Call<MyGroupResponse> call = atgService.getMyGroupsData(UserPreferenceManager.getUserId(getContext()));
-            call.enqueue(myGroupResponseCallback);
+            call.enqueue(myJobGroupResponseCallback);
         }else {
-            isLoading = false;
-
             Toast.makeText(getActivity(), "Network not available", Toast.LENGTH_SHORT).show();
         }
-
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        backButtonqrious=view.findViewById(R.id.change_back_button_qrious);
-        nextButtonqrious=view.findViewById(R.id.nextButtonQrious);
-        backButtonqrious.setOnClickListener(new View.OnClickListener() {
+        backButton=view.findViewById(R.id.change_back_button_article);
+        nextButton=view.findViewById(R.id.nextButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loadHomeFragment();
             }
         });
 
-        nextButtonqrious.setOnClickListener(new View.OnClickListener() {
+        nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (NetworkUtility.isNetworkAvailable(getActivity())) {
-                    if (listqrious.size() > 0) {
-                        Log.d("data", "onResponse: " + listqrious.get(0));
-                        Log.d("Size", "onResponse: " + listqrious.size());
-                        sendQriousGroupData.sendQriousData(listqrious);
+                    if (list.size() > 0) {
+                        Log.d("data", "onResponse: " + list.get(0));
+                        Log.d("Size", "onResponse: " + list.size());
+                        sendJobGroupData.sendJobData(list);
                     } else {
                         Toast.makeText(getActivity(), "Select group(s) to proceed", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
         });
+
     }
     private void loadHomeFragment(){
         HomeFragment homeFragment=new HomeFragment();
@@ -120,15 +113,14 @@ public class PostQriousOne extends Fragment {
         ((MainActivity)getActivity()).loadHomeFragment();
 
     }
-    public Callback<MyGroupResponse> myGroupResponseCallback=new Callback<MyGroupResponse>() {
+    public Callback<MyGroupResponse> myJobGroupResponseCallback=new Callback<MyGroupResponse>() {
         @Override
         public void onResponse(Call<MyGroupResponse> call, Response<MyGroupResponse> response) {
 
             if(!response.isSuccessful()){
                 Toast.makeText(getContext(), "Failed to load data", Toast.LENGTH_SHORT).show();
-               
             }else {
-                progressBar_cyclic_qrious_one.setVisibility(View.GONE);
+                progressBar_cyclic_job.setVisibility(View.GONE);
                 MyGroupResponse myGroupResponse=response.body();
                 Gson gson = new Gson();
                 Log.w("onMyGroupResponse ", gson.toJson(myGroupResponse));
@@ -141,33 +133,32 @@ public class PostQriousOne extends Fragment {
                     }
 
                     if (array.length > 0) {
-                        tagFlowLayoutqrious.setAdapter(new TagAdapter<String>(array) {
+                        tagFlowLayout.setAdapter(new TagAdapter<String>(array) {
                             @Override
                             public View getView(FlowLayout parent, int position, String s) {
-                                TextView textView = (TextView) getLayoutInflater().inflate(R.layout.tv, tagFlowLayoutqrious, false);
+                                TextView textView = (TextView) getLayoutInflater().inflate(R.layout.tv, tagFlowLayout, false);
                                 textView.setText(s);
                                 return textView;
                             }
-
                             @Override
                             public void onSelected(int position, View view) {
                                 super.onSelected(position, view);
                                 // Toast.makeText(getActivity(), "Selected " + groupDetailsList.get(position).getName() + groupDetailsList.get(position).getId(), Toast.LENGTH_SHORT).show();
-                                listqrious.add(groupDetailsList.get(position).getId().toString());
+                                list.add(groupDetailsList.get(position).getId().toString());
                             }
 
                             @Override
                             public void unSelected(int position, View view) {
                                 super.unSelected(position, view);
                                 //   Toast.makeText(getActivity(), "Deselected " + groupDetailsList.get(position).getName() + groupDetailsList.get(position).getId(), Toast.LENGTH_SHORT).show();
-                                listqrious.remove(position);
+                                list.remove(position);
                             }
                         });
                     } else {
-                        Toast.makeText(getActivity(), "Join group(s) to post qrious", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Join group(s) to post job", Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception e){
-                    Toast.makeText(getActivity(), "Join group(s) to post an qrious", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Join group(s) to post a job", Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -176,20 +167,7 @@ public class PostQriousOne extends Fragment {
         }
         @Override
         public void onFailure(Call<MyGroupResponse> call, Throwable t) {
-            NetworkLogUtility.logFailure(call, t);
 
-            if (!call.isCanceled()) {
-                isLoading = false;
-                if(progressBar_cyclic_qrious_one!=null)
-                    progressBar_cyclic_qrious_one.setVisibility(View.GONE);
-
-                if (NetworkUtility.isKnownException(t)) {
-                    if(errorText!=null) {
-                        errorText.setText("Can't load data.\nCheck your network connection.");
-                        errorlinearLayout.setVisibility(View.VISIBLE);
-                    }
-                }
-            }
         }
     };
     @Override
@@ -207,12 +185,13 @@ public class PostQriousOne extends Fragment {
         ((MainActivity)getActivity()).showBack();
 
     }
-    public interface SendQriousGroupData{
-        void sendQriousData(List<String> list);
-    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        sendQriousGroupData=(PostQriousOne.SendQriousGroupData)getActivity();
+        sendJobGroupData=(SendJobGroupData) getActivity();
+    }
+    public interface SendJobGroupData {
+        void sendJobData(List<String> list);
     }
 }
