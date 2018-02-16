@@ -207,7 +207,6 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
     private void initTwitter() {
 
 
-
         mTwitterAuthClient = new TwitterAuthClient();
 
         twitterLoginButton = findViewById(R.id.login_button_twitter);
