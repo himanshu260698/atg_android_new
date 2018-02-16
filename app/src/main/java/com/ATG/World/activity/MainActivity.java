@@ -2,6 +2,8 @@ package com.ATG.World.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -26,18 +28,26 @@ import com.ATG.World.R;
 import com.ATG.World.fragments.HomeFragment;
 import com.ATG.World.fragments.MyGroupFragment;
 import com.ATG.World.fragments.NotificationFragment;
-import com.ATG.World.fragments.PostFragment;
-import com.ATG.World.fragments.PostStageTwoFragment;
+import com.ATG.World.fragments.PostArticlePartOne;
+import com.ATG.World.fragments.PostArticlePartThree;
+import com.ATG.World.fragments.PostArticlePartTwo;
+import com.ATG.World.fragments.PostQriousOne;
+import com.ATG.World.fragments.PostQriousThree;
+import com.ATG.World.fragments.PostQriousTwo;
 import com.ATG.World.fragments.SettingsFragment;
 import com.ATG.World.preferences.UserPreferenceManager;
+import com.ATG.World.utilities.GPSTracker;
 import com.ATG.World.utilities.GlideApp;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener,PostArticlePartOne.SendGroupData,PostArticlePartTwo.SendArticleData,PostQriousOne.SendQriousGroupData,PostQriousTwo.SendQriousData{
 
     private View headerLayout;
     @BindView(R.id.layoutFabJob)
@@ -54,6 +64,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     LinearLayout layoutFabQrious;
 
     private boolean fabExpanded = false;
+    private int FlagLocation = 1;
+
+
     //private FloatingActionButton fab;
     //private Toolbar toolbar;
     //private NavigationView navigationView;
@@ -77,12 +90,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // toolbar titles respected to selected nav menu item
     private String[] activityTitles;
 
-
-    //Tags used to attach fragments
+    // Tags used to attach fragments
     private static final String TAG_HOME = "Home";
     private static final String TAG_POST = "Post";
-    private static final String TAG_NOTIFICATION = "Notifications";
-    private static final String TAG_MY_POST = "My Posts";
+    private static final String TAG_NOTIFICATION = "Notification";
+    private static final String TAG_MY_POST = "My Post";
     private static final String TAG_MY_GROUPS = "My Groups";
     private static final String TAG_EXPLORE_GROUPS = "Explore Groups";
     private static final String TAG_LOGOUT = "Logout";
@@ -91,8 +103,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private boolean mToolBarNavigationListenerIsRegistered = false;
     private Handler mHandler;
     private boolean shouldLoadHomeFragmentOnBackPress = true;
+    private boolean isInternetAvailable=false;
     ActionBarDrawerToggle toggle;
-    private Fragment fragment;
+    GPSTracker gps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,16 +143,57 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             loadHomeFragment();
         }
+        if (FlagLocation == 1) {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+
+        isInternetAvailable=netInfo!= null && netInfo.isConnectedOrConnecting();
+        if(FlagLocation==1){
+
+            Location();
+        }
 
         headerLayout = navigationView.getHeaderView(0);
         UpdateNavProfile();
+        layoutFabArticle.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            closeSubMenusFab();
+            fab.hide();
+            PostArticlePartOne postArticlePartOne=new PostArticlePartOne();
+            Fragment fragment = postArticlePartOne;
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                    android.R.anim.fade_out);
+            fragmentTransaction.replace(R.id.main_content, fragment);
+            fragmentTransaction.commitAllowingStateLoss();
+        }
+    });
 
+    }
+    layoutFabQrious.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            closeSubMenusFab();
+            fab.hide();
+            PostQriousOne postQriousOne=new PostQriousOne();
+            Fragment fragment = postQriousOne;
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                    android.R.anim.fade_out);
+            fragmentTransaction.replace(R.id.main_content, fragment);
+            fragmentTransaction.commitAllowingStateLoss();
+        }
+    });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         getSupportActionBar().show();
+        fab.show();
+
     }
 
     @Override
@@ -147,11 +201,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onDestroy();
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode,resultCode,data);
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_content);
         if (fragment != null) {
-            fragment.onActivityResult(requestCode, resultCode, data);
+           fragment.onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -199,7 +255,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             drawer.closeDrawers();
             return;
         }
+        if(getSupportFragmentManager().getBackStackEntryCount()==2){
 
+        }
         // This code loads home fragment when back key is pressed
         // when user is in other fragment than home
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
@@ -221,7 +279,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onBackPressed();
     }
 
-    private void loadHomeFragment() {
+    public void loadHomeFragment() {
         //selectNavMenu();
 
         setToolbarTitle();
@@ -273,10 +331,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case 1:
                 logOut();
                 return null;
-
+            case 2:
+                NotificationFragment myNotificationFragment=new NotificationFragment();
+                return myNotificationFragment;
+            case 3:
+                // Call My Posts
+            //    return ;
             case 4:
+                // Call My Groups
                 MyGroupFragment myGroupFragment = new MyGroupFragment();
                 return myGroupFragment;
+            /*
+            case 5:
+                // Call Explore Groups
+                return ;*/
+
+            case 6:
+                logOut();
+                return null;
 
             case 7:
                 SettingsFragment settingsFragment = new SettingsFragment();
@@ -335,29 +407,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         invalidateOptionsMenu();
     }
 
-    private void loadPostFragment() {
-        fragment = new PostFragment();
-
-        if (fragment != null) {
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                    android.R.anim.fade_out);
-            fragmentTransaction.replace(R.id.main_content, fragment, CURRENT_TAG);
-            fragmentTransaction.commitAllowingStateLoss();
-            getSupportActionBar().setTitle("Post");
-
-            //Close Fab button..
-            toggleFab();
-            //Closing drawer on item click
-            drawer.closeDrawers();
-        }
-    }
-
-
     private Fragment getNotificationFragment() {
         switch (navItemIndex) {
             case 2:
-                Log.d("MainActivity", "Notification Invoked");
                 // Notification
                 NotificationFragment homeFragment = new NotificationFragment();
                 return homeFragment;
@@ -370,6 +422,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    public void Location() {
+
+
+        gps = new GPSTracker(MainActivity.this,isInternetAvailable);
+
+
+    }
+
     private void setToolbarTitle() {
         getSupportActionBar().setTitle(CURRENT_TAG);
     }
@@ -378,21 +438,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         navigationView.getMenu().getItem(navItemIndex).setChecked(true);
     }
 
-    private void setUpNavigationView() {
+    public void setUpNavigationView() {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                closeSubMenusFab();
                 switch (item.getItemId()) {
                     case R.id.nav_home:
                         navItemIndex = 0;
                         CURRENT_TAG = TAG_HOME;
-                        loadHomeFragment();
                         break;
 
                     case R.id.nav_post:
                         navItemIndex = 1;
                         CURRENT_TAG = TAG_POST;
-                        loadPostFragment();
                         break;
 
                     case R.id.nav_notification:
@@ -437,6 +497,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 item.setChecked(true);
 
+                loadHomeFragment();
+
                 return true;
             }
         });
@@ -463,7 +525,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         actionBarDrawerToggle.syncState();
     }
 
-
     // show or hide the fab
     private void toggleFab() {
         if (navItemIndex == 0)
@@ -471,7 +532,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else
             fab.hide();
     }
-
+    public void hideFAB(){
+        fab.hide();
+    }
     private void logOut() {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
         mBuilder.setMessage("Are you sure, you want to logout?");
@@ -546,17 +609,59 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fragmentTransaction.commit();
     }
 
-    public void loadPostSecondStageFragment() {
-        fragment = new PostStageTwoFragment();
 
-        if (fragment != null) {
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                    android.R.anim.fade_out);
-            fragmentTransaction.replace(R.id.main_content, fragment);
-            fragmentTransaction.commitAllowingStateLoss();
-            getSupportActionBar().setTitle("Post");
-        }
+    @Override
+    public void sendData(List<String> list) {
+        Log.d("Inside senddata", "sendData: ");
+        PostArticlePartTwo postArticlePartTwo=new PostArticlePartTwo();
+        Fragment fragment = postArticlePartTwo;
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                android.R.anim.fade_out);
+        fragmentTransaction.replace(R.id.main_content, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+        postArticlePartTwo.receivedGroupData(list);
     }
 
+
+    @Override
+    public void transferData(String articleID, String title) {
+        PostArticlePartThree postArticlePartThree=new PostArticlePartThree();
+        Fragment fragment = postArticlePartThree;
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                android.R.anim.fade_out);
+        fragmentTransaction.replace(R.id.main_content, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+        postArticlePartThree.receiveArticleData(articleID,title);
+    }
+
+    @Override
+    public void sendQriousData(List<String> qlist) {
+        Log.d("Inside qrious data", "sendQriousData: ");
+        PostQriousTwo postQriousTwo=new PostQriousTwo();
+        Fragment fragment = postQriousTwo;
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                android.R.anim.fade_out);
+        fragmentTransaction.replace(R.id.main_content, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+        postQriousTwo.receivedQriousGroupData(qlist);
+    }
+
+    @Override
+    public void transferQriousData(String articleID, String title) {
+        PostQriousThree postQriousThree=new PostQriousThree();
+        Fragment fragment = postQriousThree;
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                android.R.anim.fade_out);
+        fragmentTransaction.replace(R.id.main_content, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+        postQriousThree.receiveQriousData(articleID,title);
+    }
 }

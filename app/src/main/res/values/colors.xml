@@ -315,4 +315,11 @@
 
     <color name="colorBlack">#000000</color>
     <color name="colorWhite">#FFFFFF</color>
+
+    <color name="button_pressed">#ff8a00</color>
+    <color name="button_focused">#ff8a00</color>
+    <color name="button_default">#1c76bb</color>
+    <color name="likeButton">#4267B2</color>
+    <!--Custom Notification Bar-->
+    <color name="social_notification_bar">#339966</color>
 </resources>

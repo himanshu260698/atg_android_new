@@ -12,7 +12,8 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/get_all_constraint_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="8dp">
 
         <!--<ImageView
             android:id="@+id/iv_dashboard_user_img"
@@ -75,21 +76,13 @@
             android:id="@+id/noti_subject"
             style="@style/OtherText"
             android:layout_width="@dimen/size_0"
+            android:layout_marginTop="5dp"
+            android:paddingTop="4dp"
             android:layout_height="26dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/iv_get_all"
             app:layout_constraintTop_toBottomOf="@+id/user_name" />
 
-        <View
-            android:id="@+id/view_separater"
-            android:layout_width="@dimen/size_0"
-            android:layout_height="@dimen/view_height"
-            android:layout_marginTop="@dimen/view_margin"
-            android:background="@color/colorBlack"
-            android:textSize="18sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/noti_time" />
 
 
 

@@ -3,6 +3,7 @@ package com.ATG.World.adapters;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,9 +25,12 @@ import butterknife.ButterKnife;
 
 /**
  * Created by Chetan on 22-12-2017.
+ * Recycler View adapter for list of all post on homepage
  */
 
 public class GetAllAdapter extends BaseAdapter<Dashboard> {
+
+    private static final String TAG = GetAllAdapter.class.getSimpleName();
 
     private FooterViewHolder footerViewHolder;
 
@@ -49,6 +53,18 @@ public class GetAllAdapter extends BaseAdapter<Dashboard> {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.get_all_layout, parent, false);
 
         final AllViewHolder holder = new AllViewHolder(view);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int adapterPos = holder.getAdapterPosition();
+                if (adapterPos != RecyclerView.NO_POSITION) {
+                    if (onItemClickListener != null) {
+                        onItemClickListener.onItemClick(adapterPos, holder.itemView);
+                    }
+                }
+            }
+        });
 
         return holder;
     }
@@ -119,24 +135,24 @@ public class GetAllAdapter extends BaseAdapter<Dashboard> {
         ImageView postUserProfilePicture;*/
         @BindView(R.id.tv_dashboard_user_name)
         TextView postUserName;
-        /*@BindView(R.id.tv_dashboard_post_time)
-        TextView postTime;*/
+        @BindView(R.id.tv_dashboard_post_time)
+        TextView postTime;
         @BindView(R.id.iv_get_all)
         ImageView postImage;
         @BindView(R.id.tv_post_type)
         TextView postType;
         @BindView(R.id.tv_title_get_all)
         TextView postTitle;
-        @BindView(R.id.tv_likes)
+        /*@BindView(R.id.tv_likes)
         TextView postLikes;
         @BindView(R.id.tv_unlikes)
         TextView postUnlikes;
         @BindView(R.id.tv_comments)
         TextView postComments;
         @BindView(R.id.tv_share)
-        TextView postShare;
+        TextView postShare;*/
 
-        public AllViewHolder (View itemView) {
+        public AllViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
@@ -144,19 +160,23 @@ public class GetAllAdapter extends BaseAdapter<Dashboard> {
         private void bind(Dashboard article) {
             //setupUserImage(postUserProfilePicture, article);
             setupUserName(postUserName, article);
-            //setupPostTime(postTime, article);
+            setupPostTime(postTime, article);
             setupPostType(postType, article);
             setupPostImage(postImage, article);
             setupPostTitle(postTitle, article);
-            setupPostLikes(postLikes, article);
+            /*setupPostLikes(postLikes, article);
             setupPostUnlikes(postUnlikes, article);
             setupPostComments(postComments, article);
-            setupPostShares(postShare, article);
+            setupPostShares(postShare, article);*/
             int adapterPos = getAdapterPosition();
         }
 
         private void setupUserName(TextView postUserName, Dashboard dashboard) {
-            int user_id = dashboard.getId();
+            String firstName = dashboard.getFirstName();
+            String lastName = dashboard.getLastName();
+            if (!TextUtils.isEmpty(firstName)) {
+                postUserName.setText(firstName + " " + lastName);
+            }
         }
 
         /*private void setupUserImage(ImageView postUserProfilePicture, Dashboard dashboard) {
@@ -170,12 +190,12 @@ public class GetAllAdapter extends BaseAdapter<Dashboard> {
             }
         }*/
 
-        /*private void setupPostTime(TextView postTime, Dashboard dashboard) {
-            String time = dashboard.getStartTime();
+        private void setupPostTime(TextView postTime, Dashboard dashboard) {
+            String time = dashboard.getCreatedAt();
             if (!TextUtils.isEmpty(time)) {
                 postTime.setText(time);
             }
-        }*/
+        }
 
         private void setupPostType(TextView postType, Dashboard dashboard) {
             String type = dashboard.getType();
@@ -185,6 +205,12 @@ public class GetAllAdapter extends BaseAdapter<Dashboard> {
         }
 
         private void setupPostImage(ImageView postImage, Dashboard dashboard) {
+            String imageUrl = dashboard.getImage();
+            if (!TextUtils.isEmpty(imageUrl)) {
+                Glide.with(postImage.getContext())
+                        .load("https://www.atg.world/" + imageUrl)
+                        .into(postImage);
+            }
         }
 
         private void setupPostTitle(TextView postTitle, Dashboard dashboard) {
@@ -194,25 +220,37 @@ public class GetAllAdapter extends BaseAdapter<Dashboard> {
             }
         }
 
-        private void setupPostLikes(TextView postLikes, Dashboard dashboard) {
-            int likes = dashboard.getUpvoteCount();
-            postLikes.setText(""+likes);
+        /*private void setupPostLikes(TextView likes, Dashboard dashboard) {
+            int like = dashboard.getUpvoteCount();
+            int userLike = dashboard.getUserUpvoteCount();
+            if (like > 0) {
+                likes.setText("" + like);
+            } else {
+                likes.setText("");
+            }
 
+            if (userLike == 1) {
+                likes.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_thumb_up_blue_24dp, 0, 0, 0);
+            }
         }
 
         private void setupPostUnlikes(TextView postUnlikes, Dashboard dashboard) {
-            int unlikes = dashboard.getDownvoteCount();
-            postUnlikes.setText(""+unlikes);
-
+            int unlike = dashboard.getDownvoteCount();
+            int userDislikeStatus = dashboard.getUserDownvoteCount();
+            if (unlike > 0) {
+                postUnlikes.setText("" + unlike);
+            } else {
+                postLikes.setText("");
+            }
         }
 
         private void setupPostComments(TextView postComments, Dashboard dashboard) {
-            postComments.setText("0");
+
         }
 
         private void setupPostShares(TextView postShare, Dashboard dashboard) {
-            postShare.setText("0");
-        }
+
+        }*/
 
     }
 

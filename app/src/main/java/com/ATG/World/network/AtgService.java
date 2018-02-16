@@ -5,13 +5,25 @@ import android.support.annotation.NonNull;
 
 import com.ATG.World.models.AddEditDialogueResponse;
 import com.ATG.World.models.DashboardResponse;
+import com.ATG.World.models.FeedDetailResponse;
+import com.ATG.World.models.PostQriousResponse;
+import com.ATG.World.models.UpvoteDownvoteResponse;
+import com.ATG.World.models.FeedDetailResponse;
+import com.ATG.World.models.UpvoteDownvoteResponse;
+import com.ATG.World.models.GroupPostListResponse;
 import com.ATG.World.models.JoinLeaveGroupResponse;
+import com.ATG.World.models.LocationDetails;
+import com.ATG.World.models.MainGroup;
 import com.ATG.World.models.MarkNotificationResponse;
 import com.ATG.World.models.MyGroupResponse;
+import com.ATG.World.models.NicheGroupResponse;
 import com.ATG.World.models.NotificationRes;
+import com.ATG.World.models.PostArticleDetails;
+import com.ATG.World.models.PostArticleResponse;
 import com.ATG.World.models.SignUpResponse;
 import com.ATG.World.models.SubGroupResponse;
 import com.ATG.World.models.User_details;
+import com.ATG.World.models.WsJoinLeaveGroupResponse;
 import com.ATG.World.models.WsLoginResponse;
 
 import java.util.List;
@@ -44,21 +56,28 @@ public interface AtgService {
 
     @GET("ws-social-media")
     Call<WsLoginResponse> getFacebookLogin(@Query("fb_id") String fbid, @Query("first_name") String firstname,
-                                           @Query("last_name") String lastname, @Query("email") String email, @Query("registration_id") String regid,
-                                           @Query("device_name") int devname);
+                                           @Query("last_name") String lastname, @Query("email") String email);
 
     @GET("ws-social-media")
     Call<WsLoginResponse> getGoogleLogin(@Query("google_id") String fbid, @Query("first_name") String firstname,
-                                         @Query("last_name") String lastname, @Query("email") String email, @Query("registration_id") String regid,
-                                         @Query("device_name") int devname);
+                                         @Query("last_name") String lastname, @Query("email") String email);
 
     @GET("ws-social-media")
-    Call<WsLoginResponse> getTwitterLogin(@Query("twitter_id") String fbid, @Query("user_name") String username, @Query("registration_id") String regid,
-                                          @Query("device_name") int devname);
+    Call<WsLoginResponse> getTwitterLogin(@Query("twitter_id") String fbid, @Query("user_name") String username);
 
     @GET("ws-register-user")
-    Call<SignUpResponse> getEmailSignUp(@Query("first_name") String fname,@Query("last_name") String lname,
-                                        @Query("email") String email,@Query("password") String password,@Query("device_name") String dev_name);
+    Call<SignUpResponse> getEmailSignUp(@Query("first_name") String fname, @Query("last_name") String lname,
+                                        @Query("email") String email, @Query("password") String password, @Query("device_name") String dev_name);
+
+    @GET("ws-group")
+    Call<MainGroup> getmainGroup();
+
+    @GET("ws-sub-group")
+    Call<NicheGroupResponse> getNicheGroup(@Query("id") int id);
+
+    @GET("ws-join-leave-group")
+    Call<WsJoinLeaveGroupResponse> joinLeaveGroup(@Query("status") int status, @Query("group_id") String group_id
+            , @Query("user_id") String user_id);
 
     /**
      * This API call will be used for getting data for Homepage.
@@ -72,6 +91,13 @@ public interface AtgService {
                                              @Field("page_number") @NonNull int pageNumber,
                                              @Field("user_id") @NonNull int userId);
 
+    @POST("ws-update-user-location")
+    @FormUrlEncoded
+    Call<LocationDetails> Postlocation(
+            @Field("user_id") @NonNull String userId,
+            @Field("latitude") @NonNull Double latitude,
+            @Field("longitude") @NonNull Double longitude);
+
     /*@GET("ws-get-notification-list")
     Call<> getNotificationList(@Field("user_id") int user_id);
 
@@ -82,7 +108,8 @@ public interface AtgService {
      */
     @FormUrlEncoded
     @POST("ws-change-password")
-    Call<WsLoginResponse> postChangedPassword(@Field("user_id") String userId,@Field("new_password")String newPassword);
+    Call<WsLoginResponse> postChangedPassword(@Field("user_id") String userId, @Field("new_password") String newPassword);
+
     /*
     @FormUrlEncoded
     @POST("ws-account-setting")
@@ -90,11 +117,11 @@ public interface AtgService {
       */
     @Multipart
     @POST("ws-edit-account-setting")
-    Call<User_details> updateUserDetails(@Part("user_id") RequestBody userId,@Part MultipartBody.Part file,  @Part("user_name") RequestBody userName, @Part("first_name") RequestBody firstName,
-                                          @Part("last_name")RequestBody lastName, @Part("tagline")RequestBody tagLine,
-                                          @Part("email")RequestBody email, @Part("profession")RequestBody profession,
-                                          @Part("about_me")RequestBody aboutMe, @Part("mob_no")RequestBody mobileNo, @Part("phone_no")RequestBody phNo,
-                                          @Part("location")RequestBody location, @Part("user_type")RequestBody userType);
+    Call<User_details> updateUserDetails(@Part("user_id") RequestBody userId, @Part MultipartBody.Part file, @Part("user_name") RequestBody userName, @Part("first_name") RequestBody firstName,
+                                         @Part("last_name") RequestBody lastName, @Part("tagline") RequestBody tagLine,
+                                         @Part("email") RequestBody email, @Part("profession") RequestBody profession,
+                                         @Part("about_me") RequestBody aboutMe, @Part("mob_no") RequestBody mobileNo, @Part("phone_no") RequestBody phNo,
+                                         @Part("location") RequestBody location, @Part("user_type") RequestBody userType);
 
     @POST("ws-my-groups")
     @FormUrlEncoded
@@ -115,10 +142,62 @@ public interface AtgService {
     Call<AddEditDialogueResponse> getTagDialogueResponse(@Field("user_id") @NonNull String userId,
                                                          @Field("group_id") @NonNull String groupId,
                                                          @Field("tag_line") @NonNull String tagLine);
+
     @GET("ws-get-notification-list")
     Call<NotificationRes> getNotificationList(@Query("user_id") String user_id);
 
 
     @POST("ws-mark-notifications-read")
     Call<MarkNotificationResponse> markNotificationRead(@Field("user_id") @NonNull int user_id);
+
+    /**
+     * This API is used to fetch details of a particular feed
+     *
+     * @param postType Article, Events, etc
+     * @param feedId   A feed have a unique id
+     * @param userId   Id of logged User
+     * @return
+     */
+    @POST("ws-feed-detail")
+    @FormUrlEncoded
+    Call<FeedDetailResponse> getFeedDetails(@Field("type") String postType,
+                                            @Field("feed_id") int feedId,
+                                            @Field("user_id") int userId);
+
+    @GET("ws-upvote-downvote")
+    Call<UpvoteDownvoteResponse> setUpvoteDownvote(@Query("status") int status,
+                                                   @Query("type") String postType,
+                                                   @Query("feed_id") int feedId,
+                                                   @Query("user_id") int userId);
+
+    @POST("ws-single-group-post-list")
+    @FormUrlEncoded
+    Call<GroupPostListResponse> getGroupPosts(@Field("user_id") @NonNull String user_id,
+                                              @Field("group_id") @NonNull String group_id,
+                                              @Field("type") @NonNull String type);
+    //Post article calls
+
+    @POST("ws-post-article-step-one")
+    @FormUrlEncoded
+    Call<PostArticleResponse> postArticleStepOne(@Field("user_id")@NonNull String userId, @Field("group_id")@NonNull int groupId,
+                                                @Field("already_exist_article_id")String already_exist_article_id,
+                                                @Field("title")@NonNull String title, @Field("description")@NonNull String description);
+    @Multipart
+    @POST("ws-post-article-step-two")
+    Call<PostArticleResponse> postArticleStepTwo(@Part("user_id")RequestBody userId,@Part("article_id")RequestBody articleId,
+                                                 @Part("tags")RequestBody tags, @Part MultipartBody.Part file,
+                                                 @Part("title")RequestBody title);
+    //Post qrious calls
+
+    @POST("ws-post-qrious-step-one")
+    @FormUrlEncoded
+    Call<PostQriousResponse> postQriousStepOne(@Field("user_id")@NonNull String userId, @Field("group_id")@NonNull int groupId,
+                                               @Field("already_exist_qrious_id")String already_exist_qrious_id,
+                                               @Field("title")@NonNull String title, @Field("description")@NonNull String description);
+
+    @Multipart
+    @POST("ws-post-qrious-step-two")
+    Call<PostQriousResponse> postQriousStepTwo(@Part("user_id")RequestBody userId,@Part("qrious_id")RequestBody articleId,
+                                                 @Part("tags")RequestBody tags, @Part MultipartBody.Part file,
+                                                 @Part("title")RequestBody title);
 }

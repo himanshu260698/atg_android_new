@@ -4,14 +4,19 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,8 +29,6 @@ import com.ATG.World.models.WsLoginResponse;
 import com.ATG.World.network.AtgClient;
 import com.ATG.World.network.AtgService;
 import com.ATG.World.preferences.UserPreferenceManager;
-
-import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,11 +43,31 @@ public class LoginActivity extends AppCompatActivity {
     private View mProgressView;
     private View mLoginFormView;
     private AtgService retrofit;
+    private Button sign_up_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        // Make Sign Up Green And Bold
+        sign_up_button = findViewById(R.id.sign_up_button);
+        SpannableString text = new SpannableString("Don't have an account? Sign Up");
+
+        text.setSpan(new ForegroundColorSpan(Color.BLACK), 0, 22, 0);
+
+        text.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.social_notification_bar)), 23, 30, 0);
+
+        text.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 23, 30, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        sign_up_button.setText(text, TextView.BufferType.SPANNABLE);
+
+        // To make notification bar transparent
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window w = getWindow(); // in Activity's onCreate() for instance
+            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
+
         retrofit= AtgClient.getClient().create(AtgService.class);
        //setupActionBar();
         mEmailView = findViewById(R.id.email);
@@ -61,6 +84,16 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //Sign Up Button Action
+        sign_up_button.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this,SocialLoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -72,6 +105,7 @@ public class LoginActivity extends AppCompatActivity {
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
     }
+
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private void setupActionBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -111,50 +145,51 @@ public class LoginActivity extends AppCompatActivity {
             focusView.requestFocus();
         } else {
             showProgress(true);
-            Call<WsLoginResponse> call = retrofit.getEmailLogin(email,password,"0","");
+            Call<WsLoginResponse> call = retrofit.getEmailLogin(email, password, "0", "");
             call.enqueue(new Callback<WsLoginResponse>() {
                 @Override
                 public void onResponse(Call<WsLoginResponse> call, Response<WsLoginResponse> response) {
-                    WsLoginResponse wsLoginResponse=response.body();
+                    WsLoginResponse wsLoginResponse = response.body();
+                    if (wsLoginResponse != null) {
 
-                    if (wsLoginResponse.getError_code()==0) {
-                        User_details userDetails=wsLoginResponse.getUser_details();
+                        if (wsLoginResponse.getError_code() == 0) {
+                            User_details userDetails = wsLoginResponse.getUser_details();
 
-                        UserPreferenceManager.login(LoginActivity.this,
-                                userDetails.getId(),
-                                userDetails.getFirst_name(),
-                                userDetails.getLast_name(),
-                                userDetails.getUser_type(),
-                                "",
-                                userDetails.getProfile_picture(),
-                                "",
-                                userDetails.getLocation(),
-                                userDetails.getFb_login(),
-                                userDetails.getGoogle_login(),
-                                userDetails.getLinkdin_login(),
-                                userDetails.getTwitter_login(),
-                                userDetails.getEmail(),
-                                userDetails.getMob_no()
-                        );
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putString("flg", "1");
-                        intent.putExtras(bundle);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        finish();
-                        startActivity(intent);
-                    } else if (wsLoginResponse.getError_code()==1) {
-                        Toast.makeText(LoginActivity.this, "Please check your credentials.", Toast.LENGTH_SHORT).show();
+                            UserPreferenceManager.login(LoginActivity.this,
+                                    userDetails.getId(),
+                                    userDetails.getFirst_name(),
+                                    userDetails.getLast_name(),
+                                    userDetails.getUser_type(),
+                                    "",
+                                    userDetails.getProfile_picture(),
+                                    "",
+                                    userDetails.getLocation(),
+                                    userDetails.getFb_login(),
+                                    userDetails.getGoogle_login(),
+                                    userDetails.getLinkdin_login(),
+                                    userDetails.getTwitter_login(),
+                                    userDetails.getEmail(),
+                                    userDetails.getMob_no()
+                            );
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            finish();
+                            startActivity(intent);
+                        } else if (wsLoginResponse.getError_code() == 1) {
+                            Toast.makeText(LoginActivity.this, "Please check your credentials.", Toast.LENGTH_SHORT).show();
 
-                    } else if (wsLoginResponse.getError_code()==2) {
-                        Toast.makeText(LoginActivity.this, "This email is not registered with this site.", Toast.LENGTH_SHORT).show();
+                        } else if (wsLoginResponse.getError_code() == 2) {
+                            Toast.makeText(LoginActivity.this, "This email is not registered with this site.", Toast.LENGTH_SHORT).show();
 
-                    } else if (wsLoginResponse.getError_code()==3) {
-                        Toast.makeText(LoginActivity.this, "Your account has been blocked by administrator!.Please contact administrator to activate your account.", Toast.LENGTH_SHORT).show();
+                        } else if (wsLoginResponse.getError_code() == 3) {
+                            Toast.makeText(LoginActivity.this, "Your account has been blocked by administrator!.Please contact administrator to activate your account.", Toast.LENGTH_SHORT).show();
 
-                    } else if (wsLoginResponse.getError_code()==4) {
-                        Toast.makeText(LoginActivity.this, "Please activate your account.", Toast.LENGTH_SHORT).show();
+                        } else if (wsLoginResponse.getError_code() == 4) {
+                            Toast.makeText(LoginActivity.this, "Please activate your account.", Toast.LENGTH_SHORT).show();
 
+                        }
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
                     }
 
                     showProgress(false);
@@ -164,7 +199,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<WsLoginResponse> call, Throwable t) {
-                    Toast.makeText(LoginActivity.this,"FAil",Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "FAil", Toast.LENGTH_LONG).show();
                     showProgress(false);
 
 

@@ -19,17 +19,25 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ATG.World.R;
+import com.ATG.World.adapters.SingleGroupPostAdapter;
 import com.ATG.World.fragments.ArticleFragment;
 import com.ATG.World.fragments.EducationFragment;
 import com.ATG.World.fragments.EventsFragment;
 import com.ATG.World.fragments.GetAllFragment;
+import com.ATG.World.fragments.GroupPostsList;
 import com.ATG.World.fragments.HomeFragment;
 import com.ATG.World.fragments.JobsFragment;
 import com.ATG.World.fragments.MeetingsFragment;
 import com.ATG.World.fragments.QueriesFragment;
+import com.ATG.World.models.ArrJoinedGroupDetails;
 import com.ATG.World.models.GroupDetails;
+import com.ATG.World.models.GroupPostListResponse;
+import com.ATG.World.network.AtgClient;
+import com.ATG.World.network.AtgService;
+import com.ATG.World.preferences.UserPreferenceManager;
 import com.ATG.World.utilities.GlideApp;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
@@ -39,6 +47,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class GroupDetailsActivity extends AppCompatActivity {
 
@@ -96,8 +107,7 @@ public class GroupDetailsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
 
-            //groupTitle = (TextView) findViewById(R.id.tv_title);
-            //groupTitle.setText(groupDetails.getName());
+            groupTitle = (TextView) findViewById(R.id.group_profession);
 
             ImageView headerImage = (ImageView) findViewById(R.id.image_header);
 
@@ -121,9 +131,34 @@ public class GroupDetailsActivity extends AppCompatActivity {
                 }
             });
 
-            setupViewPager(viewPager);
+            setupViewPager(viewPager,groupDetails.getId().toString());
 
             tabLayout.setupWithViewPager(viewPager);
+
+            AtgService atgService = AtgClient.getClient().create(AtgService.class);
+            Call<GroupPostListResponse> postListResponseCall =
+                    atgService.getGroupPosts(UserPreferenceManager.getUserId(getApplicationContext()),
+                            groupDetails.getId().toString(),"2");
+            Callback<GroupPostListResponse> groupPostListResponseCallback =
+                    new Callback<GroupPostListResponse>() {
+                        @Override
+                        public void onResponse(Call<GroupPostListResponse> call, Response<GroupPostListResponse> response) {
+                            try {
+                                GroupPostListResponse groupPostListResponse = response.body();
+                                ArrJoinedGroupDetails arrJoinedGroupDetails = groupPostListResponse.getArrData().getArrJoinedGroupDetails();
+                                groupTitle.setText(arrJoinedGroupDetails.getProfession());
+                            }
+                            catch(NullPointerException e){
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<GroupPostListResponse> call, Throwable t) {
+                            Toast.makeText(getApplicationContext(),"Network Error", Toast.LENGTH_SHORT).show();
+                        }
+                    };
+            postListResponseCall.enqueue(groupPostListResponseCallback);
 
             /*frameLayout = (FrameLayout) findViewById(R.id.post_content);
 
@@ -137,15 +172,16 @@ public class GroupDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private void setupViewPager(ViewPager viewPager){
+    private void setupViewPager(ViewPager viewPager,
+                                String id){
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPagerAdapter.addFragment(new GetAllFragment(), getString(R.string.fragment_get_all));
-        viewPagerAdapter.addFragment(new ArticleFragment(), getString(R.string.fragment_article));
-        viewPagerAdapter.addFragment(new EducationFragment(), getString(R.string.fragment_education));
-        viewPagerAdapter.addFragment(new MeetingsFragment(), getString(R.string.fragment_meetup));
-        viewPagerAdapter.addFragment(new EventsFragment(), getString(R.string.fragment_event));
-        viewPagerAdapter.addFragment(new QueriesFragment(), getString(R.string.fragment_queries));
-        viewPagerAdapter.addFragment(new JobsFragment(), getString(R.string.fragment_jobs));
+        viewPagerAdapter.addFragment(new GroupPostsList("0",id), getString(R.string.fragment_get_all));
+        viewPagerAdapter.addFragment(new GroupPostsList("1",id), getString(R.string.fragment_article));
+        viewPagerAdapter.addFragment(new GroupPostsList("2",id), getString(R.string.fragment_education));
+        viewPagerAdapter.addFragment(new GroupPostsList("3",id), getString(R.string.fragment_meetup));
+        viewPagerAdapter.addFragment(new GroupPostsList("4",id), getString(R.string.fragment_event));
+        viewPagerAdapter.addFragment(new GroupPostsList("5",id), getString(R.string.fragment_queries));
+        viewPagerAdapter.addFragment(new GroupPostsList("6",id), getString(R.string.fragment_jobs));
 
         viewPager.setAdapter(viewPagerAdapter);
     }
