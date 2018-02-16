@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.ATG.World.R;
 import com.ATG.World.adapters.NotificationAdapter;
@@ -20,7 +19,6 @@ import com.ATG.World.network.AtgClient;
 import com.ATG.World.network.AtgService;
 import com.ATG.World.preferences.UserPreferenceManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -57,34 +55,35 @@ public class NotificationFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            user_id=(getArguments().getInt("user_id"));
-            Log.e("user_idddddddd",""+user_id);
+            user_id = (getArguments().getInt("user_id"));
+            Log.e("user_idddddddd", "" + user_id);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View v=inflater.inflate(R.layout.fragment_notification, container, false);
-        Retrofit retrofit=new AtgClient().getClient();
-        AtgService atg=retrofit.create(AtgService.class);
-        Log.e("ATG",UserPreferenceManager.getUserId(getContext()));
-        Call<NotificationRes> call=atg.getNotificationList(UserPreferenceManager.getUserId(getContext()));
+        final View v = inflater.inflate(R.layout.fragment_notification, container, false);
+        Retrofit retrofit = new AtgClient().getClient();
+        AtgService atg = retrofit.create(AtgService.class);
+        Log.e("ATG", UserPreferenceManager.getUserId(getContext()));
+        Call<NotificationRes> call = atg.getNotificationList(UserPreferenceManager.getUserId(getContext()));
         //give me 2 mins//is this stuff written in the wrong method?though i dont think so//wait let me look closely for 2-3 mins
         call.enqueue(new Callback<NotificationRes>() {
             @Override
             public void onResponse(Call<NotificationRes> call, Response<NotificationRes> response) {
-                NotificationRes notificationRes=response.body();
-                List<Notification> notifs=notificationRes.getNotification();
-                for(int i=0;i<notifs.size();i++)
-                    Log.e("HELLO",notifs.get(i).getFeed_id()+"");
-                RecyclerView recyclerView=(RecyclerView)v.findViewById(R.id.recycler_view);
+                NotificationRes notificationRes = response.body();
+                List<Notification> notifs = notificationRes.getNotification();
+                for (int i = 0; i < notifs.size(); i++)
+                    Log.e("HELLO", notifs.get(i).getFeed_id() + "");
+                RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
                 recyclerView.setHasFixedSize(false);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                recyclerView.setAdapter(new NotificationAdapter(notifs,getActivity()));
+                recyclerView.setAdapter(new NotificationAdapter(notifs, getActivity()));
                 //as u can see retrofit is getting all the response correctly//u kidding ri8?
             }//so nothing wrong with the retrofit part?now no problem,earlier was not working//i think some api problem.coz it shud return a link...maybe they are
-                //it is api prob that they are returning null for prof image,i will try for something else.but we are not loading the images yet
+
+            //it is api prob that they are returning null for prof image,i will try for something else.but we are not loading the images yet
             //u saw the output?its right ?i think so,so ..problem is somewhere else,i gotta drop mom to market,will get back later
             //cool..even i gott visit market n munivcipality//.sbuyre enjoy bro,bye,gotta go hmm
             @Override
