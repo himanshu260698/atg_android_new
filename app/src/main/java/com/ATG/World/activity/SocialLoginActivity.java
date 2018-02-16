@@ -17,6 +17,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,6 +56,8 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 public class SocialLoginActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private LinearLayout social_login_id;
     private CallbackManager callbackManager;
     private TwitterAuthClient mTwitterAuthClient;
     private int socialFlag;
@@ -70,7 +73,6 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
     private Button signupButton;
     private Button more_options_button;
     private AtgService retrofit;
-    private View mProgressView;
     private View mLoginView;
 
     //Facebook Details
@@ -90,6 +92,9 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
     private String twitterId;
     private String twitterUsername;
 
+    // Progress Bar
+    private ProgressBar mProgressView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +107,21 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
         initFacebookLogin();
 
 
+        signupButton = findViewById(R.id.sign_up_email);
+        social_login_id = findViewById(R.id.social_login_id);
+
+        loginFacebookButton = findViewById(R.id.login_button);
+        signupButton = findViewById(R.id.sign_up_email);
+        loginEmailButton = findViewById(R.id.login_email);
+        more_options_button = findViewById(R.id.more_options);
+
+        mLoginView = findViewById(R.id.login_view);
+        mProgressView = findViewById(R.id.login_progress_home);
+        loginEmailButton.setOnClickListener(this);
+        signupButton.setOnClickListener(this);
+
         // More options button action
+
         more_options_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -150,14 +169,19 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
             }
 
             public void onClick(View v) {
+
+                //Progress Bar
+                progressbaraction();
+
                 fbLoginManager.logInWithReadPermissions(SocialLoginActivity.this, Arrays.asList("public_profile", "email"));
+
+
             }
         });
 
 
-
-
         retrofit = AtgClient.getClient().create(AtgService.class);
+
 
     }
 
@@ -172,15 +196,29 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
         mProgressView = findViewById(R.id.login_progress_home);
         loginEmailButton.setOnClickListener(this);
         signupButton.setOnClickListener(this);
+
+        initTwitter();
+        initGoogleLogin();
+        initFacebookLogin();
+
+
     }
 
-
     private void initTwitter() {
+
+
+
+        mTwitterAuthClient = new TwitterAuthClient();
+
         twitterLoginButton = findViewById(R.id.login_button_twitter);
         mTwitterAuthClient= new TwitterAuthClient();
         twitterLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //Progress Bar
+                progressbaraction();
+
                 mTwitterAuthClient.authorize(SocialLoginActivity.this, new com.twitter.sdk.android.core.Callback<TwitterSession>() {
                     @Override
                     public void success(Result<TwitterSession> result) {
@@ -188,18 +226,18 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
                         TwitterSession user = result.data;
                         twitterId = String.valueOf(user.getUserId());
                         twitterUsername = user.getUserName();
-                        Log.e("twitter",twitterId+twitterUsername);
-                        socialFlag=3;
+                        Log.e("twitter", twitterId + twitterUsername);
+                        socialFlag = 3;
                         socialLogin();
                     }
+
                     @Override
                     public void failure(TwitterException e) {
-                        Toast.makeText(SocialLoginActivity.this,"Network problem",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SocialLoginActivity.this, "Network problem", Toast.LENGTH_SHORT).show();
                     }
 
 
                 });
-
 
 
             }
@@ -239,7 +277,7 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
 
                             socialFlag = 1;
 
-                            socialFlag=1;
+                            socialFlag = 1;
 
                             socialLogin();
                         } catch (JSONException e) {
@@ -266,7 +304,7 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
 //                // App code
 
             public void onError(FacebookException e) {
-                Toast.makeText(SocialLoginActivity.this,"Network problem",Toast.LENGTH_SHORT).show();
+                Toast.makeText(SocialLoginActivity.this, "Network problem", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -518,7 +556,7 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
         } else if (requestCode == TwitterAuthConfig.DEFAULT_AUTH_REQUEST_CODE) {
             mTwitterAuthClient.onActivityResult(requestCode, resultCode, data);
 
-        }else if (requestCode==TwitterAuthConfig.DEFAULT_AUTH_REQUEST_CODE){
+        } else if (requestCode == TwitterAuthConfig.DEFAULT_AUTH_REQUEST_CODE) {
             mTwitterAuthClient.onActivityResult(requestCode, resultCode, data);
 
         }
@@ -529,18 +567,76 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.sign_in_button:
+
+                //Progress Bar
+                progressbaraction();
+
                 signInGoogle();
+
                 break;
             case R.id.sign_up_email:
+
+                //Progress Bar
+                progressbaraction();
+
                 Intent intent = new Intent(SocialLoginActivity.this, SignupActivity.class);
                 startActivity(intent);
+
                 break;
             case R.id.login_email:
+
+                //Progress Bar
+                progressbaraction();
+
                 Intent intent1 = new Intent(SocialLoginActivity.this, LoginActivity.class);
                 startActivity(intent1);
+
                 break;
         }
     }
+
+    public void progressbaraction() {
+
+            mProgressView.getIndeterminateDrawable().
+
+                    setColorFilter(
+                            getResources().
+
+                                    getColor(R.color.social_notification_bar),
+
+                            android.graphics.PorterDuff.Mode.SRC_IN);
+            mLoginView.setVisibility(View.GONE);
+            mProgressView.setVisibility(View.VISIBLE);
+
+
+            final Thread t = new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        mProgressView.setVisibility(View.VISIBLE);
+                        sleep(1000);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mProgressView.setVisibility(View.GONE);
+                                mLoginView.setVisibility(View.VISIBLE);
+                            }
+                        });
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+            t.start();
+        }
+
 }
+
+
+
+
+
+
 
 
