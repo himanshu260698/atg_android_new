@@ -1,6 +1,5 @@
 package com.ATG.World.fragments;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.ATG.World.R;
@@ -45,7 +43,6 @@ public class NotificationFragment extends BaseFragment {
     private int user_id;
     private OnFragmentInteractionListener mListener;
 
-    ProgressBar progressBar;
     public NotificationFragment() {
         // Required empty public constructor
     }
@@ -69,16 +66,11 @@ public class NotificationFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View v=inflater.inflate(R.layout.fragment_notification, container, false);
-        ProgressDialog progressDialog=new ProgressDialog(getActivity());
-        progressDialog.setMessage("Its loading....");
-        progressDialog.setIndeterminate(true);
-        progressDialog.setTitle("ProgressDialog bar example");
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        progressDialog.show();
         Retrofit retrofit=new AtgClient().getClient();
         AtgService atg=retrofit.create(AtgService.class);
         Log.e("ATG",UserPreferenceManager.getUserId(getContext()));
         Call<NotificationRes> call=atg.getNotificationList(UserPreferenceManager.getUserId(getContext()));
+        //give me 2 mins//is this stuff written in the wrong method?though i dont think so//wait let me look closely for 2-3 mins
         call.enqueue(new Callback<NotificationRes>() {
             @Override
             public void onResponse(Call<NotificationRes> call, Response<NotificationRes> response) {
@@ -90,12 +82,14 @@ public class NotificationFragment extends BaseFragment {
                 recyclerView.setHasFixedSize(false);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                 recyclerView.setAdapter(new NotificationAdapter(notifs,getActivity()));
-                progressDialog.dismiss();
-            }
+                //as u can see retrofit is getting all the response correctly//u kidding ri8?
+            }//so nothing wrong with the retrofit part?now no problem,earlier was not working//i think some api problem.coz it shud return a link...maybe they are
+                //it is api prob that they are returning null for prof image,i will try for something else.but we are not loading the images yet
+            //u saw the output?its right ?i think so,so ..problem is somewhere else,i gotta drop mom to market,will get back later
+            //cool..even i gott visit market n munivcipality//.sbuyre enjoy bro,bye,gotta go hmm
             @Override
             public void onFailure(Call<NotificationRes> call, Throwable t) {
-                progressDialog.dismiss();
-                Toast.makeText(getActivity(),"Some error occured",Toast.LENGTH_LONG).show();
+
             }
         });
         /*call.enqueue(new Callback<List<UserNotification>>() {

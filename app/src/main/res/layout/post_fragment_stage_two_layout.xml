@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginBottom="100.0dip"
+    android:background="@color/colorWhite">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#f4f0f0"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10.0dip">
+
+
+            <ImageView
+                android:layout_width="25.0dip"
+                android:layout_height="25.0dip"
+                android:layout_marginEnd="5.0dip"
+                android:background="@drawable/bg_circle_background"
+                android:gravity="center"
+                android:padding="3.0dip"
+                android:src="@drawable/ic_done_white_48dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your article has been published"
+                android:textColor="#413e3e"
+                android:textSize="@dimen/SIZE_15"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10.0dip"
+            android:orientation="vertical"
+            android:padding="5.0dip">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5.0dip"
+                android:text="Upload a Cover Image for your article(Optional)"
+                android:textColor="@color/grey_black_1000"
+                android:textSize="@dimen/SIZE_15" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="200.0dip"
+                android:background="@drawable/bg_doted_rectangle_background"
+                android:padding="10.0dip">
+
+                <ImageView
+                    android:id="@+id/input_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Give a title to your article..."
+                    android:padding="@dimen/SIZE_10"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/TEXT_SIZE_16" />
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#00ffffff"
+                    android:src="@drawable/ic_menu_camera" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+        <View
+            android:id="@+id/friend_divider"
+            android:layout_width="match_parent"
+            android:layout_height="3.0dip"
+            android:layout_marginTop="16.0dip"
+            android:background="#f7f3f3" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10.0dip"
+            android:orientation="vertical"
+            android:padding="5.0dip">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5.0dip"
+                android:text="Tags(Optional)"
+                android:textColor="@color/grey_black_1000"
+                android:textSize="@dimen/SIZE_15" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txttag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/bg_like_circle_background"
+                    android:drawableRight="@drawable/ic_remove_black"
+                    android:gravity="center"
+                    android:padding="5.0dip"
+                    android:text="Music"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/bg_like_circle_background"
+                    android:drawableRight="@drawable/ic_remove_black"
+                    android:gravity="center"
+                    android:padding="5.0dip"
+                    android:text="Technology"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/input_tag"
+                    android:layout_width="0.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20.0dip"
+                    android:layout_weight="1"
+                    android:background="@drawable/square_drawable"
+                    android:hint="Type a tag and press  '+' button"
+                    android:maxLines="1"
+                    android:padding="10.0dip"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/TEXT_SIZE_16" />
+
+                <ImageButton
+                    android:layout_width="30.0dip"
+                    android:layout_height="30.0dip"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_circle_background"
+                    android:padding="20.0dip"
+                    android:src="@drawable/ic_add_white_24dp"
+                    android:text="Add" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
+
