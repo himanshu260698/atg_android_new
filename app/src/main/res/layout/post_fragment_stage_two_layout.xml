@@ -49,7 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5.0dip"
-                android:text="Upload a Cover Image for your article(Optinal)"
+                android:text="Upload a Cover Image for your article(Optional)"
                 android:textColor="@color/grey_black_1000"
                 android:textSize="@dimen/SIZE_15" />
 
