@@ -32,6 +32,9 @@ import com.ATG.World.fragments.PostArticlePartOne;
 import com.ATG.World.fragments.PostArticlePartThree;
 import com.ATG.World.fragments.PostArticlePartTwo;
 import com.ATG.World.fragments.PostFragment;
+import com.ATG.World.fragments.PostJobOne;
+import com.ATG.World.fragments.PostJobThree;
+import com.ATG.World.fragments.PostJobTwo;
 import com.ATG.World.fragments.PostQriousOne;
 import com.ATG.World.fragments.PostQriousThree;
 import com.ATG.World.fragments.PostQriousTwo;
@@ -47,7 +50,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, PostArticlePartOne.SendGroupData, PostArticlePartTwo.SendArticleData, PostQriousOne.SendQriousGroupData, PostQriousTwo.SendQriousData {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener,PostArticlePartOne.SendGroupData,
+        PostArticlePartTwo.SendArticleData,PostQriousOne.SendQriousGroupData,PostQriousTwo.SendQriousData,
+        PostJobOne.SendJobGroupData,PostJobTwo.SendJobData{
 
     private View headerLayout;
     @BindView(R.id.layoutFabJob)
@@ -157,22 +162,67 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             headerLayout = navigationView.getHeaderView(0);
             UpdateNavProfile();
-            layoutFabArticle.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    closeSubMenusFab();
-                    fab.hide();
-                    PostArticlePartOne postArticlePartOne = new PostArticlePartOne();
-                    Fragment fragment = postArticlePartOne;
-                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                            android.R.anim.fade_out);
-                    fragmentTransaction.replace(R.id.main_content, fragment);
-                    fragmentTransaction.commitAllowingStateLoss();
-                }
-            });
 
+        headerLayout = navigationView.getHeaderView(0);
+        UpdateNavProfile();
+        layoutFabArticle.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            closeSubMenusFab();
+            fab.hide();
+            PostArticlePartOne postArticlePartOne=new PostArticlePartOne();
+            Fragment fragment = postArticlePartOne;
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                    android.R.anim.fade_out);
+            fragmentTransaction.replace(R.id.main_content, fragment);
+            fragmentTransaction.commitAllowingStateLoss();
         }
+    });
+    }
+   /* layoutFabQrious.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            closeSubMenusFab();
+            fab.hide();
+            PostQriousOne postQriousOne=new PostQriousOne();
+            Fragment fragment = postQriousOne;
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                    android.R.anim.fade_out);
+            fragmentTransaction.replace(R.id.main_content, fragment);
+            fragmentTransaction.commitAllowingStateLoss();
+        });
+        */
+        layoutFabArticle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeSubMenusFab();
+                fab.hide();
+                PostArticlePartOne postArticlePartOne = new PostArticlePartOne();
+                Fragment fragment = postArticlePartOne;
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                        android.R.anim.fade_out);
+                fragmentTransaction.replace(R.id.main_content, fragment);
+                fragmentTransaction.commitAllowingStateLoss();
+            }
+        });
+        layoutFabjob.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                closeSubMenusFab();
+                fab.hide();
+                PostJobOne postJobOne=new PostJobOne();
+                Fragment fragment = postJobOne;
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                        android.R.anim.fade_out);
+                fragmentTransaction.replace(R.id.main_content, fragment);
+                fragmentTransaction.commitAllowingStateLoss();
+            }
+        });
         layoutFabQrious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -699,5 +749,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             fragmentTransaction.commitAllowingStateLoss();
             getSupportActionBar().setTitle("Post");
         }
+    }
+
+    @Override
+    public void sendJobData(List<String> jlist) {
+        Log.d("Inside job data", "sendJobData: ");
+        PostJobTwo postJobTwo=new PostJobTwo();
+        Fragment fragment = postJobTwo;
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                android.R.anim.fade_out);
+        fragmentTransaction.replace(R.id.main_content, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+        postJobTwo.receivedJobGroupData(jlist);
+    }
+
+    @Override
+    public void transferJobData(String jobID, String location) {
+        PostJobThree postJobThree=new PostJobThree();
+        Fragment fragment = postJobThree;
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                android.R.anim.fade_out);
+        fragmentTransaction.replace(R.id.main_content, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+        postJobThree.receiveJobData(jobID,location);
     }
 }

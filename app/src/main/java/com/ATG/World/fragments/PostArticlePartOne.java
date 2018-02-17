@@ -144,7 +144,7 @@ public class PostArticlePartOne extends Fragment {
                                 return textView;
                             }
 
-                           /* @Override
+                            @Override
                             public void onSelected(int position, View view) {
                                 super.onSelected(position, view);
                                // Toast.makeText(getActivity(), "Selected " + groupDetailsList.get(position).getName() + groupDetailsList.get(position).getId(), Toast.LENGTH_SHORT).show();
@@ -156,7 +156,7 @@ public class PostArticlePartOne extends Fragment {
                                 super.unSelected(position, view);
                              //   Toast.makeText(getActivity(), "Deselected " + groupDetailsList.get(position).getName() + groupDetailsList.get(position).getId(), Toast.LENGTH_SHORT).show();
                                 list.remove(position);
-                            }*/
+                            }
                         });
                     } else {
                         Toast.makeText(getActivity(), "Join group(s) to post article", Toast.LENGTH_SHORT).show();

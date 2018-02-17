@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import com.ATG.World.models.AddEditDialogueResponse;
 import com.ATG.World.models.DashboardResponse;
 import com.ATG.World.models.FeedDetailResponse;
+import com.ATG.World.models.PostJobResponse;
 import com.ATG.World.models.PostQriousResponse;
 import com.ATG.World.models.UpvoteDownvoteResponse;
 import com.ATG.World.models.FeedDetailResponse;
@@ -200,4 +201,22 @@ public interface AtgService {
     Call<PostQriousResponse> postQriousStepTwo(@Part("user_id")RequestBody userId,@Part("qrious_id")RequestBody articleId,
                                                  @Part("tags")RequestBody tags, @Part MultipartBody.Part file,
                                                  @Part("title")RequestBody title);
+
+    //Post job calls
+    @POST("ws-post-job-step-one")
+    @FormUrlEncoded
+    Call<PostJobResponse> postJobStepOne(@Field("user_id")@NonNull String userId, @Field("group_id")@NonNull int groupId,
+                                             @Field("already_exist_article_id")String already_exist_article_id,
+                                             @Field("title")@NonNull String title, @Field("description")@NonNull String description,
+                                             @Field("location")@NonNull String location);
+
+    @POST("ws-post-job-step-two")
+    @FormUrlEncoded
+    Call<PostJobResponse> postJobStepTwo(@Field("user_id")@NonNull String userId, @Field("job_id")@NonNull int jobId,
+                                         @Field("company_name")String companyName,@Field("company_website")String companyWebsite,
+                                         @Field("role")String role,@Field("external_link")String extLink,
+                                         @Field("email_id")String emailId,@Field("dead_line")String deadline,
+                                         @Field("education")String education,@Field("min_exp")String minExperience,
+                                         @Field("location")String location,@Field("tags")String tags,
+                                         @Field("emp_type")int empType);
 }
