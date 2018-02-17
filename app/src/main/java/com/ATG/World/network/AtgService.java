@@ -209,6 +209,7 @@ public interface AtgService {
                                              @Field("already_exist_article_id")String already_exist_article_id,
                                              @Field("title")@NonNull String title, @Field("description")@NonNull String description,
                                              @Field("location")@NonNull String location);
+
     @POST("ws-post-job-step-two")
     @FormUrlEncoded
     Call<PostJobResponse> postJobStepTwo(@Field("user_id")@NonNull String userId, @Field("job_id")@NonNull int jobId,

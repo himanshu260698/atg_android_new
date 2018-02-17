@@ -9,6 +9,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class PostJobDetails {
 
+
     @SerializedName("user_id_fk")
     @Expose
     private String userIdFk;

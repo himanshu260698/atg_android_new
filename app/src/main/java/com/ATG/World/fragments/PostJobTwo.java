@@ -7,15 +7,18 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.ATG.World.R;
+import com.ATG.World.activity.MainActivity;
 import com.ATG.World.models.PostArticleResponse;
 import com.ATG.World.models.PostJobResponse;
 import com.ATG.World.network.AtgClient;
@@ -37,10 +40,11 @@ public class PostJobTwo extends Fragment {
     ArrayList<String> arrayList;
     Button nextButtonJob,backButton;
     private List<String> jobIds;
-    EditText title,description;
+    EditText title,description,locationText;
     private List<String> articleIds;
     private AtgService atgService;
     SendJobData sendJobData;
+    ProgressBar progressBar_cyclic_job_two;
     String location;
     int id;
     public PostJobTwo() {
@@ -54,11 +58,17 @@ public class PostJobTwo extends Fragment {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_post_job_two, container, false);
         jobIds=new ArrayList<>();
+        progressBar_cyclic_job_two=view.findViewById(R.id.progressBar_cyclic_job_two);
+        progressBar_cyclic_job_two.setVisibility(View.INVISIBLE);
+        title=view.findViewById(R.id.editText_title);
+        description=view.findViewById(R.id.editText_description);
+        locationText=view.findViewById(R.id.location_text);
+        backButton=view.findViewById(R.id.backJobTwo);
         nextButtonJob=view.findViewById(R.id.nextButtonJob);
         nextButtonJob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  if(checkFor()){
+                if(checkFor()){
                     if(NetworkUtility.isNetworkAvailable(getActivity())){
 
                         uploadJobFirst();
@@ -66,15 +76,15 @@ public class PostJobTwo extends Fragment {
                         Toast.makeText(getActivity(), "Network connection not available", Toast.LENGTH_SHORT).show();
                     }
                 }
-         //   }
+            }
         });
-     /*   backButton.setOnClickListener(new View.OnClickListener() {
+       backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loadPrevious();
             }
         });
-        */
+
 
         return view;
     }
@@ -83,7 +93,7 @@ public class PostJobTwo extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         atgService= AtgClient.getClient().create(AtgService.class);
     }
-  /*  public boolean checkFor(){
+    public boolean checkFor(){
         if(title.getText().toString().equals("")){
             title.requestFocus();
             title.setError("Title cannot be empty");
@@ -93,12 +103,16 @@ public class PostJobTwo extends Fragment {
             description.requestFocus();
             description.setError("Description cannot be empty");
             return false;
+        }else if(locationText.getText().toString().equals("")){
+            description.requestFocus();
+            description.setError("Location cannot be empty");
+            return false;
         }
         else {
             return true;
         }
     }
-    */
+
     private void loadPrevious(){
 
         getActivity().getSupportFragmentManager().popBackStack();
@@ -116,17 +130,18 @@ public class PostJobTwo extends Fragment {
 
     }
     private void uploadJobFirst(){
-     //   progressBar_cyclic_two.setVisibility(View.VISIBLE);
+
+        progressBar_cyclic_job_two.setVisibility(View.VISIBLE);
         Call<PostJobResponse> call;
         for (int i=0;i<arrayList.size();i++){
             call=atgService.postJobStepOne(UserPreferenceManager.getUserId(getActivity()),Integer.parseInt(arrayList.get(i)),
                     jobIds.size()>0?jobIds.get(i):"",
-                    "New title","New description","Shimla");
+                    title.getText().toString(),description.getText().toString(),locationText.getText().toString());
             call.enqueue(new Callback<PostJobResponse>() {
                 @Override
                 public void onResponse(Call<PostJobResponse> call, Response<PostJobResponse> response) {
                     if(response.code()==200) {
-                     //   progressBar_cyclic_two.setVisibility(View.GONE);
+                        progressBar_cyclic_job_two.setVisibility(View.GONE);
                         Toast.makeText(getActivity(), "Job successfully posted", Toast.LENGTH_SHORT).show();
                         PostJobResponse postJobResponse=response.body();
                         id=postJobResponse.getJobId();
@@ -138,6 +153,8 @@ public class PostJobTwo extends Fragment {
 
                         //  loadNext();
                         //  Toast.makeText(getActivity(), "data "+articleIds.get(0), Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(getActivity(), "Code "+response.code(), Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -148,6 +165,21 @@ public class PostJobTwo extends Fragment {
             });
         }
 
+
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+        ((MainActivity) getActivity()).showNButton();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+        ((MainActivity)getActivity()).showBack();
 
     }
     @Override

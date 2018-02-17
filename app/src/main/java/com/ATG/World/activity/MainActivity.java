@@ -163,8 +163,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             headerLayout = navigationView.getHeaderView(0);
             UpdateNavProfile();
 
-
+        headerLayout = navigationView.getHeaderView(0);
+        UpdateNavProfile();
+        layoutFabArticle.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            closeSubMenusFab();
+            fab.hide();
+            PostArticlePartOne postArticlePartOne=new PostArticlePartOne();
+            Fragment fragment = postArticlePartOne;
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                    android.R.anim.fade_out);
+            fragmentTransaction.replace(R.id.main_content, fragment);
+            fragmentTransaction.commitAllowingStateLoss();
         }
+    });
+    }
+   /* layoutFabQrious.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            closeSubMenusFab();
+            fab.hide();
+            PostQriousOne postQriousOne=new PostQriousOne();
+            Fragment fragment = postQriousOne;
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                    android.R.anim.fade_out);
+            fragmentTransaction.replace(R.id.main_content, fragment);
+            fragmentTransaction.commitAllowingStateLoss();
+        });
+        */
         layoutFabArticle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -57,10 +57,10 @@ public class PostJobOne extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view=inflater.inflate(R.layout.fragment_post_article_part_one, container, false);
-        tagFlowLayout=view.findViewById(R.id.tag_flow_layout);
+        View view=inflater.inflate(R.layout.fragment_post_job_oe, container, false);
+        tagFlowLayout=view.findViewById(R.id.tag_flow_layout_job);
         tagFlowLayout.setMaxSelectCount(5);
-        progressBar_cyclic_job=view.findViewById(R.id.progressBar_cyclic_one);
+        progressBar_cyclic_job=view.findViewById(R.id.progressBar_cyclic_one_job);
         list=new ArrayList<>();
         AtgService atgService= AtgClient.getClient().create(AtgService.class);
         if(NetworkUtility.isNetworkAvailable(getActivity())) {
@@ -76,8 +76,8 @@ public class PostJobOne extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        backButton=view.findViewById(R.id.change_back_button_article);
-        nextButton=view.findViewById(R.id.nextButton);
+        backButton=view.findViewById(R.id.change_back_button_job);
+        nextButton=view.findViewById(R.id.nextButtonJob);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -2,14 +2,148 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.ATG.World.fragments.PostJobTwo">
 
     <!-- TODO: Update blank fragment layout -->
+    <android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <RelativeLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            >
+            <Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:id="@+id/toolbar"
+                android:background="#228B22"
+                tools:targetApi="lollipop">
+                <RelativeLayout
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    >
 
+                    <TextView
+                        android:id="@+id/postJob"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="11dp"
+                        android:layout_toEndOf="@+id/backJobTwo"
+                        android:text="Post Job"
+                        android:textColor="@android:color/white"
+                        android:textSize="20dp" />
 
-    <Button
-        android:id="@+id/nextButtonJob"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button" />
+                    <Button
+                        android:id="@+id/nextButtonJob"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/postJob"
+                        android:layout_alignBottom="@+id/postJob"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="13dp"
+                        android:clickable="true"
+                        android:text="Next"
+                        android:elevation="4dp"
+                        android:background="#228B22"
+                        android:textColor="@android:color/white"
+                        android:textSize="16dp" />
+
+                    <Button
+                        android:id="@+id/backJobTwo"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignBottom="@+id/postJob"
+                        android:layout_alignParentStart="true"
+                        android:background="@drawable/back_arrow" />
+
+                </RelativeLayout>
+            </Toolbar>
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/location_image"
+                android:layout_marginStart="29dp"
+                android:layout_marginTop="17dp"
+                android:text="Title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="#228B22"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="75dp" />
+
+            <EditText
+                android:id="@+id/editText_title"
+                android:layout_width="match_parent"
+                android:layout_marginRight="20dp"
+                android:layout_height="50dp"
+                android:layout_alignStart="@+id/title"
+                android:layout_below="@+id/title"
+                android:ems="15"
+                android:hint="Give a title to your job..."
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/editText_title"
+                android:layout_below="@+id/editText_title"
+                android:layout_marginTop="31dp"
+                android:text="Description"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="#228B22"
+                android:textSize="18sp" />
+
+            <EditText
+                android:textAlignment="textStart"
+                android:layout_marginRight="20dp"
+                android:id="@+id/editText_description"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_alignStart="@+id/description"
+                android:layout_below="@+id/description"
+                android:ems="15"
+                android:inputType="textMultiLine"
+                android:gravity="start"
+                android:hint="Start Typing here...."
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+            <ImageView
+                android:id="@+id/location_image"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignStart="@+id/title"
+                android:layout_below="@+id/toolbar"
+                android:layout_marginTop="27dp"
+                app:srcCompat="@drawable/location"
+                tools:ignore="VectorDrawableCompat" />
+
+            <EditText
+                android:id="@+id/location_text"
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+
+                android:layout_alignTop="@+id/location_image"
+                android:layout_toEndOf="@+id/title"
+                android:hint="Location"
+                android:textColor="#006400" />
+
+        </RelativeLayout>
+    </android.support.constraint.ConstraintLayout>
+    <ProgressBar
+        android:id="@+id/progressBar_cyclic_job_two"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:elevation="6dp"
+        android:layout_gravity="center"
+        android:indeterminateTint="#228B22" />
 </FrameLayout>
