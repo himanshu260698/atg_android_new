@@ -17,6 +17,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +35,9 @@ import com.ATG.World.preferences.UserPreferenceManager;
 import com.ATG.World.utilities.GlideApp;
 //import com.ATG.World.utilities.GlideApp;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -81,6 +85,7 @@ public class EventDetailFragment extends Fragment {
     TextView mEndTime;
     @BindView(R.id.wv_post_description)
     WebView postDescription;
+    int setTime=0;
    /*@BindView(R.id.iv_user_comment)
            @Nullable
     ImageView mCommenterPicture;
@@ -272,7 +277,7 @@ public class EventDetailFragment extends Fragment {
     };
 
     public void setData() {
-      //  progressBar.setVisibility(View.GONE);
+        //  progressBar.setVisibility(View.GONE);
         //setupPostCoverImage(mCoverPicture, postDetail);
         setupPostUserImage(mUserPicture, postDetail);
         setupPostUserName(mUserName, postDetail);
@@ -287,9 +292,9 @@ public class EventDetailFragment extends Fragment {
         setupVenue(mVenue, postDetail);
         setupCity(mCity, postDetail);
         setupStartTime(mStartTime, postDetail);
+        setupEndDate(mEndDate, postDetail);
         setupEndTime(mEndTime, postDetail);
         setupStartDate(mStartDate, postDetail);
-        setupEndDate(mEndDate, postDetail);
         setupTags();
     }
     private void setupEventTitle(TextView title,PostDetail postDetail)
@@ -297,13 +302,34 @@ public class EventDetailFragment extends Fragment {
         title.setText(postDetail.getTitle());
     }
     private void setupContact(TextView contact, PostDetail postDetail) {
-        contact.setText(postDetail.getContact_number());
+        LinearLayout con_lay;
+        if(postDetail.getContact_number().length()!=0)
+            contact.setText(postDetail.getContact_number());
+        else
+        {
+            con_lay=(LinearLayout)(getActivity().findViewById(R.id.contact_layout));
+            con_lay.setVisibility(View.GONE);
+        }
+
     }
     private void setupEmail(TextView email, PostDetail postDetail) {
-        email.setText(postDetail.getEmail_address());
+        LinearLayout em_lay;
+        if(postDetail.getEmail_address().length()!=0)
+            email.setText(postDetail.getEmail_address());
+        else
+        {
+            em_lay=(LinearLayout)(getActivity().findViewById(R.id.em_lay));
+            em_lay.setVisibility(View.GONE);        }
     }
     private void setupWebsite(TextView website, PostDetail postDetail) {
-        website.setText(postDetail.getWebsite());
+        LinearLayout web_lay;
+        if(postDetail.getWebsite().length()!=0)
+            website.setText(postDetail.getWebsite());
+        else
+        {
+            web_lay=(LinearLayout)(getActivity().findViewById(R.id.web_lay));
+            web_lay.setVisibility(View.GONE);
+        }
     }
     private void setupProfession(TextView profession, PostDetail postDetail) {
         profession.setText(postDetail.getProfession());
@@ -312,7 +338,14 @@ public class EventDetailFragment extends Fragment {
         venue.setText(postDetail.getVenue());
     }
     private void setupCity(TextView city, PostDetail postDetail) {
-        city.setText(postDetail.getUser_city());
+        LinearLayout cit_lay;
+        if(postDetail.getUser_city()!=null)
+            city.setText(postDetail.getUser_city());
+        else
+        {
+            cit_lay=(LinearLayout)(getActivity().findViewById(R.id.cit_lay));
+            cit_lay.setVisibility(View.GONE);
+        }
     }
     private void setupStartTime(TextView startTime, PostDetail postDetail) {
         startTime.setText(postDetail.getStart_time());
@@ -320,21 +353,39 @@ public class EventDetailFragment extends Fragment {
     private void setupStartDate(TextView startDate, PostDetail postDetail) {
         startDate.setText(postDetail.getStart_date());
     }
-    private void setupEndTime(TextView endTime, PostDetail postDetail) {
-        endTime.setText(postDetail.getEnd_time());
-    }
     private void setupEndDate(TextView endDate, PostDetail postDetail) {
-        endDate.setText(postDetail.getEnd_date());
+        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd /*HH:mm:ss*/");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date strDate = null,enddate=null;
+        try {
+            strDate = sdf.parse(postDetail.getStart_date()/*+" "+postDetail.getStart_time()*/);
+            enddate=sdf.parse(postDetail.getEnd_date()/*+" "+postDetail.getEnd_time()*/);
+            if (enddate.compareTo(strDate)==1) {
+                endDate.setText(postDetail.getEnd_date());
+                setTime=100;
+            }
+            else
+                endDate.setText("N/A");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
-    /*private void setupPostCoverImage(ImageView cover, PostDetail detail) {
-        String url = getResources().getString(R.string.event_details_image_path) + detail.getProfile_image();
+
+    private void setupEndTime(TextView endTime, PostDetail postDetail) {
+        if(setTime==100)
+            endTime.setText(postDetail.getEnd_time());
+        else
+            endTime.setText("N/A");
+    }
+    private void setupPostCoverImage(ImageView cover, PostDetail detail) {
+        String url = getResources().getString(R.string.article_details_image_path) + detail.getProfile_image();
         if (!TextUtils.isEmpty(detail.getProfile_image())) {
             mUserPicture.setVisibility(View.VISIBLE);
             GlideApp.with(cover.getContext())
                     .load(url)
                     .into(cover);
         }
-    }*/
+    }
 
     private void setupPostUserImage(ImageView image, PostDetail detail) {
         mUserPicture.setVisibility(View.VISIBLE);
