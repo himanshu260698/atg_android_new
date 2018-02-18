@@ -74,26 +74,36 @@ public class SingleGroupPostAdapter extends RecyclerView.Adapter<SingleGroupPost
 
     public static class CustomHolder extends RecyclerView.ViewHolder {
 
-        /*@BindView(R.id.iv_dashboard_user_img)
-        ImageView postUserProfilePicture;*/
+//        @BindView(R.id.iv_dashboard_user_img)
+//        ImageView postUserProfilePicture;
+//        @BindView(R.id.tv_dashboard_user_name)
+//        TextView postUserName;@BindView(R.id.tv_dashboard_post_time)
+//        TextView postTime;
+//        @BindView(R.id.iv_get_all)
+//        ImageView postImage;
+//        @BindView(R.id.tv_post_type)
+//        TextView postType;
+//        @BindView(R.id.tv_title_get_all)
+//        TextView postTitle;
+//        @BindView(R.id.tv_likes)
+//        TextView postLikes;
+//        @BindView(R.id.tv_unlikes)
+//        TextView postUnlikes;
+//        @BindView(R.id.tv_comments)
+//        TextView postComments;
+//        @BindView(R.id.tv_share)
+//        TextView postShare;
+
         @BindView(R.id.tv_dashboard_user_name)
         TextView postUserName;
-        /*@BindView(R.id.tv_dashboard_post_time)
-        TextView postTime;*/
+        @BindView(R.id.tv_dashboard_post_time)
+        TextView postTime;
         @BindView(R.id.iv_get_all)
         ImageView postImage;
         @BindView(R.id.tv_post_type)
         TextView postType;
         @BindView(R.id.tv_title_get_all)
         TextView postTitle;
-        @BindView(R.id.tv_likes)
-        TextView postLikes;
-        @BindView(R.id.tv_unlikes)
-        TextView postUnlikes;
-        @BindView(R.id.tv_comments)
-        TextView postComments;
-        @BindView(R.id.tv_share)
-        TextView postShare;
 
         public CustomHolder (View itemView) {
             super(itemView);
@@ -107,10 +117,10 @@ public class SingleGroupPostAdapter extends RecyclerView.Adapter<SingleGroupPost
             setupPostType(postType, article);
             setupPostImage(postImage, article);
             setupPostTitle(postTitle, article);
-            setupPostLikes(postLikes, article);
-            setupPostUnlikes(postUnlikes, article);
-            setupPostComments(postComments, article);
-            setupPostShares(postShare, article);
+//            setupPostLikes(postLikes, article);
+//            setupPostUnlikes(postUnlikes, article);
+//            setupPostComments(postComments, article);
+//            setupPostShares(postShare, article);
             int adapterPos = getAdapterPosition();
         }
 
