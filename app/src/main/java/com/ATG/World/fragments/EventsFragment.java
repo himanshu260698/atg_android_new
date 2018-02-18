@@ -200,7 +200,7 @@ public class EventsFragment extends BaseFragment implements EventsAdapter.OnItem
         @Override
         public void onFailure(Call call, Throwable t) {
             NetworkLogUtility.logFailure(call, t);
-
+                Log.e("events","falure");
             if (!call.isCanceled()) {
                 isLoading = false;
                 mProgressBar.setVisibility(View.GONE);
