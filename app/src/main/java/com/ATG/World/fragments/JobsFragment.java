@@ -1,6 +1,7 @@
 package com.ATG.World.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.ATG.World.R;
+import com.ATG.World.activity.PostDetailActivity;
 import com.ATG.World.adapters.ArticleAdapter;
 import com.ATG.World.adapters.JobsAdapter;
 import com.ATG.World.models.Dashboard;
@@ -39,7 +42,7 @@ import retrofit2.Response;
 
 
 public class JobsFragment extends BaseFragment implements JobsAdapter.OnReloadClickListener, JobsAdapter.OnItemClickListener {
-
+    private static final String TAG = ArticleFragment.class.getSimpleName();
     public static final int PAGE_SIZE = 7;
     public static final int GET_JOBS_FILTER = 5;
     public static final int NO_RECORD_FOUND = 3;
@@ -261,8 +264,15 @@ public class JobsFragment extends BaseFragment implements JobsAdapter.OnReloadCl
 
     @Override
     public void onItemClick(int position, View view) {
+        Log.d(TAG, "onItemClick: " + position);
         // Get Item position
-    }
+        Intent intent = new Intent(getActivity(), PostDetailActivity.class);
+        Bundle bundle = new Bundle();
+        Log.e("job_id_clicked",""+jobsAdapter.getItem(position).getId());
+        bundle.putString("Type", jobsAdapter.getItem(position).getType());
+        bundle.putInt("FeedId", jobsAdapter.getItem(position).getId());
+        intent.putExtras(bundle);
+        startActivity(intent);    }
 
     private void removeListeners() {
         mRecyclerView.removeOnScrollListener(recyclerViewOnScrollListener);

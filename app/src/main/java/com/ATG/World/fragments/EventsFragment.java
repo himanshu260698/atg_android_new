@@ -268,7 +268,7 @@ public class EventsFragment extends BaseFragment implements EventsAdapter.OnItem
         Bundle bundle = new Bundle();
         Log.e("event_id_clicked",""+eventsAdapter.getItem(position).getId());
         bundle.putString("Type", eventsAdapter.getItem(position).getType());
-        bundle.putInt("feed_id", eventsAdapter.getItem(position).getId());
+        bundle.putInt("FeedId", eventsAdapter.getItem(position).getId());
         intent.putExtras(bundle);
         startActivity(intent);    }
 

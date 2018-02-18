@@ -139,7 +139,7 @@ public class EventDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate: ");
         if (getArguments() != null) {
-            feedId = (int) getArguments().get("feed_id");
+            feedId = (int) getArguments().get("FeedId");
             Log.e("feed_id_event_details:",""+feedId);
 
         }
