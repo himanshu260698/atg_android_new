@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import com.ATG.World.models.AddEditDialogueResponse;
 import com.ATG.World.models.DashboardResponse;
 import com.ATG.World.models.FeedDetailResponse;
+import com.ATG.World.models.JobDetailResponse;
 import com.ATG.World.models.PostJobResponse;
 import com.ATG.World.models.PostQriousResponse;
 import com.ATG.World.models.UpvoteDownvoteResponse;
@@ -164,6 +165,12 @@ public interface AtgService {
     Call<FeedDetailResponse> getFeedDetails(@Field("type") String postType,
                                             @Field("feed_id") int feedId,
                                             @Field("user_id") int userId);
+
+    @POST("ws-feed-detail")
+    @FormUrlEncoded
+    Call<JobDetailResponse> getJobDetails(@Field("type") String postType,
+                                          @Field("feed_id") int feedId,
+                                          @Field("user_id") int userId);
 
     @GET("ws-upvote-downvote")
     Call<UpvoteDownvoteResponse> setUpvoteDownvote(@Query("status") int status,

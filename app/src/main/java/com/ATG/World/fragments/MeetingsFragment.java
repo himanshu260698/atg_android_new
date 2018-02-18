@@ -166,7 +166,7 @@ public class MeetingsFragment extends BaseFragment implements MeetingsAdapter.On
     public Callback<DashboardResponse> firstFetchCallback = new Callback<DashboardResponse>() {
         @Override
         public void onResponse(Call<DashboardResponse> call, Response<DashboardResponse> response) {
-            mProgressBar.setVisibility(View.GONE);
+            //mProgressBar.setVisibility(View.GONE);
             isLoading = false;
 
             if (!response.isSuccessful()) {
