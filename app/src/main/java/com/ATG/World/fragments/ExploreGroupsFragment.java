@@ -40,7 +40,7 @@ import retrofit2.Response;
  * Created by Prince on 24/1/18.
  */
 
-public class MyGroupFragment extends Fragment {
+public class ExploreGroupsFragment extends Fragment {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -179,7 +179,7 @@ public class MyGroupFragment extends Fragment {
     }
 
     private void setupViewPager() {
-        MyGroupFragment.CollectionPagerAdapter adapter = new MyGroupFragment.CollectionPagerAdapter(getFragmentManager());
+        CollectionPagerAdapter adapter = new CollectionPagerAdapter(getFragmentManager());
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
     }

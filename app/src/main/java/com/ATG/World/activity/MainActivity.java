@@ -522,7 +522,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     case R.id.nav_my_groups:
                         navItemIndex = 4;
-                        //changeFrame(new MyGroupFragment(),R.string.my_groups);
+                        changeFrame(new MyGroupFragment(),R.string.my_groups);
                         CURRENT_TAG = TAG_MY_GROUPS;
                         break;
 

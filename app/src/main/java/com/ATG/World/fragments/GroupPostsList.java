@@ -91,6 +91,8 @@ public class GroupPostsList extends BaseFragment {
                                     new SingleGroupPostAdapter(group_id, type,
                                             getContext(), arrPostDatumList);
                             mRecyclerView.setAdapter(singleGroupPostAdapter);
+                            if(mProgressBar!=null)
+                                mProgressBar.setVisibility(View.INVISIBLE);
                         }
                         catch (NullPointerException e){
 
