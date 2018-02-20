@@ -70,8 +70,8 @@ public class EducationDetailFragment extends Fragment {
     TextView likes;
     @BindView(R.id.tv_unlikes)
     TextView unlikes;
-    @BindView(R.id.tv_followers)
-    TextView followers;
+    @BindView(R.id.tv_share)
+    TextView share;
     int setTime=0;
    /*@BindView(R.id.iv_user_comment)
            @Nullable
@@ -199,17 +199,12 @@ public class EducationDetailFragment extends Fragment {
         setupPostDescription(postDescription, educationDetail);
         setupLikesCount(likes, educationDetail);
         setupUnLikesCount(unlikes, educationDetail);
-        setupFollowersCount(followers,educationDetail);
         setupTags();
     }
 
     private void setupTitle(TextView title,EducationDetail postDetail)
     {
         title.setText(postDetail.getTitle());
-    }
-    private void setupFollowersCount(TextView tv_follow,EducationDetail educationDetail)
-    {
-        tv_follow.setText(""+educationDetail.getFollower_count());
     }
 
 
