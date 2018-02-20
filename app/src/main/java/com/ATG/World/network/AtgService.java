@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.ATG.World.models.AddEditDialogueResponse;
 import com.ATG.World.models.DashboardResponse;
+import com.ATG.World.models.EducationDetailResponse;
 import com.ATG.World.models.FeedDetailResponse;
 import com.ATG.World.models.JobDetailResponse;
 import com.ATG.World.models.PostJobResponse;
@@ -171,6 +172,11 @@ public interface AtgService {
     Call<JobDetailResponse> getJobDetails(@Field("type") String postType,
                                           @Field("feed_id") int feedId,
                                           @Field("user_id") int userId);
+    @POST("ws-feed-detail")
+    @FormUrlEncoded
+    Call<EducationDetailResponse> getEducationDetails(@Field("type") String postType,
+                                                      @Field("feed_id") int feedId,
+                                                      @Field("user_id") int userId);
 
     @GET("ws-upvote-downvote")
     Call<UpvoteDownvoteResponse> setUpvoteDownvote(@Query("status") int status,
@@ -187,43 +193,43 @@ public interface AtgService {
 
     @POST("ws-post-article-step-one")
     @FormUrlEncoded
-    Call<PostArticleResponse> postArticleStepOne(@Field("user_id")@NonNull String userId, @Field("group_id")@NonNull int groupId,
-                                                @Field("already_exist_article_id")String already_exist_article_id,
-                                                @Field("title")@NonNull String title, @Field("description")@NonNull String description);
+    Call<PostArticleResponse> postArticleStepOne(@Field("user_id") @NonNull String userId, @Field("group_id") @NonNull int groupId,
+                                                 @Field("already_exist_article_id") String already_exist_article_id,
+                                                 @Field("title") @NonNull String title, @Field("description") @NonNull String description);
     @Multipart
     @POST("ws-post-article-step-two")
-    Call<PostArticleResponse> postArticleStepTwo(@Part("user_id")RequestBody userId,@Part("article_id")RequestBody articleId,
-                                                 @Part("tags")RequestBody tags, @Part MultipartBody.Part file,
-                                                 @Part("title")RequestBody title);
+    Call<PostArticleResponse> postArticleStepTwo(@Part("user_id") RequestBody userId, @Part("article_id") RequestBody articleId,
+                                                 @Part("tags") RequestBody tags, @Part MultipartBody.Part file,
+                                                 @Part("title") RequestBody title);
     //Post qrious calls
 
     @POST("ws-post-qrious-step-one")
     @FormUrlEncoded
-    Call<PostQriousResponse> postQriousStepOne(@Field("user_id")@NonNull String userId, @Field("group_id")@NonNull int groupId,
-                                               @Field("already_exist_qrious_id")String already_exist_qrious_id,
-                                               @Field("title")@NonNull String title, @Field("description")@NonNull String description);
+    Call<PostQriousResponse> postQriousStepOne(@Field("user_id") @NonNull String userId, @Field("group_id") @NonNull int groupId,
+                                               @Field("already_exist_qrious_id") String already_exist_qrious_id,
+                                               @Field("title") @NonNull String title, @Field("description") @NonNull String description);
 
     @Multipart
     @POST("ws-post-qrious-step-two")
-    Call<PostQriousResponse> postQriousStepTwo(@Part("user_id")RequestBody userId,@Part("qrious_id")RequestBody articleId,
-                                                 @Part("tags")RequestBody tags, @Part MultipartBody.Part file,
-                                                 @Part("title")RequestBody title);
+    Call<PostQriousResponse> postQriousStepTwo(@Part("user_id") RequestBody userId, @Part("qrious_id") RequestBody articleId,
+                                               @Part("tags") RequestBody tags, @Part MultipartBody.Part file,
+                                               @Part("title") RequestBody title);
 
     //Post job calls
     @POST("ws-post-job-step-one")
     @FormUrlEncoded
-    Call<PostJobResponse> postJobStepOne(@Field("user_id")@NonNull String userId, @Field("group_id")@NonNull int groupId,
-                                             @Field("already_exist_article_id")String already_exist_article_id,
-                                             @Field("title")@NonNull String title, @Field("description")@NonNull String description,
-                                             @Field("location")@NonNull String location);
+    Call<PostJobResponse> postJobStepOne(@Field("user_id") @NonNull String userId, @Field("group_id") @NonNull int groupId,
+                                         @Field("already_exist_article_id") String already_exist_article_id,
+                                         @Field("title") @NonNull String title, @Field("description") @NonNull String description,
+                                         @Field("location") @NonNull String location);
 
     @POST("ws-post-job-step-two")
     @FormUrlEncoded
-    Call<PostJobResponse> postJobStepTwo(@Field("user_id")@NonNull String userId, @Field("job_id")@NonNull int jobId,
-                                         @Field("company_name")String companyName,@Field("company_website")String companyWebsite,
-                                         @Field("role")String role,@Field("external_link")String extLink,
-                                         @Field("email_id")String emailId,@Field("dead_line")String deadline,
-                                         @Field("education")String education,@Field("min_exp")String minExperience,
-                                         @Field("location")String location,@Field("tags")String tags,
-                                         @Field("emp_type")int empType);
+    Call<PostJobResponse> postJobStepTwo(@Field("user_id") @NonNull String userId, @Field("job_id") @NonNull int jobId,
+                                         @Field("company_name") String companyName, @Field("company_website") String companyWebsite,
+                                         @Field("role") String role, @Field("external_link") String extLink,
+                                         @Field("email_id") String emailId, @Field("dead_line") String deadline,
+                                         @Field("education") String education, @Field("min_exp") String minExperience,
+                                         @Field("location") String location, @Field("tags") String tags,
+                                         @Field("emp_type") int empType);
 }
