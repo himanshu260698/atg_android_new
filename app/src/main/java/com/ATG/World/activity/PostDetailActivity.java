@@ -11,8 +11,10 @@ import android.widget.Toolbar;
 
 import com.ATG.World.R;
 import com.ATG.World.fragments.ArticleDetailFragment;
+import com.ATG.World.fragments.EducationDetailFragment;
 import com.ATG.World.fragments.EventDetailFragment;
 import com.ATG.World.fragments.JobDetailFragment;
+import com.ATG.World.models.EducationDetail;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,6 +53,13 @@ public class PostDetailActivity extends AppCompatActivity {
                     .commit();
 
         } else if (postType.equals("Education")) {
+            Log.e("\nmessage","postType == \"Education\"");
+            EducationDetailFragment fragment = EducationDetailFragment.newInstance(intent.getExtras());
+            Log.e("feed_id_post_details:",""+intent.getExtras().getInt("FeedId"));
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.post_detail_frame, fragment)
+                    .commit();
 
         } else if (postType.equals( "Meetup")) {
 

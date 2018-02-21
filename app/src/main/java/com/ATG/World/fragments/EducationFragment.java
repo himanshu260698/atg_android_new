@@ -1,6 +1,7 @@
 package com.ATG.World.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.ATG.World.R;
+import com.ATG.World.activity.PostDetailActivity;
 import com.ATG.World.adapters.EducationAdapter;
 import com.ATG.World.models.Dashboard;
 import com.ATG.World.models.DashboardResponse;
@@ -39,6 +42,7 @@ import retrofit2.Response;
  * A simple {@link Fragment} subclass.
  */
 public class EducationFragment extends BaseFragment implements EducationAdapter.OnItemClickListener, EducationAdapter.OnReloadClickListener {
+    private static final String TAG = EducationFragment.class.getSimpleName();
 
     public static final int PAGE_SIZE = 7;
     public static final int GET_EDUCATION_FILTER = 2;
@@ -259,7 +263,15 @@ public class EducationFragment extends BaseFragment implements EducationAdapter.
 
     @Override
     public void onItemClick(int position, View view) {
+        Log.d(TAG, "onItemClick: " + position);
         // Get Item position
+        Intent intent = new Intent(getActivity(), PostDetailActivity.class);
+        Bundle bundle = new Bundle();
+        Log.e("education_id_clicked",""+educationAdapter.getItem(position).getId());
+        bundle.putString("Type", educationAdapter.getItem(position).getType());
+        bundle.putInt("FeedId", educationAdapter.getItem(position).getId());
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     private void removeListeners() {
