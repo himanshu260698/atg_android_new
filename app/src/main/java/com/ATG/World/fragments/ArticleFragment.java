@@ -109,9 +109,11 @@ public class ArticleFragment extends BaseFragment implements ArticleAdapter.OnIt
         mRecyclerView.addOnScrollListener(recyclerViewOnScrollListener);
 
         AtgService atgService = AtgClient.getClient().create(AtgService.class);
-        Call<DashboardResponse> call = atgService.getDashboardData(1, PAGE_START, Integer.parseInt(UserPreferenceManager.getUserId(getActivity())));
-        Log.d(TAG, "onViewCreated: " + call);
+        if(!UserPreferenceManager.getUserId(getActivity()).equalsIgnoreCase("")){
+       Call<DashboardResponse> call = atgService.getDashboardData(1, PAGE_START, Integer.parseInt(UserPreferenceManager.getUserId(getActivity())));
+        Log.d(TAG, "onViewCreated: " + call +    UserPreferenceManager.getUserId(getActivity()));
         call.enqueue(firstFetchCallback);
+        }
     }
 
     @Override
