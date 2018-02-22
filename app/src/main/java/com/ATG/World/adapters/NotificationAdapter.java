@@ -2,6 +2,7 @@ package com.ATG.World.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -144,6 +145,7 @@ public class NotificationAdapter extends BaseAdapter<Notification> implements Ev
     public void onItemClick(int position, View view) {
         Retrofit retrofit=new AtgClient().getClient();
         AtgService atg=retrofit.create(AtgService.class);
+        Log.e("notification id",""+items.get(position).getFeed_id());
         Call<MarkNotificationResponse> call=atg.markNotificationRead(items.get(position).getUser_id());
         call.enqueue(new Callback<MarkNotificationResponse>() {
             @Override
@@ -163,8 +165,6 @@ public class NotificationAdapter extends BaseAdapter<Notification> implements Ev
 
         @BindView(R.id.noti_message)
         TextView nmess;
-        @BindView(R.id.noti_subject)
-        TextView nsub;
         @BindView(R.id.user_name)
         TextView nname;
         @BindView(R.id.noti_time)
@@ -179,7 +179,6 @@ public class NotificationAdapter extends BaseAdapter<Notification> implements Ev
            // setupUserId(nuid, article);
             setupUserImage(uImage, article);
             setupMessage(nmess, article);
-            setupSubject(nsub, article);
             setupTime(ntime, article);
             setupName(nname,article);
             int adapterPos = getAdapterPosition();
@@ -187,10 +186,6 @@ public class NotificationAdapter extends BaseAdapter<Notification> implements Ev
         private void setupMessage(TextView t,Notification article)
         {
             t.setText(article.getMessage());
-        }
-        private void setupSubject(TextView t,Notification article)
-        {
-            t.setText(article.getSubject());
         }
         private void setupTime(TextView t,Notification article)
         {

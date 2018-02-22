@@ -25,11 +25,11 @@
             app:layout_constraintTop_toTopOf="parent" />-->
 
         <TextView
-            android:text="Your comment got upvoted"
             android:id="@+id/noti_message"
             style="@style/HeadingText"
-            android:layout_width="wrap_content"
+            android:layout_width="270dp"
             android:layout_height="wrap_content"
+            android:text="Your comment got upvoted"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -66,18 +66,6 @@
             android:id="@+id/noti_time"
             style="@style/OtherText"
             android:layout_width="@dimen/size_0"
-            android:layout_height="26dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/iv_get_all"
-            app:layout_constraintTop_toBottomOf="@+id/noti_subject" />
-        <TextView
-            android:textSize="15dp"
-            android:text="Upvoted your Comment"
-            android:id="@+id/noti_subject"
-            style="@style/OtherText"
-            android:layout_width="@dimen/size_0"
-            android:layout_marginTop="5dp"
-            android:paddingTop="4dp"
             android:layout_height="26dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/iv_get_all"
