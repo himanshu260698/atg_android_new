@@ -2,6 +2,7 @@ package com.ATG.World.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.Nullable;
 
 /**
  * Created by prate on 09-12-2017.
@@ -28,7 +29,7 @@ public class UserPreferenceManager {
     private static String USER_TWITTERLogin="twitter_login";
     private static String USER_EMAIL="email";
     private static String USER_MOBILE_NO="mob_no";
-
+    private static String userId="";
 
     private static void init(Context mContext) {
         mSharedPreferences = mContext.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
@@ -53,6 +54,7 @@ public class UserPreferenceManager {
         if(mSharedPreferences==null){
             init(mContext);
         }
+        setId(userID);
         SharedPreferences.Editor mShEditor=mSharedPreferences.edit();
         mShEditor.putString(USER_ID,userID);
         mShEditor.putString(USER_FNAME,userFname);
@@ -70,6 +72,10 @@ public class UserPreferenceManager {
         mShEditor.putString(USER_MOBILE_NO,userMobileNo);
         mShEditor.commit();
     }
+    private static void setId(String id) {
+        userId = id;
+    }
+
 
     public static void logout(Context mContext){
         if(mSharedPreferences==null){
@@ -87,6 +93,7 @@ public class UserPreferenceManager {
         userImg = mSharedPreferences.getString(USER_IMAGE, "");
         return userImg;
     }
+
     public static String getUserFbstatus(Context mContext) {
         String userFbstatus = "";
         if (mSharedPreferences == null) {
@@ -171,12 +178,14 @@ public class UserPreferenceManager {
         mUserMobile=mSharedPreferences.getString(USER_MOBILE_NO,"");
         return mUserMobile;
     }
+
     public static String getUserId(Context mContext){
         String mUserId="";
         if(mSharedPreferences==null){
             init(mContext);
         }
-        mUserId=mSharedPreferences.getString(USER_ID,"");
+
+        mUserId=mSharedPreferences.getString(USER_ID,userId);
         return mUserId;
     }
     public static String getUserFirstName(Context mContext){
