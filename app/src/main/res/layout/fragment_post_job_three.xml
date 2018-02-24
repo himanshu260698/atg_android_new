@@ -17,7 +17,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:id="@+id/toolbar"
-                android:background="#228B22"
+                android:background="@drawable/ab_gradient"
                 tools:targetApi="lollipop">
                 <RelativeLayout
                     android:layout_height="match_parent"
@@ -43,7 +43,7 @@
                         android:layout_alignBottom="@+id/article"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="13dp"
-                        android:background="#228B22"
+                        android:background="@drawable/ab_gradient"
                         android:clickable="true"
                         android:text="Skip"
                         android:elevation="4dp"
@@ -232,5 +232,5 @@
         android:layout_height="70dp"
         android:elevation="6dp"
         android:layout_gravity="center"
-        android:indeterminateTint="#228B22" />
+        android:indeterminateTint="@color/colorPrimary"  />
 </FrameLayout>

@@ -17,44 +17,64 @@
             android:elevation="4dp"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@drawable/ab_gradient"
             app:popupTheme="@style/AppTheme.PopupOverlay" >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <Button
                 android:id="@+id/change_back_button_article3"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="0dp"
-                android:background="@drawable/back_arrow"
-                />
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/back_arrow" />
+
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textSize="20sp"
-                android:textAlignment="textStart"
-                android:paddingTop="12dp"
-                android:paddingStart="8dp"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/change_back_button_article3"
                 android:layout_weight="1"
+                android:paddingStart="8dp"
+                android:paddingTop="12dp"
+                android:text="Post article"
+                android:textAlignment="textStart"
                 android:textColor="#ffffff"
-                android:text="Post article" />
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/skipAndFinish"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/ab_gradient"
+                android:text="Skip"
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
+        </RelativeLayout>
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 <LinearLayout
+    android:layout_marginTop="?attr/actionBarSize"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
     <RelativeLayout
-        android:layout_marginTop="?attr/actionBarSize"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <EditText
-            android:background="@drawable/editext_round_design_two"
+            android:background="@drawable/edittectdesignthree"
             android:id="@+id/tagEdittext"
-            android:padding="4dp"
+            android:padding="6dp"
             android:textSize="20sp"
             android:layout_width="match_parent"
             android:layout_height="100dp"
@@ -65,6 +85,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
             android:inputType="textMultiLine"
+            android:textColorHint="#228B22"
             android:hint="tags" />
 
         <ImageButton
@@ -85,27 +106,15 @@
             android:id="@+id/finalPostButton"
             android:layout_width="150dp"
             android:layout_height="50dp"
-            android:layout_alignEnd="@+id/tagEdittext"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="21dp"
-            android:layout_marginEnd="15dp"
-            android:background="@drawable/save_butto"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="22dp"
+            android:background="#228B22"
             android:text="Submit"
             android:textColor="#ffffff"
             android:textSize="18sp" />
 
-        <Button
-            android:id="@+id/skipAndFinish"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:layout_alignBaseline="@+id/finalPostButton"
-            android:layout_alignBottom="@+id/finalPostButton"
-            android:layout_alignStart="@+id/tagEdittext"
-            android:layout_marginStart="15dp"
-            android:background="@drawable/save_butto"
-            android:text="Skip"
-            android:textColor="#ffffff"
-            android:textSize="18sp" />
+
         <TextView
             android:id="@+id/addImageText"
             android:layout_width="wrap_content"
@@ -113,6 +122,7 @@
             android:layout_alignBottom="@+id/selectarticleImage"
             android:layout_centerHorizontal="true"
             android:textSize="18sp"
+            android:textColor="#228B22"
             android:text="Add image" />
     </RelativeLayout>
 </LinearLayout>

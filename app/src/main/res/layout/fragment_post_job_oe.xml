@@ -57,6 +57,7 @@
             android:layout_marginBottom="30dp"
             android:background="#228B22"
             android:textSize="20sp"
+            android:textColor="#ffffff"
             android:text="Next" />
 
     </RelativeLayout>
@@ -70,7 +71,7 @@
             android:elevation="4dp"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#228B22"
+            android:background="@drawable/ab_gradient"
             app:popupTheme="@style/AppTheme.PopupOverlay" >
 
             <Button
@@ -81,12 +82,12 @@
                 android:background="@drawable/back_arrow"
                 />
             <TextView
-                android:layout_marginStart="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textSize="20sp"
                 android:textAlignment="textStart"
                 android:paddingTop="14dp"
+                android:layout_marginStart="11dp"
                 android:paddingStart="8dp"
                 android:layout_weight="1"
                 android:textColor="#ffffff"
@@ -100,7 +101,7 @@
         android:layout_height="70dp"
         android:elevation="6dp"
         android:layout_gravity="center"
-        android:indeterminateTint="#228B22" />
+        android:indeterminateTint="@color/colorPrimary"  />
 
 
 
