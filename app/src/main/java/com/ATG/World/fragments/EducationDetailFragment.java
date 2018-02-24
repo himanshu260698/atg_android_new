@@ -37,6 +37,7 @@ import com.ATG.World.models.UpvoteDownvoteResponse;
 import com.ATG.World.network.AtgClient;
 import com.ATG.World.network.AtgService;
 import com.ATG.World.preferences.UserPreferenceManager;
+import com.ATG.World.utilities.GlideApp;
 //import com.ATG.World.utilities.GlideApp;
 //import com.ATG.World.utilities.GlideApp;
 
@@ -72,6 +73,8 @@ public class EducationDetailFragment extends Fragment {
     TextView unlikes;
     @BindView(R.id.tv_share)
     TextView share;
+    @BindView(R.id.iv_cover_edu_details)
+    ImageView coverImage;
     int setTime=0;
    /*@BindView(R.id.iv_user_comment)
            @Nullable
@@ -199,6 +202,7 @@ public class EducationDetailFragment extends Fragment {
         setupPostDescription(postDescription, educationDetail);
         setupLikesCount(likes, educationDetail);
         setupUnLikesCount(unlikes, educationDetail);
+       // setupCoverImage(coverImage,educationDetail);
         setupTags();
     }
 
@@ -206,6 +210,15 @@ public class EducationDetailFragment extends Fragment {
     {
         title.setText(postDetail.getTitle());
     }
+    /*private void setupCoverImage(ImageView cover, EducationDetail detail) {
+        String url = getResources().getString(R.string.article_details_image_path) + detail.getProfile_image();
+        if (!TextUtils.isEmpty(detail.getProfile_image())) {
+            cover.setVisibility(View.VISIBLE);
+            GlideApp.with(cover.getContext())
+                    .load(url)
+                    .into(cover);
+        }
+    }*/
 
 
     private void setupPostDescription(WebView description, EducationDetail detail) {
