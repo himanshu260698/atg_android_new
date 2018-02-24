@@ -58,14 +58,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private View headerLayout;
     @BindView(R.id.layoutFabJob)
     LinearLayout layoutFabjob;
-    @BindView(R.id.layoutFabMeetup)
-    LinearLayout layoutFabMeetup;
+  //  @BindView(R.id.layoutFabMeetup)
+   // LinearLayout layoutFabMeetup;
     @BindView(R.id.layoutFabArticle)
     LinearLayout layoutFabArticle;
     @BindView(R.id.layoutFabEducation)
     LinearLayout layoutFabEducation;
-    @BindView(R.id.layoutFabEvent)
-    LinearLayout layoutFabEvent;
+  //  @BindView(R.id.layoutFabEvent)
+   // LinearLayout layoutFabEvent;
     @BindView(R.id.layoutFabQrious)
     LinearLayout layoutFabQrious;
 
@@ -501,9 +501,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     case R.id.nav_post:
                         navItemIndex = 1;
-                        CURRENT_TAG = TAG_POST;
-                        loadPostFragment();
-
+                        CURRENT_TAG = TAG_HOME;
+                       // loadPostFragment();
+                        loadHomeFragment();
+                        fab.show();
+                        openSubMenusFab();
                         break;
 
                     case R.id.nav_notification:
@@ -616,10 +618,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void closeSubMenusFab() {
         layoutFabjob.setVisibility(View.INVISIBLE);
-        layoutFabMeetup.setVisibility(View.INVISIBLE);
+     //   layoutFabMeetup.setVisibility(View.INVISIBLE);
         layoutFabArticle.setVisibility(View.INVISIBLE);
         layoutFabEducation.setVisibility(View.INVISIBLE);
-        layoutFabEvent.setVisibility(View.INVISIBLE);
+     //   layoutFabEvent.setVisibility(View.INVISIBLE);
         layoutFabQrious.setVisibility(View.INVISIBLE);
         fab.setImageResource(R.drawable.ic_add_black_24px);
         fabExpanded = false;
@@ -628,10 +630,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //Opens FAB submenus
     private void openSubMenusFab() {
         layoutFabjob.setVisibility(View.VISIBLE);
-        layoutFabMeetup.setVisibility(View.VISIBLE);
+     //   layoutFabMeetup.setVisibility(View.VISIBLE);
         layoutFabArticle.setVisibility(View.VISIBLE);
         layoutFabEducation.setVisibility(View.VISIBLE);
-        layoutFabEvent.setVisibility(View.VISIBLE);
+      //  layoutFabEvent.setVisibility(View.VISIBLE);
         layoutFabQrious.setVisibility(View.VISIBLE);
         fab.setImageResource(R.drawable.ic_clear_black_24px);
         fabExpanded = true;
