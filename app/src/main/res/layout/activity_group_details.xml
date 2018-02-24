@@ -61,15 +61,27 @@
                         android:layout_marginRight="@dimen/SIZE_15"
                         android:layout_height="wrap_content">
 
-                        <TextView
+                        <RelativeLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Hello Enginneers"
-                            android:textColor="@color/colorWhite"
-                            android:gravity="center"
-                            android:id="@+id/group_profession"
-                            android:textSize="@dimen/TEXT_SIZE_25"
-                            android:textStyle="bold"/>
+                            android:layout_height="wrap_content">
+                            <ProgressBar
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/group_name_progress_bar"
+                                android:visibility="visible"
+                                android:layout_marginLeft="@dimen/SIZE_15"
+                                android:layout_centerVertical="true"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:visibility="invisible"
+                                android:textColor="@color/colorWhite"
+                                android:gravity="center"
+                                android:layout_centerVertical="true"
+                                android:id="@+id/group_profession"
+                                android:textSize="@dimen/TEXT_SIZE_25"
+                                android:textStyle="bold"/>
+                        </RelativeLayout>
 
                         <TextView
                             android:layout_width="wrap_content"

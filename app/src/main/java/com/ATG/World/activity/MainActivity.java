@@ -25,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ATG.World.R;
+import com.ATG.World.fragments.ExploreGroupsFragment;
 import com.ATG.World.fragments.HomeFragment;
 import com.ATG.World.fragments.MyGroupFragment;
 import com.ATG.World.fragments.NotificationFragment;
@@ -390,13 +391,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //    return ;
             case 4:
                 // Call My Groups
-                MyGroupFragment myGroupFragment = new MyGroupFragment();
-                return myGroupFragment;
-            /*
+                return new MyGroupFragment();
             case 5:
-                // Call Explore Groups
-                return ;*/
-
+                return new ExploreGroupsFragment();
             case 6:
                 logOut();
                 return null;

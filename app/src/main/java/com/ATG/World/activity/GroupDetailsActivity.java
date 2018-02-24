@@ -14,10 +14,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,6 +61,7 @@ public class GroupDetailsActivity extends AppCompatActivity {
     public GroupDetails groupDetails = new GroupDetails();
     public AppBarLayout appBarLayout;
     public CollapsingToolbarLayout collapsingToolbarLayout;
+    public ProgressBar groupNameProgress;
     public ImageView toolbarGroupIcon;
     public FrameLayout frameLayout;
     public TextView groupTitle;
@@ -67,6 +71,8 @@ public class GroupDetailsActivity extends AppCompatActivity {
     private static final String TAG_HOME = "Home";
     public Boolean expandedBar = true;
     public float alphaHeader = (float) 5.0;
+    private static final String TAG_MY_GROUPS = "My Groups";
+    private static final int NAV_INDEX_MY_GROUPS = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +93,8 @@ public class GroupDetailsActivity extends AppCompatActivity {
         collapsingToolbarLayout.setScrimAnimationDuration(200);
 
         toolbarGroupIcon = (ImageView) findViewById(R.id.group_detail_icon);
+
+        groupNameProgress = (ProgressBar) findViewById(R.id.group_name_progress_bar);
 
         /*backButton = (LinearLayout) findViewById(R.id.tv_sub_group_back);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -147,6 +155,8 @@ public class GroupDetailsActivity extends AppCompatActivity {
                                 GroupPostListResponse groupPostListResponse = response.body();
                                 ArrJoinedGroupDetails arrJoinedGroupDetails = groupPostListResponse.getArrData().getArrJoinedGroupDetails();
                                 groupTitle.setText(arrJoinedGroupDetails.getProfession());
+                                groupNameProgress.setVisibility(View.INVISIBLE);
+                                groupTitle.setVisibility(View.VISIBLE);
                             }
                             catch(NullPointerException e){
 
@@ -176,12 +186,12 @@ public class GroupDetailsActivity extends AppCompatActivity {
                                 String id){
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFragment(new GroupPostsList("0",id), getString(R.string.fragment_get_all));
-        viewPagerAdapter.addFragment(new GroupPostsList("1",id), getString(R.string.fragment_article));
-        viewPagerAdapter.addFragment(new GroupPostsList("2",id), getString(R.string.fragment_education));
-        viewPagerAdapter.addFragment(new GroupPostsList("3",id), getString(R.string.fragment_meetup));
-        viewPagerAdapter.addFragment(new GroupPostsList("4",id), getString(R.string.fragment_event));
-        viewPagerAdapter.addFragment(new GroupPostsList("5",id), getString(R.string.fragment_queries));
-        viewPagerAdapter.addFragment(new GroupPostsList("6",id), getString(R.string.fragment_jobs));
+        viewPagerAdapter.addFragment(new GroupPostsList("1",id), getString(R.string.fragment_queries));
+        viewPagerAdapter.addFragment(new GroupPostsList("2",id), getString(R.string.fragment_article));
+        viewPagerAdapter.addFragment(new GroupPostsList("3",id), getString(R.string.fragment_event));
+        viewPagerAdapter.addFragment(new GroupPostsList("4",id), getString(R.string.fragment_meetup));
+        viewPagerAdapter.addFragment(new GroupPostsList("5",id), getString(R.string.fragment_jobs));
+        viewPagerAdapter.addFragment(new GroupPostsList("6",id), getString(R.string.fragment_education));
 
         viewPager.setAdapter(viewPagerAdapter);
     }
@@ -216,4 +226,27 @@ public class GroupDetailsActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this,MainActivity.class);
+        intent.putExtra("index",NAV_INDEX_MY_GROUPS);
+        intent.putExtra("tag",TAG_MY_GROUPS);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
