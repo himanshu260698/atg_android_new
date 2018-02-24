@@ -25,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ATG.World.R;
+import com.ATG.World.fragments.ExploreGroupsFragment;
 import com.ATG.World.fragments.HomeFragment;
 import com.ATG.World.fragments.MyGroupFragment;
 import com.ATG.World.fragments.NotificationFragment;
@@ -522,13 +523,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     case R.id.nav_my_groups:
                         navItemIndex = 4;
-                        changeFrame(new MyGroupFragment(),R.string.my_groups);
                         CURRENT_TAG = TAG_MY_GROUPS;
+                        changeFrame(new MyGroupFragment(),R.string.my_groups);
                         break;
 
                     case R.id.nav_explore_groups:
                         navItemIndex = 5;
                         CURRENT_TAG = TAG_EXPLORE_GROUPS;
+                        changeFrame(new ExploreGroupsFragment(),R.string.explore_groups);
                         break;
 
                     case R.id.nav_logout:
@@ -659,6 +661,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void changeFrame(Fragment fragment, int id) {
+        drawer.closeDrawers();
         toolbar.setTitle(id);
         fragmentTransaction = getSupportFragmentManager().beginTransaction().replace(R.id.main_content, fragment);
         fragmentTransaction.commit();
