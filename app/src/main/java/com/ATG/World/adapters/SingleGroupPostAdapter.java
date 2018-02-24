@@ -125,7 +125,15 @@ public class SingleGroupPostAdapter extends RecyclerView.Adapter<SingleGroupPost
         }
 
         private void setupUserName(TextView postUserName, ArrPostDatum dashboard) {
-            int user_id = dashboard.getId();
+            String name = "";
+            if(dashboard.getFirstName()!=null)
+                name+=dashboard.getFirstName()+" ";
+            if(dashboard.getLastName()!=null)
+                name+=dashboard.getLastName();
+            if(name.equals("") &&
+                    dashboard.getUserName()!=null)
+                name = dashboard.getUserName().toString();
+            postUserName.setText(name);
         }
 
         /*private void setupUserImage(ImageView postUserProfilePicture, Dashboard dashboard) {

@@ -200,6 +200,8 @@ public class MyGroupsAdapter extends ArrayAdapter {
         public void onResponse(Call<JoinLeaveGroupResponse> call, Response<JoinLeaveGroupResponse> response) {
             Log.w("onResponse: ", response.body().getMsg());
             Intent intent = new Intent(getContext(),MainActivity.class);
+            intent.putExtra("index",NAV_INDEX_MY_GROUPS);
+            intent.putExtra("tag",TAG_MY_GROUPS);
             getContext().startActivity(intent);
             ((MainActivity)getContext()).finish();
         }
