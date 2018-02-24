@@ -180,7 +180,7 @@ public class PostArticlePartThree extends Fragment {
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        //super.onActivityResult(requestCode, resultCode, data);
         ((MainActivity)getActivity()).hideFAB();
         if (requestCode == 100) {
             if (resultCode == Activity.RESULT_OK) {
@@ -191,7 +191,7 @@ public class PostArticlePartThree extends Fragment {
                 String capturedImageFilePath = cursor.getString(column_index_data);
                 Uri imageuri = Uri.parse("file:///" + capturedImageFilePath);
                 selectButton.setImageBitmap(compressImage(imageuri));
-                realUri=Uri.parse(getRealPathFromURI(data.getData()));
+              //  realUri=Uri.parse(getRealPathFromURI(data.getData()));
                 ((MainActivity)getActivity()).hideFAB();
             }
 

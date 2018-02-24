@@ -538,6 +538,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     case R.id.settings:
                         navItemIndex = 7;
                         CURRENT_TAG = TAG_SETTINGS;
+                        loadHomeFragment();
                         break;
                     default:
                         navItemIndex = 0;
