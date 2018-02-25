@@ -8,8 +8,12 @@ import com.ATG.World.models.DashboardResponse;
 import com.ATG.World.models.EducationDetailResponse;
 import com.ATG.World.models.FeedDetailResponse;
 import com.ATG.World.models.JobDetailResponse;
+import com.ATG.World.models.PostArticleResponse2;
+import com.ATG.World.models.PostJobDetails2;
 import com.ATG.World.models.PostJobResponse;
+import com.ATG.World.models.PostJobResponse2;
 import com.ATG.World.models.PostQriousResponse;
+import com.ATG.World.models.PostQriousResponse2;
 import com.ATG.World.models.UpvoteDownvoteResponse;
 import com.ATG.World.models.FeedDetailResponse;
 import com.ATG.World.models.UpvoteDownvoteResponse;
@@ -198,9 +202,9 @@ public interface AtgService {
                                                  @Field("title") @NonNull String title, @Field("description") @NonNull String description);
     @Multipart
     @POST("ws-post-article-step-two")
-    Call<PostArticleResponse> postArticleStepTwo(@Part("user_id") RequestBody userId, @Part("article_id") RequestBody articleId,
-                                                 @Part("tags") RequestBody tags, @Part MultipartBody.Part file,
-                                                 @Part("title") RequestBody title);
+    Call<PostArticleResponse2> postArticleStepTwo(@Part("user_id") RequestBody userId, @Part("article_id") RequestBody articleId,
+                                                  @Part("tags") RequestBody tags, @Part MultipartBody.Part file,
+                                                  @Part("title") RequestBody title);
     //Post qrious calls
 
     @POST("ws-post-qrious-step-one")
@@ -211,9 +215,9 @@ public interface AtgService {
 
     @Multipart
     @POST("ws-post-qrious-step-two")
-    Call<PostQriousResponse> postQriousStepTwo(@Part("user_id") RequestBody userId, @Part("qrious_id") RequestBody articleId,
-                                               @Part("tags") RequestBody tags, @Part MultipartBody.Part file,
-                                               @Part("title") RequestBody title);
+    Call<PostQriousResponse2> postQriousStepTwo(@Part("user_id") RequestBody userId, @Part("qrious_id") RequestBody articleId,
+                                                @Part("tags") RequestBody tags, @Part MultipartBody.Part file,
+                                                @Part("title") RequestBody title);
 
     //Post job calls
     @POST("ws-post-job-step-one")
@@ -225,11 +229,11 @@ public interface AtgService {
 
     @POST("ws-post-job-step-two")
     @FormUrlEncoded
-    Call<PostJobResponse> postJobStepTwo(@Field("user_id") @NonNull String userId, @Field("job_id") @NonNull int jobId,
-                                         @Field("company_name") String companyName, @Field("company_website") String companyWebsite,
-                                         @Field("role") String role, @Field("external_link") String extLink,
-                                         @Field("email_id") String emailId, @Field("dead_line") String deadline,
-                                         @Field("education") String education, @Field("min_exp") String minExperience,
-                                         @Field("location") String location, @Field("tags") String tags,
-                                         @Field("emp_type") int empType);
+    Call<PostJobResponse2> postJobStepTwo(@Field("user_id") @NonNull String userId, @Field("job_id") @NonNull int jobId,
+                                          @Field("company_name") String companyName, @Field("company_website") String companyWebsite,
+                                          @Field("role") String role, @Field("external_link") String extLink,
+                                          @Field("email_id") String emailId, @Field("dead_line") String deadline,
+                                          @Field("education") String education, @Field("min_exp") String minExperience,
+                                          @Field("location") String location, @Field("tags") String tags,
+                                          @Field("emp_type") int empType);
 }
