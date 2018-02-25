@@ -31,6 +31,7 @@ import com.ATG.World.R;
 import com.ATG.World.activity.MainActivity;
 import com.ATG.World.models.PostArticleResponse;
 import com.ATG.World.models.PostQriousResponse;
+import com.ATG.World.models.PostQriousResponse2;
 import com.ATG.World.network.AtgClient;
 import com.ATG.World.network.AtgService;
 import com.ATG.World.preferences.UserPreferenceManager;
@@ -144,10 +145,10 @@ public class PostQriousThree extends Fragment {
                         RequestBody articleId = RequestBody.create(MediaType.parse("multipart/form-data"), articleIds.get(i));
                         RequestBody tags = RequestBody.create(MediaType.parse("multipart/form-data"), getTags());
                         RequestBody title = RequestBody.create(MediaType.parse("multipart/form-data"), transfereedTitle);
-                        Call<PostQriousResponse> postQriousThreeCall = atgService.postQriousStepTwo(userId, articleId, tags, body, title);
-                        postQriousThreeCall.enqueue(new Callback<PostQriousResponse>() {
+                        Call<PostQriousResponse2> postQriousThreeCall = atgService.postQriousStepTwo(userId, articleId, tags, body, title);
+                        postQriousThreeCall.enqueue(new Callback<PostQriousResponse2>() {
                             @Override
-                            public void onResponse(Call<PostQriousResponse> call, Response<PostQriousResponse> response) {
+                            public void onResponse(Call<PostQriousResponse2> call, Response<PostQriousResponse2> response) {
                                 if (response.code() == 200) {
                                     Toast.makeText(getActivity(), "Qrious updated successfully ", Toast.LENGTH_SHORT).show();
                                     loadHomeFragment();
@@ -156,7 +157,7 @@ public class PostQriousThree extends Fragment {
                             }
 
                             @Override
-                            public void onFailure(Call<PostQriousResponse> call, Throwable t) {
+                            public void onFailure(Call<PostQriousResponse2> call, Throwable t) {
                                 Toast.makeText(getActivity(), "Failed to update qrious", Toast.LENGTH_SHORT).show();
                             }
                         });

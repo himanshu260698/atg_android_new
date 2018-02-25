@@ -31,6 +31,7 @@ import com.ATG.World.R;
 import com.ATG.World.activity.MainActivity;
 import com.ATG.World.models.PostArticleDetails;
 import com.ATG.World.models.PostArticleResponse;
+import com.ATG.World.models.PostArticleResponse2;
 import com.ATG.World.network.AtgClient;
 import com.ATG.World.network.AtgService;
 import com.ATG.World.preferences.UserPreferenceManager;
@@ -261,10 +262,10 @@ public class PostArticlePartThree extends Fragment {
                         RequestBody articleId = RequestBody.create(MediaType.parse("multipart/form-data"), articleIds.get(i));
                         RequestBody tags = RequestBody.create(MediaType.parse("multipart/form-data"), getTags());
                         RequestBody title = RequestBody.create(MediaType.parse("multipart/form-data"), transfereedTitle);
-                        Call<PostArticleResponse> postArticleResponseCall = atgService.postArticleStepTwo(userId, articleId, tags, body, title);
-                        postArticleResponseCall.enqueue(new Callback<PostArticleResponse>() {
+                        Call<PostArticleResponse2> postArticleResponseCall = atgService.postArticleStepTwo(userId, articleId, tags, body, title);
+                        postArticleResponseCall.enqueue(new Callback<PostArticleResponse2>() {
                             @Override
-                            public void onResponse(Call<PostArticleResponse> call, Response<PostArticleResponse> response) {
+                            public void onResponse(Call<PostArticleResponse2> call, Response<PostArticleResponse2> response) {
                                 if (response.code() == 200) {
                                     Toast.makeText(getActivity(), "Article updated successfully ", Toast.LENGTH_SHORT).show();
                                     loadHomeFragment();
@@ -273,7 +274,7 @@ public class PostArticlePartThree extends Fragment {
                             }
 
                             @Override
-                            public void onFailure(Call<PostArticleResponse> call, Throwable t) {
+                            public void onFailure(Call<PostArticleResponse2> call, Throwable t) {
                                 Toast.makeText(getActivity(), "Failed to update article", Toast.LENGTH_SHORT).show();
                             }
                         });

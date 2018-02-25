@@ -22,7 +22,9 @@ import android.widget.Toast;
 
 import com.ATG.World.R;
 import com.ATG.World.activity.MainActivity;
+import com.ATG.World.models.PostJobDetails2;
 import com.ATG.World.models.PostJobResponse;
+import com.ATG.World.models.PostJobResponse2;
 import com.ATG.World.network.AtgClient;
 import com.ATG.World.network.AtgService;
 import com.ATG.World.preferences.UserPreferenceManager;
@@ -202,7 +204,7 @@ public class PostJobThree extends Fragment {
 
     }
     private void submit() {
-        Call<PostJobResponse> call;
+        Call<PostJobResponse2> call;
         for (int i = 0; i < jobIds.size(); i++) {
             call = atgService.postJobStepTwo(UserPreferenceManager.getUserId(getActivity()), Integer.parseInt(jobIds.get(i)),
                     cName.getText().toString(), cWebsite.getText().toString(), role.getText().toString(),
@@ -210,9 +212,9 @@ public class PostJobThree extends Fragment {
                     , education.getText().toString(), minExp.getText().toString(), location.getText().toString(),
                     getTags(), spinPosition
             );
-            call.enqueue(new Callback<PostJobResponse>() {
+            call.enqueue(new Callback<PostJobResponse2>() {
                 @Override
-                public void onResponse(Call<PostJobResponse> call, Response<PostJobResponse> response) {
+                public void onResponse(Call<PostJobResponse2> call, Response<PostJobResponse2> response) {
                     if (response.code() == 200) {
                         progressBar_cyclic_job_three.setVisibility(View.GONE);
                         loadHome();
@@ -224,7 +226,7 @@ public class PostJobThree extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<PostJobResponse> call, Throwable t) {
+                public void onFailure(Call<PostJobResponse2> call, Throwable t) {
                     Toast.makeText(getActivity(), "Failed to post job", Toast.LENGTH_SHORT).show();
                 }
             });
