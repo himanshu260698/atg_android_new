@@ -1,6 +1,7 @@
 package com.ATG.World.fragments;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,12 +17,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ATG.World.R;
-import com.ATG.World.activity.MainActivity;
-import com.ATG.World.adapters.GetAllAdapter;
-import com.ATG.World.models.DashboardResponse;
 import com.ATG.World.models.NicheGroupResponse;
 import com.ATG.World.models.Subgroup;
 import com.ATG.World.network.AtgClient;
@@ -182,10 +179,17 @@ public class GroupSelectionFragment extends Fragment {
 
         public void bind(Subgroup subgroup) {
             textView.setText(subgroup.getGroup_name());
-            if(subgroup.getFollowing())
+            if(subgroup.getFollowing()) {
                 button.setSelected(true);
-            else
+                button.setBackground(getActivity().getResources().getDrawable(R.drawable.rondedcorner));
+                button.setBackgroundColor(Color.parseColor("#20794d"));
+                button.setText("Following");
+                button.setTextColor(Color.WHITE);
+            }else{
                 button.setSelected(false);
+                button.setBackground(getActivity().getResources().getDrawable(R.drawable.rondedcorner));
+                button.setText("Follow");
+                button.setTextColor(Color.parseColor("#20794d"));}
             Log.e("CHECK",subgroup.getIcon_img());
             GlideApp.with(getContext())
                     .load(subgroup.getIcon_img())
@@ -198,15 +202,16 @@ public class GroupSelectionFragment extends Fragment {
                         addedGroups.removeGroup(subgroup.getId());
                         Log.e("CHECK",subgroup.getId()+""+"-");
                         subgroup.setFollowing(false);
-                        button.setSelected(false);}
+                        button.setSelected(false);
+                        /
+
+                    }
                     else{
                         addedGroups.addGroup(subgroup.getId());
                         Log.e("CHECK",subgroup.getId()+""+"+");
                         subgroup.setFollowing(true);
                         button.setSelected(true);}
                         nicheGroupAdapter.notifyDataSetChanged();
-
-
                 }
             });
 

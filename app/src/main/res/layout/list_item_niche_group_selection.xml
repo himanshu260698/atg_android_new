@@ -3,34 +3,54 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/tools"
     android:layout_margin="5dp"
     card_view:cardCornerRadius="2dp"
     card_view:contentPadding="10dp">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        >
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/image_group"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            />
 
         <TextView
             android:id="@+id/group_name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+
+            android:layout_marginStart="39dp"
+            android:layout_toEndOf="@+id/image_group"
+            android:layout_weight="6"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="ENGINEERING"
+            android:textAllCaps="true"
+            android:textSize="@dimen/TEXT_SIZE_16"
+            app:customFont="@string/str_font_bold" />
 
         <Button
             android:id="@+id/group_select"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
             android:layout_gravity="end"
-            android:background="@drawable/button_background"
-            android:text="Follow"
-            android:textColor="#fff" />
 
-    </LinearLayout>
+            android:layout_weight="2"
+            android:background="@drawable/rondedcorner"
+
+            android:text="Follow"
+            android:textColor="@color/colorPrimaryDark" />
+
+    </RelativeLayout>
 
 </android.support.v7.widget.CardView>
