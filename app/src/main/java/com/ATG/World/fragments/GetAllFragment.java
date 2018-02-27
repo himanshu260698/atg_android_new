@@ -115,7 +115,8 @@ public class GetAllFragment extends BaseFragment implements GetAllAdapter.OnItem
         mRecyclerView.addOnScrollListener(recyclerViewOnScrollListener);
 
         AtgService atgService = AtgClient.getClient().create(AtgService.class);
-        Call<DashboardResponse> call = atgService.getDashboardData(0, PAGE_START, 455);
+        Call<DashboardResponse> call = atgService.getDashboardData(0, PAGE_START,
+                UserPreferenceManager.getUserId(getContext()));
         call.enqueue(firstFetchCallback);
 
     }
