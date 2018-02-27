@@ -232,7 +232,15 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
 
                     @Override
                     public void failure(TwitterException e) {
-                        Toast.makeText(SocialLoginActivity.this, "Network problem", Toast.LENGTH_SHORT).show();
+                        Log.d("CLAY | jack1806", "failure: "+e.getMessage());
+                        String backPress1 = "Failed to get authorization, bundle incomplete";
+                        String backPress2 = "Authorization failed, request was canceled.";
+                        if(e.getMessage().equals(backPress1) ||
+                                e.getMessage().equals(backPress2)){
+                            Toast.makeText(SocialLoginActivity.this,"Sign In Cancelled", Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                            Toast.makeText(SocialLoginActivity.this,"Network Error", Toast.LENGTH_SHORT).show();
                     }
 
 
