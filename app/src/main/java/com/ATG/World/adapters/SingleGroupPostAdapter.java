@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ATG.World.R;
+import com.ATG.World.activity.PostDetailActivity;
 import com.ATG.World.models.ArrPostDatum;
 import com.ATG.World.models.Dashboard;
 import com.ATG.World.models.GroupPostListResponse;
@@ -69,7 +71,7 @@ public class SingleGroupPostAdapter extends RecyclerView.Adapter<SingleGroupPost
     @Override
     public void onBindViewHolder(CustomHolder holder, int position) {
         if(arrPostDatumList != null)
-            holder.bind(arrPostDatumList.get(position));
+            holder.bind(arrPostDatumList.get(position),context);
     }
 
     public static class CustomHolder extends RecyclerView.ViewHolder {
@@ -104,13 +106,15 @@ public class SingleGroupPostAdapter extends RecyclerView.Adapter<SingleGroupPost
         TextView postType;
         @BindView(R.id.tv_title_get_all)
         TextView postTitle;
+        View view;
 
         public CustomHolder (View itemView) {
             super(itemView);
+            view = itemView;
             ButterKnife.bind(this, itemView);
         }
 
-        private void bind(ArrPostDatum article) {
+        private void bind(ArrPostDatum article,Context context) {
             //setupUserImage(postUserProfilePicture, article);
             setupUserName(postUserName, article);
             //setupPostTime(postTime, article);
@@ -122,6 +126,16 @@ public class SingleGroupPostAdapter extends RecyclerView.Adapter<SingleGroupPost
 //            setupPostComments(postComments, article);
 //            setupPostShares(postShare, article);
             int adapterPos = getAdapterPosition();
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("CLAY | jack1806", "onClick: "+adapterPos);
+                    Intent intent = new Intent(context, PostDetailActivity.class);
+                    intent.putExtra("Type",article.getType());
+                    intent.putExtra("FeedId",article.getId());
+                    context.startActivity(intent);
+                }
+            });
         }
 
         private void setupUserName(TextView postUserName, ArrPostDatum dashboard) {
