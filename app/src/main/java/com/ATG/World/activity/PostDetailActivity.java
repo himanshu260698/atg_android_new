@@ -44,7 +44,7 @@ public class PostDetailActivity extends AppCompatActivity {
     private void setupFragment() {
         progressBar.setVisibility(View.GONE);
 
-        if (postType.equals("Article")) {
+        if (postType.equalsIgnoreCase("Article")) {
             ArticleDetailFragment fragment = ArticleDetailFragment.newInstance(getIntent().getExtras());
             Log.e("feed_id_post_details:",""+intent.getExtras().getInt("FeedId"));
             getSupportFragmentManager()
@@ -52,7 +52,7 @@ public class PostDetailActivity extends AppCompatActivity {
                     .replace(R.id.post_detail_frame, fragment)
                     .commit();
 
-        } else if (postType.equals("Education")) {
+        } else if (postType.equalsIgnoreCase("Education")) {
             Log.e("\nmessage","postType == \"Education\"");
             EducationDetailFragment fragment = EducationDetailFragment.newInstance(intent.getExtras());
             Log.e("feed_id_post_details:",""+intent.getExtras().getInt("FeedId"));
@@ -61,9 +61,9 @@ public class PostDetailActivity extends AppCompatActivity {
                     .replace(R.id.post_detail_frame, fragment)
                     .commit();
 
-        } else if (postType.equals( "Meetup")) {
+        } else if (postType.equalsIgnoreCase( "Meetup")) {
 
-        } else if (postType.equals("Event")) {
+        } else if (postType.equalsIgnoreCase("Event")) {
             Log.e("\nmessage","postType == \"Event\"");
             EventDetailFragment fragment = EventDetailFragment.newInstance(intent.getExtras());
             Log.e("feed_id_post_details:",""+intent.getExtras().getInt("FeedId"));
@@ -71,7 +71,7 @@ public class PostDetailActivity extends AppCompatActivity {
                     .beginTransaction()
                     .replace(R.id.post_detail_frame, fragment)
                     .commit();
-        } else if (postType.equals("Job")) {
+        } else if (postType.equalsIgnoreCase("Job")) {
             Log.e("\nmessage","postType == \"Job\"");
             JobDetailFragment fragment = JobDetailFragment.newInstance(intent.getExtras());
             Log.e("feed_id_post_details:",""+intent.getExtras().getInt("FeedId"));
@@ -79,7 +79,7 @@ public class PostDetailActivity extends AppCompatActivity {
                     .beginTransaction()
                     .replace(R.id.post_detail_frame, fragment)
                     .commit();
-        } else if (postType.equals("Qrious")) {
+        } else if (postType.equalsIgnoreCase("Qrious")) {
 
         }
     }
