@@ -38,11 +38,18 @@
         android:layout_height="wrap_content"
         android:textColor="@color/colorWhite"
         android:drawableStart="@drawable/ic_comment_white_24dp"
-        android:onClick="onCommentsImageViewClicked"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view_separater" />
+
+    <!-- TODO: implement a onClick Listener for the comment and share button in All Post Detail Fragments-->
+
+    <!-- I suggest not to use onClick attribute in XML as there is no direct Activity Class
+      attached to this layout please implement a suitable function -->
+
+    <!--android:onClick="onCommentsImageViewClicked"
+        android:onClick="onShareImageViewClicked"-->
 
     <TextView
         android:id="@+id/tv_share"
@@ -51,7 +58,6 @@
         android:layout_height="wrap_content"
         android:textColor="@color/colorWhite"
         android:drawableStart="@drawable/ic_share_white_24dp"
-        android:onClick="onShareImageViewClicked"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view_separater" />
