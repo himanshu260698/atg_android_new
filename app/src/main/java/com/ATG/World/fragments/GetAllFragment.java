@@ -116,7 +116,7 @@ public class GetAllFragment extends BaseFragment implements GetAllAdapter.OnItem
 
         AtgService atgService = AtgClient.getClient().create(AtgService.class);
         Call<DashboardResponse> call = atgService.getDashboardData(0, PAGE_START,
-                UserPreferenceManager.getUserId(getContext()));
+                Integer.parseInt(UserPreferenceManager.getUserId(getContext())));
         call.enqueue(firstFetchCallback);
 
     }

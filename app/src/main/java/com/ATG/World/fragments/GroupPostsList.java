@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +55,7 @@ public class GroupPostsList extends BaseFragment {
     private Unbinder unbinder;
     private LinearLayoutManager mLinearLayoutManager;
     public List<ArrPostDatum> arrPostDatumList;
+    public int page_number = 0;
 
     public GroupPostsList(String type,
                           String group_id){
@@ -77,9 +79,11 @@ public class GroupPostsList extends BaseFragment {
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
         AtgService atgService = AtgClient.getClient().create(AtgService.class);
+        Log.d("CLAY|jack1806",UserPreferenceManager.getUserId(getContext())+"::"
+                +this.group_id+"::"+this.type+"::"+page_number);
         Call<GroupPostListResponse> postListResponseCall =
                 atgService.getGroupPosts(UserPreferenceManager.getUserId(getContext()),
-                        this.group_id,this.type);
+                        this.group_id,this.type,page_number+"");
         Callback<GroupPostListResponse> groupPostListResponseCallback =
                 new Callback<GroupPostListResponse>() {
                     @Override
