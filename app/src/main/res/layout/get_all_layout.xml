@@ -14,23 +14,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--<ImageView
-            android:id="@+id/iv_dashboard_user_img"
-            android:layout_width="@dimen/dashboard_user_image_width"
-            android:layout_height="@dimen/dashboard_user_image_height"
+
+        <ImageView
+            android:id="@+id/iv_get_all"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
             android:src="@color/orange_A400"
             android:layout_margin="8dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />-->
-
-        <TextView
-            android:id="@+id/tv_dashboard_user_name"
-            style="@style/HeadingText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!--   <TextView
+               android:id="@+id/tv_dashboard_user_name"
+               style="@style/HeadingText"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               app:layout_constraintLeft_toLeftOf="parent"
+               app:layout_constraintTop_toTopOf="parent" />
+   --><TextView
+        android:id="@+id/tv_title_get_all"
+        style="@style/OtherText"
+        android:layout_width="@dimen/size_0"
+        android:layout_height="wrap_content"
+        android:ellipsize="marquee"
+        android:maxLines="2"
+        android:text="details"
+        app:layout_constraintLeft_toLeftOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@id/iv_get_all" />
         <TextView
             android:id="@+id/tv_dashboard_post_time"
             android:layout_width="wrap_content"
@@ -40,42 +51,82 @@
             android:drawableStart="@drawable/ic_history_black_24dp"
             android:fontFamily="sans-serif-condensed"
             android:textSize="14sp"
+            android:text="timestamp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_dashboard_user_name" />
+            app:layout_constraintTop_toBottomOf="@id/tv_title_get_all" />
 
         <TextView
             android:id="@+id/tv_post_type"
             style="@style/OtherText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+
             android:background="@drawable/rounded_corner"
             android:textColor="@color/teal_A700"
+            />
+        <TextView
+            android:id="@+id/tv_likes"
+            style="@style/DrawableTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_thumb_up_black_24dp"
+            android:onClick="onLikesImageViewClicked"
+
+
+
+            android:textSize="18sp"
+
+            app:layout_constraintBaseline_toBaselineOf="@id/tv_dashboard_user_name"
+            app:layout_constraintRight_toLeftOf="@id/tv_share"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_unlikes"
+            style="@style/DrawableTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_thumb_down_black_24dp"
+            android:onClick="onUnLikesImageViewClicked"
+
+            android:textSize="18sp"
             app:layout_constraintBaseline_toBaselineOf="@id/tv_dashboard_user_name"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/tv_share"
+            style="@style/DrawableTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_share_black_24dp"
+            android:onClick="onShareImageViewClicked"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/tv_unlikes"
+            app:layout_constraintTop_toBottomOf="@id/view_separater" />
 
         <ImageView
-            android:id="@+id/iv_get_all"
-            android:layout_width="@dimen/img_width_height"
-            android:layout_height="@dimen/img_width_height"
+            android:id="@+id/iv_dashboard_user_img"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@color/orange_A400"
+            android:padding="5dp"
             android:layout_margin="8dp"
-            android:scaleType="fitXY"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_dashboard_user_name" />
-
-        <TextView
-            android:id="@+id/tv_title_get_all"
-            style="@style/OtherText"
-            android:layout_width="@dimen/size_0"
-            android:layout_height="wrap_content"
-            android:ellipsize="marquee"
-            android:maxLines="2"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/iv_get_all"
             app:layout_constraintTop_toBottomOf="@id/tv_dashboard_post_time" />
 
+
+        <TextView
+            android:id="@+id/tv_dashboard_user_name"
+            style="@style/HeadingText"
+            android:text="User Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@id/iv_dashboard_user_img"
+            app:layout_constraintBottom_toBottomOf="@id/iv_dashboard_user_img"/>
+
+
         <!--<View
+        app:layout_constraintRight_toLeftOf="@id/iv_get_all"
+            app:layout_constraintTop_toBottomOf="@id/tv_dashboard_post_time"
             android:id="@+id/view_separater"
             android:layout_width="@dimen/size_0"
             android:layout_height="@dimen/view_height"
