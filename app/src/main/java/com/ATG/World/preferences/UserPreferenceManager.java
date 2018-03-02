@@ -188,6 +188,15 @@ public class UserPreferenceManager {
         mUserId=mSharedPreferences.getString(USER_ID,userId);
         return mUserId;
     }
+    public static void setUserId(Context mContext, String userId) {
+
+        if (mSharedPreferences == null) {
+            init(mContext);
+        }
+        SharedPreferences.Editor mShEditor = mSharedPreferences.edit();
+        mShEditor.putString(USER_ID, userId);
+        mShEditor.commit();
+    }
     public static String getUserFirstName(Context mContext){
         String mUserLname="";
         if(mSharedPreferences==null){

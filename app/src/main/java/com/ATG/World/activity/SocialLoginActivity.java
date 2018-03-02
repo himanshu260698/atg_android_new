@@ -638,6 +638,11 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
             t.start();
         }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }
 
 

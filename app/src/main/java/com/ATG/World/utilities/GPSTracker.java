@@ -240,7 +240,7 @@ public class GPSTracker extends Service implements LocationListener {
 
 
     public void showSettingsAlert(){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
+    /*    AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
 
         // Setting Dialog Title
         alertDialog.setTitle("Location Access Required");
@@ -272,6 +272,11 @@ public class GPSTracker extends Service implements LocationListener {
 
         // Showing Alert Message
         alertDialog.show();
+        */
+        if(isInternetAvailable) {
+            Log.i("state","sent by ip ");
+            new RetriveByIP().execute();
+        }
     }
 
     @Override

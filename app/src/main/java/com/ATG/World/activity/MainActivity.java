@@ -1,5 +1,6 @@
 package com.ATG.World.activity;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -44,6 +45,8 @@ import com.ATG.World.fragments.SettingsFragment;
 import com.ATG.World.preferences.UserPreferenceManager;
 import com.ATG.World.utilities.GPSTracker;
 import com.ATG.World.utilities.GlideApp;
+import com.tbruyelle.rxpermissions.RxPermissions;
+import com.twitter.sdk.android.core.models.User;
 
 import java.util.List;
 
@@ -113,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ActionBarDrawerToggle toggle;
     GPSTracker gps;
     private Fragment fragment;
-
+    RxPermissions rxPermissions ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         ButterKnife.bind(this);
         setUI();
-
+        rxPermissions = new RxPermissions(this);
         setSupportActionBar(toolbar);
 
         closeSubMenusFab();
@@ -472,8 +475,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void Location() {
 
+        rxPermissions
+                .request(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_NETWORK_STATE)
+                .subscribe(granted -> {
+                    if (granted) { // Always true pre-M
 
-        gps = new GPSTracker(MainActivity.this, isInternetAvailable);
+                        Log.d("Permission", "Location: Given");
+                    } else {
+
+                        gps = new GPSTracker(MainActivity.this, isInternetAvailable);
+                    }
+                });
+
 
 
     }
@@ -600,11 +614,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(MainActivity.this, SocialLoginActivity.class);
                 UserPreferenceManager.logout(MainActivity.this);
-
+                UserPreferenceManager.setUserId(MainActivity.this,"login");
                 intent.setClass(MainActivity.this, SocialLoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                finish();
                 startActivity(intent);
+                finish();
             }
         });
         mBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
