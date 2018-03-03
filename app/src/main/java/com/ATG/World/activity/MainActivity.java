@@ -32,6 +32,7 @@ import com.ATG.World.fragments.NotificationFragment;
 import com.ATG.World.fragments.PostArticlePartOne;
 import com.ATG.World.fragments.PostArticlePartThree;
 import com.ATG.World.fragments.PostArticlePartTwo;
+import com.ATG.World.fragments.PostEducationPartOne;
 import com.ATG.World.fragments.PostFragment;
 import com.ATG.World.fragments.PostJobOne;
 import com.ATG.World.fragments.PostJobThree;
@@ -195,6 +196,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             fragmentTransaction.commitAllowingStateLoss();
         });
         */
+        layoutFabEducation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeSubMenusFab();
+                fab.hide();
+                PostEducationPartOne postEducationPartOne = new PostEducationPartOne();
+                Fragment fragment = postEducationPartOne;
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                        android.R.anim.fade_out);
+                fragmentTransaction.replace(R.id.main_content, fragment);
+                fragmentTransaction.commitAllowingStateLoss();
+            }
+        });
+
         layoutFabArticle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
