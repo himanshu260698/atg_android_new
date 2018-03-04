@@ -6,41 +6,41 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_home"
+            android:icon="@drawable/home_icon"
             android:title="@string/activity_home" />
 
         <item
             android:id="@+id/nav_post"
-            android:icon="@drawable/ic_menu_post"
+            android:icon="@drawable/post_icon"
             android:title="@string/activity_post" />
 
         <item
             android:id="@+id/nav_notification"
-            android:icon="@drawable/ic_notifications_none_black_24dp"
+            android:icon="@drawable/notification_icon"
             android:title="Notifications" />
 
         <item
             android:id="@+id/nav_my_posts"
-            android:icon="@drawable/ic_notifications_none_black_24dp"
+            android:icon="@drawable/myposts_icon"
             android:title="@string/my_posts" />
 
         <item
             android:id="@+id/nav_my_groups"
-            android:icon="@drawable/ic_notifications_none_black_24dp"
+            android:icon="@drawable/mygroups_icon"
             android:title="@string/my_groups" />
 
         <item
             android:id="@+id/nav_explore_groups"
-            android:icon="@drawable/ic_notifications_none_black_24dp"
+            android:icon="@drawable/exploregroups_icon"
             android:title="@string/explore_groups" />
 
         <item
             android:id="@+id/nav_logout"
-            android:icon="@drawable/ic_menu_logout"
+            android:icon="@drawable/logout_icon"
             android:title="Logout" />
         <item
             android:id="@+id/settings"
-            android:icon="@drawable/ic_menu_logout"
+            android:icon="@drawable/settings_icon"
             android:title="Settings" />
     </group>
 
