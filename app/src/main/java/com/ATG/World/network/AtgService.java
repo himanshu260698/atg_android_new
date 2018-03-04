@@ -190,9 +190,15 @@ public interface AtgService {
 
     @POST("ws-single-group-post-list")
     @FormUrlEncoded
-    Call<GroupPostListResponse> getGroupPosts(@Field("user_id") @NonNull String user_id,
-                                              @Field("group_id") @NonNull String group_id,
-                                              @Field("type") @NonNull String type);
+    Call<GroupPostListResponse> getGroupData(@Field("user_id") @NonNull String user_id,
+                                          @Field("group_id") @NonNull String group_id,
+                                          @Field("type") @NonNull String feature);
+
+    @GET("ws-get-group-wise-records")
+    Call<GroupPostListResponse> getGroupPosts(@Query("user_id") String user_id,
+                                              @Query("group_id") String group_id,
+                                              @Query("feature") String feature,
+                                              @Query("page_number") String page_number);
     //Post article calls
 
     @POST("ws-post-article-step-one")

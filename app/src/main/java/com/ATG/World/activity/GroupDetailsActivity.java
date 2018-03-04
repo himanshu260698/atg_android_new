@@ -145,7 +145,7 @@ public class GroupDetailsActivity extends AppCompatActivity {
 
             AtgService atgService = AtgClient.getClient().create(AtgService.class);
             Call<GroupPostListResponse> postListResponseCall =
-                    atgService.getGroupPosts(UserPreferenceManager.getUserId(getApplicationContext()),
+                    atgService.getGroupData(UserPreferenceManager.getUserId(getApplicationContext()),
                             groupDetails.getId().toString(),"2");
             Callback<GroupPostListResponse> groupPostListResponseCallback =
                     new Callback<GroupPostListResponse>() {
