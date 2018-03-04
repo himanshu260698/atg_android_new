@@ -1,6 +1,8 @@
 package com.ATG.World.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -8,15 +10,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -40,7 +38,7 @@ public class GroupSelectionActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private AtgService retrofit;
-    private Toolbar mTopToolbar;
+    public Toolbar mTopToolbar;
     List<Group> groups;
     private View mainlayout;
     private ProgressBar progressBar;
@@ -51,9 +49,7 @@ public class GroupSelectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_group_selection);
-        mTopToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(mTopToolbar);
-        getSupportActionBar().setTitle("Select Your Interest");
+
         retrofit= AtgClient.getClient().create(AtgService.class);
 
         progressBar=findViewById(R.id.progress_bar);
@@ -146,6 +142,7 @@ public class GroupSelectionActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+       // menu.add(0, 1, 1, menuIconWithText(getResources().getDrawable(R.mipmap.user_2), getResources().getString(R.string.action_profile)));
         getMenuInflater().inflate(R.menu.group_selection_next_button,menu);
         return true;
     }
@@ -169,6 +166,7 @@ public class GroupSelectionActivity extends AppCompatActivity {
         }
         return true;
     }
+
 
     private void setupViewPager() {
         CollectionPagerAdapter adapter = new CollectionPagerAdapter(getSupportFragmentManager());
@@ -201,4 +199,5 @@ public class GroupSelectionActivity extends AppCompatActivity {
         }
     }
 }
+
 
