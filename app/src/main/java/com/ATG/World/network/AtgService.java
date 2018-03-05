@@ -242,4 +242,11 @@ public interface AtgService {
                                           @Field("education") String education, @Field("min_exp") String minExperience,
                                           @Field("location") String location, @Field("tags") String tags,
                                           @Field("emp_type") int empType);
+
+    @POST("ws-my-post")
+    @FormUrlEncoded
+    Call<Object> getMyPostData(@Field("type") @NonNull int type,
+                               @Field("user_id") @NonNull int userId,
+                               @Field("page_number") int pageNumber,
+                               @Field("count") int count);
 }

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="3dp"
+        android:elevation="5dp"
+        card_view:cardCornerRadius="2dp"
+        card_view:contentPadding="10dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/layout_main_home_Data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/SIZE_5"
+                android:layout_marginRight="@dimen/SIZE_5"
+                android:layout_marginTop="@dimen/SIZE_5"
+                android:background="@color/colorWhite"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/ptitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+
+                            android:textColor="@color/colorBlack"
+                            android:textSize="12sp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layout_descrip_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_pdesc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginTop="@dimen/SIZE_5"
+                            android:background="@color/colorWhite"
+                            android:ellipsize="end"
+                            android:maxLines="2"
+                            android:textColor="#4B4B4B"
+                            android:textSize="11sp" />
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/event_type_image"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="end"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginRight="@dimen/SIZE_10"
+                        android:focusable="false" />
+
+                    <ImageView
+                        android:id="@+id/imv_openpopup"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="end"
+                        android:layout_marginRight="@dimen/SIZE_10"
+                        android:focusable="false"
+                        android:src="@drawable/threedot" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/SIZE_5"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="@dimen/SIZE_5">
+
+                <LinearLayout
+                    android:id="@+id/layout_date_time_loc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/tv_upvote"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/ic_upvote_grren"
+                        android:drawablePadding="@dimen/SIZE_3"
+                        android:textColor="#6CC287"
+                        android:textSize="@dimen/TEXT_SIZE_10" />
+
+                    <TextView
+                        android:id="@+id/tv_downvote"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/ic_downvote_red"
+                        android:drawablePadding="@dimen/SIZE_3"
+                        android:textColor="#FF1C08"
+                        android:textSize="@dimen/TEXT_SIZE_10" />
+
+                    <TextView
+                        android:id="@+id/tv_charges"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:clickable="false"
+                        android:drawableLeft="@drawable/ic_dollor"
+                        android:drawablePadding="@dimen/SIZE_3"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:text="Free"
+                        android:textColor="@color/grey_50"
+                        android:textSize="@dimen/TEXT_SIZE_10"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tv_viewcount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/ic_viewrs_green"
+                        android:drawablePadding="@dimen/SIZE_3"
+                        android:textColor="#2E533E"
+                        android:textSize="@dimen/TEXT_SIZE_10" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/if_draft_show"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/colorPrimaryDark"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:text="Unpublished"
+                    android:textColor="#fff"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="invisible" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+</LinearLayout>
