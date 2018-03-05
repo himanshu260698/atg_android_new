@@ -32,6 +32,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ATG.World.R;
@@ -114,11 +115,12 @@ public class UpdateProfileFragment extends Fragment {
     private byte[] byteArray;
     private int spinPosition;
     private Uri realUri;
+    private TextView f_name;
+    private TextView l_name;
 
     public UpdateProfileFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -127,6 +129,8 @@ public class UpdateProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_update_profile, container, false);
         circleImageView = view.findViewById(R.id.e_profileimage);
         permissions = new RxPermissions(getActivity());
+        f_name = view.findViewById(R.id.f_name);
+        l_name = view.findViewById(R.id.l_name);
         button = view.findViewById(R.id.update_back_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,6 +138,7 @@ public class UpdateProfileFragment extends Fragment {
                 loadSettingsFragment();
             }
         });
+
         unbinder = ButterKnife.bind(this, view);
         circleImageView.setOnClickListener(v -> checkPermissions());
         saveUpdate = view.findViewById(R.id.updateProfileButton);
@@ -295,9 +300,13 @@ public class UpdateProfileFragment extends Fragment {
                 }
                 if (!acObject.getString("first_name").equals("")) {
                     firstName.setText(acObject.getString("first_name"));
+// Get Firstname
+                    f_name.setText(acObject.getString("first_name"));
                 }
                 if (!acObject.getString("last_name").equals("")) {
                     lastName.setText(acObject.getString("last_name"));
+//Get Secondname
+                    l_name.setText(acObject.getString("last_name"));
                 }
                 if (!acObject.getString("email").equals("")) {
 

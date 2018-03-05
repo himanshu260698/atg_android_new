@@ -138,4 +138,6 @@
     <string name="title_activity_signup">Sign up</string>
     <string name="comment_here">Comment Here</string>
 
+    <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
+
 </resources>
