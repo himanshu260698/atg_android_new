@@ -1,13 +1,19 @@
 package com.ATG.World.fragments;
 
 
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +22,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ATG.World.R;
-import com.ATG.World.activity.MainActivity;
-import com.ATG.World.adapters.GetAllAdapter;
-import com.ATG.World.models.DashboardResponse;
 import com.ATG.World.models.NicheGroupResponse;
 import com.ATG.World.models.Subgroup;
 import com.ATG.World.network.AtgClient;
@@ -66,8 +68,10 @@ public class GroupSelectionFragment extends Fragment {
     private Unbinder unbinder;
     NicheGroupAdapter nicheGroupAdapter;
     private int id;
+    private static int count;
     List<Subgroup> mList =new ArrayList<>();
     GroupSelectionSingleton addedGroups;
+    public  Toolbar mTopToolbar;
 
 
     public GroupSelectionFragment() {
@@ -101,8 +105,9 @@ public class GroupSelectionFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
-
+        mTopToolbar = (Toolbar) getActivity().findViewById(R.id.my_toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mTopToolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Select your Interest");
         AtgService retrofit = AtgClient.getClient().create(AtgService.class);
         Call<NicheGroupResponse> call=retrofit.getNicheGroup(id);
         call.enqueue(callback);
@@ -177,15 +182,26 @@ public class GroupSelectionFragment extends Fragment {
             circleImageView = itemView.findViewById(R.id.image_group);
             textView = itemView.findViewById(R.id.group_name);
             button = itemView.findViewById(R.id.group_select);
+            button.setBackground(getActivity().getResources().getDrawable(R.drawable.rondedcorner));
 
         }
 
         public void bind(Subgroup subgroup) {
             textView.setText(subgroup.getGroup_name());
-            if(subgroup.getFollowing())
+            if(subgroup.getFollowing()) {
                 button.setSelected(true);
-            else
+
+                button.setBackground(getActivity().getResources().getDrawable(R.drawable.mybuttoncorner));
+
+              // button.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));
+                button.setText("Following");
+                button.setTextColor(Color.WHITE);
+
+            }else{
                 button.setSelected(false);
+                button.setBackground(getActivity().getResources().getDrawable(R.drawable.rondedcorner));
+                button.setText("Follow");
+                button.setTextColor(Color.parseColor("#20794d"));}
             Log.e("CHECK",subgroup.getIcon_img());
             GlideApp.with(getContext())
                     .load(subgroup.getIcon_img())
@@ -195,24 +211,41 @@ public class GroupSelectionFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     if(button.isSelected()){
+                        count--;
+                        setToolbar();
                         addedGroups.removeGroup(subgroup.getId());
                         Log.e("CHECK",subgroup.getId()+""+"-");
                         subgroup.setFollowing(false);
-                        button.setSelected(false);}
+                        button.setSelected(false);
+
+                    }
                     else{
+                        count++;
+                        setToolbar();
                         addedGroups.addGroup(subgroup.getId());
                         Log.e("CHECK",subgroup.getId()+""+"+");
                         subgroup.setFollowing(true);
                         button.setSelected(true);}
                         nicheGroupAdapter.notifyDataSetChanged();
-
-
                 }
             });
 
 
 
         }
+    }
+
+    private void setToolbar() {
+       if(count<=0){
+           count=0;
+           ((AppCompatActivity) getActivity()).setSupportActionBar(mTopToolbar);
+           ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Select your Interest");
+       }else if(count==1){
+           ((AppCompatActivity) getActivity()).setSupportActionBar(mTopToolbar);
+           ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(""+count+" Interest");
+       } else{
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mTopToolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(""+count+" Interests");}
     }
 
     private class NicheGroupAdapter extends RecyclerView.Adapter<NicheGroupHolder>{
