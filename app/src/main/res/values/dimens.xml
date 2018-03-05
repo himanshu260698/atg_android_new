@@ -84,7 +84,6 @@
     <!--Text Size Dimension List -->
     <dimen name="TEXT_SIZE_6">6sp</dimen>
     <dimen name="TEXT_SIZE_10">10sp</dimen>
-    <dimen name="TEXT_SIZE_12">12sp</dimen>
     <dimen name="TEXT_SIZE_14">14sp</dimen>
     <dimen name="TEXT_SIZE_15">15sp</dimen>
     <dimen name="TEXT_SIZE_17">17sp</dimen>
