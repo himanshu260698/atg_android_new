@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,11 +41,11 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
     private EditText mEmailView;
     private EditText mPasswordView;
-    private View mProgressView;
+ //   private View mProgressView;
     private View mLoginFormView;
     private AtgService retrofit;
     private Button sign_up_button;
-
+    private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +62,8 @@ public class LoginActivity extends AppCompatActivity {
         text.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 23, 30, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         sign_up_button.setText(text, TextView.BufferType.SPANNABLE);
-
+        progressBar=findViewById(R.id.login_progress_bar);
+        progressBar.setVisibility(View.GONE);
         // To make notification bar transparent
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window w = getWindow(); // in Activity's onCreate() for instance
@@ -103,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
+     //   mProgressView = findViewById(R.id.login_progress);
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -145,6 +147,7 @@ public class LoginActivity extends AppCompatActivity {
             focusView.requestFocus();
         } else {
             showProgress(true);
+            progressBar.setVisibility(View.VISIBLE);
             Call<WsLoginResponse> call = retrofit.getEmailLogin(email, password, "0", "");
             call.enqueue(new Callback<WsLoginResponse>() {
                 @Override
@@ -175,33 +178,39 @@ public class LoginActivity extends AppCompatActivity {
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             finish();
                             startActivity(intent);
+                            progressBar.setVisibility(View.GONE);
                         } else if (wsLoginResponse.getError_code() == 1) {
                             Toast.makeText(LoginActivity.this, "Please check your credentials.", Toast.LENGTH_SHORT).show();
+                            showProgress(false);
+                            progressBar.setVisibility(View.GONE);
 
                         } else if (wsLoginResponse.getError_code() == 2) {
                             Toast.makeText(LoginActivity.this, "This email is not registered with this site.", Toast.LENGTH_SHORT).show();
-
+                            showProgress(false);
+                            progressBar.setVisibility(View.GONE);
                         } else if (wsLoginResponse.getError_code() == 3) {
                             Toast.makeText(LoginActivity.this, "Your account has been blocked by administrator!.Please contact administrator to activate your account.", Toast.LENGTH_SHORT).show();
-
+                            showProgress(false);
+                            progressBar.setVisibility(View.GONE);
                         } else if (wsLoginResponse.getError_code() == 4) {
                             Toast.makeText(LoginActivity.this, "Please activate your account.", Toast.LENGTH_SHORT).show();
-
+                            showProgress(false);
+                            progressBar.setVisibility(View.GONE);
                         }
                     } else {
                         Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
                     }
 
                     showProgress(false);
-
-
+                    progressBar.setVisibility(View.GONE);
                 }
 
                 @Override
                 public void onFailure(Call<WsLoginResponse> call, Throwable t) {
                     Toast.makeText(LoginActivity.this, "FAil", Toast.LENGTH_LONG).show();
                     showProgress(false);
-
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(LoginActivity.this, "Please try again", Toast.LENGTH_SHORT).show();
 
                 }
             });
@@ -237,18 +246,18 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
 
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
+        //    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+         //   mProgressView.animate().setDuration(shortAnimTime).alpha(
+          //          show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+          //      @Override
+           //     public void onAnimationEnd(Animator animation) {
+          //          mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+          //      }
+         //   });
         } else {
             // The ViewPropertyAnimator APIs are not available, so simply show
             // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+          //  mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
