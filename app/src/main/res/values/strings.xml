@@ -54,7 +54,7 @@
     <string name="swipe_left_text">Swipe Left to Downvote user post</string>
 
     <!-- Start Intro Slider -->
-    <string name="next">NEXT</string>
+    <string name="next">NEXT></string>
     <string name="skip">SKIP</string>
     <string name="start">GOT IT</string>
 
