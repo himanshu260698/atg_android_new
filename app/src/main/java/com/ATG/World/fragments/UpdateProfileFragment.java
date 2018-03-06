@@ -19,6 +19,8 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +28,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -117,6 +120,7 @@ public class UpdateProfileFragment extends Fragment {
     private Uri realUri;
     private TextView f_name;
     private TextView l_name;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
 
     public UpdateProfileFragment() {
         // Required empty public constructor
@@ -127,6 +131,30 @@ public class UpdateProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_update_profile, container, false);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
+        //Setting CollapsingToolbar Title
+        collapsingToolbarLayout = view.findViewById(R.id.collapseToolbar);
+        AppBarLayout appBarLayout = view.findViewById(R.id.app_bar);
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            boolean isShow = true;
+            int scrollRange = -1;
+
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.getTotalScrollRange();
+                }
+                if (scrollRange + verticalOffset == 0) {
+                    collapsingToolbarLayout.setTitle(" Update Profile");
+                    isShow = true;
+                } else if(isShow) {
+                    collapsingToolbarLayout.setTitle(" ");//carefull there should a space between double quote otherwise it wont work
+                    isShow = false;
+                }
+            }
+        });
+
         circleImageView = view.findViewById(R.id.e_profileimage);
         permissions = new RxPermissions(getActivity());
         f_name = view.findViewById(R.id.f_name);
@@ -399,14 +427,16 @@ public class UpdateProfileFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 100) {
             if (resultCode == Activity.RESULT_OK) {
-                String[] projection = {MediaStore.Images.Media.DATA};
-                Cursor cursor = getActivity().managedQuery(uri, projection, null, null, null);
-                int column_index_data = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                cursor.moveToFirst();
-                String capturedImageFilePath = cursor.getString(column_index_data);
-                Uri imageuri = Uri.parse("file:///" + capturedImageFilePath);
-                circleImageView.setImageBitmap(compressImage(imageuri));
-                realUri = Uri.parse(getRealPathFromURI(data.getData()));
+                if (data != null) {
+                    String[] projection = {MediaStore.Images.Media.DATA};
+                    Cursor cursor = getActivity().managedQuery(uri, projection, null, null, null);
+                    int column_index_data = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                    cursor.moveToFirst();
+                    String capturedImageFilePath = cursor.getString(column_index_data);
+                    Uri imageuri = Uri.parse("file:///" + capturedImageFilePath);
+                    circleImageView.setImageBitmap(compressImage(imageuri));
+                    realUri = Uri.parse(getRealPathFromURI(data.getData()));
+                }
             }
 
         } else if (requestCode == 200) {
