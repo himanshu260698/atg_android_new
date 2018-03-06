@@ -203,7 +203,6 @@ public class LoginActivity extends AppCompatActivity {
 
                     showProgress(false);
                     progressBar.setVisibility(View.GONE);
-                    Toast.makeText(LoginActivity.this, "Please try again", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
