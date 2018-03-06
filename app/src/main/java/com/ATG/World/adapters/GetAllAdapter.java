@@ -143,11 +143,11 @@ public class GetAllAdapter extends BaseAdapter<Dashboard> {
         TextView postType;
         @BindView(R.id.tv_title_get_all)
         TextView postTitle;
-        /*@BindView(R.id.tv_likes)
+        @BindView(R.id.tv_likes)
         TextView postLikes;
         @BindView(R.id.tv_unlikes)
         TextView postUnlikes;
-        @BindView(R.id.tv_comments)
+        /*@BindView(R.id.tv_comments)
         TextView postComments;
         @BindView(R.id.tv_share)
         TextView postShare;*/
@@ -220,7 +220,7 @@ public class GetAllAdapter extends BaseAdapter<Dashboard> {
             }
         }
 
-        /*private void setupPostLikes(TextView likes, Dashboard dashboard) {
+        private void setupPostLikes(TextView likes, Dashboard dashboard) {
             int like = dashboard.getUpvoteCount();
             int userLike = dashboard.getUserUpvoteCount();
             if (like > 0) {
@@ -243,15 +243,15 @@ public class GetAllAdapter extends BaseAdapter<Dashboard> {
                 postLikes.setText("");
             }
         }
-
+/*
         private void setupPostComments(TextView postComments, Dashboard dashboard) {
 
         }
 
         private void setupPostShares(TextView postShare, Dashboard dashboard) {
 
-        }*/
-
+        }
+*/
     }
 
     public static class FooterViewHolder extends RecyclerView.ViewHolder {
