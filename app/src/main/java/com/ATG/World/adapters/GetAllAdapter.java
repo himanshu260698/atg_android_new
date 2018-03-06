@@ -1,9 +1,7 @@
 package com.ATG.World.adapters;
 
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +10,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.ATG.World.R;
 import com.ATG.World.models.Dashboard;
+import com.ATG.World.utilities.CustomTextView;
 import com.bumptech.glide.Glide;
-
-import org.w3c.dom.Text;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -134,23 +130,23 @@ public class GetAllAdapter extends BaseAdapter<Dashboard> {
         /*@BindView(R.id.iv_dashboard_user_img)
         ImageView postUserProfilePicture;*/
         @BindView(R.id.tv_dashboard_user_name)
-        TextView postUserName;
+        CustomTextView postUserName;
         @BindView(R.id.tv_dashboard_post_time)
-        TextView postTime;
+        CustomTextView postTime;
         @BindView(R.id.iv_get_all)
         ImageView postImage;
         @BindView(R.id.tv_post_type)
-        TextView postType;
+        CustomTextView postType;
         @BindView(R.id.tv_title_get_all)
-        TextView postTitle;
+        CustomTextView postTitle;
         /*@BindView(R.id.tv_likes)
-        TextView postLikes;
+        CustomTextView postLikes;
         @BindView(R.id.tv_unlikes)
-        TextView postUnlikes;
+        CustomTextView postUnlikes;
         @BindView(R.id.tv_comments)
-        TextView postComments;
+        CustomTextView postComments;
         @BindView(R.id.tv_share)
-        TextView postShare;*/
+        CustomTextView postShare;*/
 
         public AllViewHolder(View itemView) {
             super(itemView);
@@ -171,7 +167,7 @@ public class GetAllAdapter extends BaseAdapter<Dashboard> {
             int adapterPos = getAdapterPosition();
         }
 
-        private void setupUserName(TextView postUserName, Dashboard dashboard) {
+        private void setupUserName(CustomTextView postUserName, Dashboard dashboard) {
             String firstName = dashboard.getFirstName();
             String lastName = dashboard.getLastName();
             if (!TextUtils.isEmpty(firstName)) {
@@ -190,14 +186,14 @@ public class GetAllAdapter extends BaseAdapter<Dashboard> {
             }
         }*/
 
-        private void setupPostTime(TextView postTime, Dashboard dashboard) {
+        private void setupPostTime(CustomTextView postTime, Dashboard dashboard) {
             String time = dashboard.getCreatedAt();
             if (!TextUtils.isEmpty(time)) {
                 postTime.setText(time);
             }
         }
 
-        private void setupPostType(TextView postType, Dashboard dashboard) {
+        private void setupPostType(CustomTextView postType, Dashboard dashboard) {
             String type = dashboard.getType();
             if (!TextUtils.isEmpty(type)) {
                 postType.setText(type);
@@ -213,14 +209,14 @@ public class GetAllAdapter extends BaseAdapter<Dashboard> {
             }
         }
 
-        private void setupPostTitle(TextView postTitle, Dashboard dashboard) {
+        private void setupPostTitle(CustomTextView postTitle, Dashboard dashboard) {
             String title = dashboard.getTitle();
             if (!TextUtils.isEmpty(title)) {
                 postTitle.setText(title);
             }
         }
 
-        /*private void setupPostLikes(TextView likes, Dashboard dashboard) {
+        /*private void setupPostLikes(CustomTextView likes, Dashboard dashboard) {
             int like = dashboard.getUpvoteCount();
             int userLike = dashboard.getUserUpvoteCount();
             if (like > 0) {
@@ -234,7 +230,7 @@ public class GetAllAdapter extends BaseAdapter<Dashboard> {
             }
         }
 
-        private void setupPostUnlikes(TextView postUnlikes, Dashboard dashboard) {
+        private void setupPostUnlikes(CustomTextView postUnlikes, Dashboard dashboard) {
             int unlike = dashboard.getDownvoteCount();
             int userDislikeStatus = dashboard.getUserDownvoteCount();
             if (unlike > 0) {
@@ -244,11 +240,11 @@ public class GetAllAdapter extends BaseAdapter<Dashboard> {
             }
         }
 
-        private void setupPostComments(TextView postComments, Dashboard dashboard) {
+        private void setupPostComments(CustomTextView postComments, Dashboard dashboard) {
 
         }
 
-        private void setupPostShares(TextView postShare, Dashboard dashboard) {
+        private void setupPostShares(CustomTextView postShare, Dashboard dashboard) {
 
         }*/
 

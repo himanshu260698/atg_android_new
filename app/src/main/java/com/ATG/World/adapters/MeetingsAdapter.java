@@ -10,11 +10,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.ATG.World.R;
 import com.ATG.World.models.Dashboard;
-import com.bumptech.glide.Glide;
+import com.ATG.World.utilities.CustomTextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -115,23 +114,23 @@ public class MeetingsAdapter extends BaseAdapter<Dashboard> {
         /*@BindView(R.id.iv_dashboard_user_img)
         ImageView postUserProfilePicture;*/
         @BindView(R.id.tv_dashboard_user_name)
-        TextView postUserName;
+        CustomTextView postUserName;
         /*@BindView(R.id.tv_dashboard_post_time)
-        TextView postTime;*/
+        CustomTextView postTime;*/
         @BindView(R.id.iv_get_all)
         ImageView postImage;
         @BindView(R.id.tv_post_type)
-        TextView postType;
+        CustomTextView postType;
         @BindView(R.id.tv_title_get_all)
-        TextView postTitle;
+        CustomTextView postTitle;
         /*@BindView(R.id.tv_likes)
-        TextView postLikes;
+        CustomTextView postLikes;
         @BindView(R.id.tv_unlikes)
-        TextView postUnlikes;
+        CustomTextView postUnlikes;
         @BindView(R.id.tv_comments)
-        TextView postComments;
+        CustomTextView postComments;
         @BindView(R.id.tv_share)
-        TextView postShare;*/
+        CustomTextView postShare;*/
 
         public MeetingsViewHolder(View itemView) {
             super(itemView);
@@ -152,7 +151,7 @@ public class MeetingsAdapter extends BaseAdapter<Dashboard> {
             int adapterPos = getAdapterPosition();
         }
 
-        private void setupUserName(TextView postUserName, Dashboard dashboard) {
+        private void setupUserName(CustomTextView postUserName, Dashboard dashboard) {
             if (!TextUtils.isEmpty(dashboard.getFirstName())) {
                 postUserName.setText(dashboard.getFirstName() + " " + dashboard.getLastName());
             }
@@ -169,14 +168,14 @@ public class MeetingsAdapter extends BaseAdapter<Dashboard> {
             }
         }*/
 
-        /*private void setupPostTime(TextView postTime, Dashboard dashboard) {
+        /*private void setupPostTime(CustomTextView postTime, Dashboard dashboard) {
             String time = dashboard.getStartTime();
             if (!TextUtils.isEmpty(time)) {
                 postTime.setText(time);
             }
         }*/
 
-        private void setupPostType(TextView postType, Dashboard dashboard) {
+        private void setupPostType(CustomTextView postType, Dashboard dashboard) {
             String type = dashboard.getType();
             if (!TextUtils.isEmpty(type)) {
                 postType.setText(type);
@@ -186,14 +185,14 @@ public class MeetingsAdapter extends BaseAdapter<Dashboard> {
         private void setupPostImage(ImageView postImage, Dashboard dashboard) {
         }
 
-        private void setupPostTitle(TextView postTitle, Dashboard dashboard) {
+        private void setupPostTitle(CustomTextView postTitle, Dashboard dashboard) {
             String title = dashboard.getTitle();
             if (!TextUtils.isEmpty(title)) {
                 postTitle.setText(title);
             }
         }
 
-        /*private void setupPostLikes(TextView likes, Dashboard dashboard) {
+        /*private void setupPostLikes(CustomTextView likes, Dashboard dashboard) {
             int like = dashboard.getUpvoteCount();
             if (like > 0) {
                 int userLike = dashboard.getUserUpvoteCount();
@@ -206,7 +205,7 @@ public class MeetingsAdapter extends BaseAdapter<Dashboard> {
             }
         }
 
-        private void setupPostUnlikes(TextView postUnlikes, Dashboard dashboard) {
+        private void setupPostUnlikes(CustomTextView postUnlikes, Dashboard dashboard) {
             int unlike = dashboard.getDownvoteCount();
             if (unlike > 0) {
                 int userDislikeStatus = dashboard.getUserDownvoteCount();
@@ -216,11 +215,11 @@ public class MeetingsAdapter extends BaseAdapter<Dashboard> {
             }
         }
 
-        private void setupPostComments(TextView postComments, Dashboard dashboard) {
+        private void setupPostComments(CustomTextView postComments, Dashboard dashboard) {
             postComments.setText("0");
         }
 
-        private void setupPostShares(TextView postShare, Dashboard dashboard) {
+        private void setupPostShares(CustomTextView postShare, Dashboard dashboard) {
             postShare.setText("0");
         }*/
 

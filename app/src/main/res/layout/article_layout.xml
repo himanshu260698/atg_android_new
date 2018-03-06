@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/get_all_card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -22,21 +21,29 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <com.ATG.World.utilities.CustomTextView
             android:id="@+id/tv_dashboard_user_name"
             style="@style/HeadingText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:shadowColor="@color/darker_shade"
+            android:shadowDx="-2"
+            android:shadowDy="-2"
             android:text="Chetan Sankhla"
+            app:customFont="@string/roboto_font"
             app:layout_constraintLeft_toRightOf="@id/iv_dashboard_user_img"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <com.ATG.World.utilities.CustomTextView
             android:id="@+id/tv_dashboard_post_time"
             style="@style/OtherText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:shadowColor="@color/darker_shade"
+            android:shadowDx="-2"
+            android:shadowDy="-2"
             android:text="27/12/2017 20:15:20"
+            app:customFont="@string/roboto_font"
             app:layout_constraintLeft_toRightOf="@id/iv_dashboard_user_img"
             app:layout_constraintTop_toBottomOf="@id/tv_dashboard_user_name" />
 
@@ -49,12 +56,16 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_dashboard_user_img" />
 
-        <TextView
+        <com.ATG.World.utilities.CustomTextView
             android:id="@+id/tv_title_get_all"
             style="@style/HeadingText"
             android:layout_width="@dimen/size_0"
             android:layout_height="wrap_content"
+            android:shadowColor="@color/darker_shade"
+            android:shadowDx="-2"
+            android:shadowDy="-2"
             android:text="ABCDEFGHIJ KLMNOPQRST UVWXYZ ABCDEFGH"
+            app:customFont="@string/roboto_font"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/iv_get_all"
             app:layout_constraintTop_toBottomOf="@id/iv_dashboard_user_img" />
@@ -69,47 +80,63 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_get_all" />
 
-        <TextView
+        <com.ATG.World.utilities.CustomTextView
             android:id="@+id/tv_likes"
             style="@style/DrawableTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_like_black_24dp"
+            android:shadowColor="@color/darker_shade"
+            android:shadowDx="-2"
+            android:shadowDy="-2"
             android:text="25"
+            app:customFont="@string/roboto_font"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view_separater" />
 
-        <TextView
+        <com.ATG.World.utilities.CustomTextView
             android:id="@+id/tv_unlikes"
             style="@style/DrawableTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_like_black_24dp"
+            android:shadowColor="@color/darker_shade"
+            android:shadowDx="-2"
+            android:shadowDy="-2"
             android:text="25"
+            app:customFont="@string/roboto_font"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/tv_likes"
             app:layout_constraintTop_toBottomOf="@id/view_separater" />
 
-        <TextView
+        <com.ATG.World.utilities.CustomTextView
             android:id="@+id/tv_comments"
             style="@style/DrawableTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_like_black_24dp"
+            android:shadowColor="@color/darker_shade"
+            android:shadowDx="-2"
+            android:shadowDy="-2"
             android:text="25"
+            app:customFont="@string/roboto_font"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view_separater" />
 
-        <TextView
+        <com.ATG.World.utilities.CustomTextView
             android:id="@+id/tv_share"
             style="@style/DrawableTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_share_black_24dp"
+            android:shadowColor="@color/darker_shade"
+            android:shadowDx="-2"
+            android:shadowDy="-2"
             android:text="25"
+            app:customFont="@string/roboto_font"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view_separater" />

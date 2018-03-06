@@ -326,4 +326,10 @@
     <color name="likeButton">#4267B2</color>
     <!--Custom Notification Bar-->
     <color name="social_notification_bar">#339966</color>
+
+
+
+    <color name="darker_shade">#1A4D33</color>
+    <color name="lighter_shade">#339966</color>
+
 </resources>

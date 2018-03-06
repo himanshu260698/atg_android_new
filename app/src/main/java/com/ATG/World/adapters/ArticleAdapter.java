@@ -3,7 +3,6 @@ package com.ATG.World.adapters;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,23 +11,14 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ATG.World.R;
 import com.ATG.World.models.Dashboard;
-import com.ATG.World.models.UpvoteDownvoteResponse;
-import com.ATG.World.network.AtgClient;
-import com.ATG.World.network.AtgService;
-import com.ATG.World.preferences.UserPreferenceManager;
+import com.ATG.World.utilities.CustomTextView;
 import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by Chetan on 22-12-2017.
@@ -61,11 +51,11 @@ public class ArticleAdapter extends BaseAdapter<Dashboard> {
     }
 
     public interface onUpvoteClickListener {
-        void onUpvoteClick(TextView upvoted);
+        void onUpvoteClick(CustomTextView upvoted);
     }
 
     public interface onDownvoteClickListener {
-        void onDownvoteClick(TextView upvoted);
+        void onDownvoteClick(CustomTextView upvoted);
     }
 
     @Override
@@ -179,23 +169,23 @@ public class ArticleAdapter extends BaseAdapter<Dashboard> {
         /*@BindView(R.id.iv_dashboard_user_img)
         ImageView postUserProfilePicture;*/
         @BindView(R.id.tv_dashboard_user_name)
-        TextView postUserName;
+        CustomTextView postUserName;
         /*@BindView(R.id.tv_dashboard_post_time)
-        TextView postTime;*/
+        CustomTextView postTime;*/
         @BindView(R.id.iv_get_all)
         ImageView postImage;
         @BindView(R.id.tv_post_type)
-        TextView postType;
+        CustomTextView postType;
         @BindView(R.id.tv_title_get_all)
-        TextView postTitle;
+        CustomTextView postTitle;
         /*@BindView(R.id.tv_likes)
-        TextView postLikes;
+        CustomTextView postLikes;
         @BindView(R.id.tv_unlikes)
-        TextView postUnlikes;
+        CustomTextView postUnlikes;
         @BindView(R.id.tv_comments)
-        TextView postComments;
+        CustomTextView postComments;
         @BindView(R.id.tv_share)
-        TextView postShare;*/
+        CustomTextView postShare;*/
         private int SET_LIKE = 0;
         private int SET_UNLIKE = 1;
 
@@ -296,7 +286,7 @@ public class ArticleAdapter extends BaseAdapter<Dashboard> {
             }
         };*/
 
-        private void setupUserName(TextView postUserName, Dashboard dashboard) {
+        private void setupUserName(CustomTextView postUserName, Dashboard dashboard) {
             if (!TextUtils.isEmpty(dashboard.getFirstName())) {
                 postUserName.setText(dashboard.getFirstName() + " " + dashboard.getLastName());
             }
@@ -313,14 +303,14 @@ public class ArticleAdapter extends BaseAdapter<Dashboard> {
             }
         }*/
 
-        /*private void setupPostTime(TextView postTime, Dashboard dashboard) {
+        /*private void setupPostTime(CustomTextView postTime, Dashboard dashboard) {
             String time = dashboard.getStartTime();
             if (!TextUtils.isEmpty(time)) {
                 postTime.setText(time);
             }
         }*/
 
-        private void setupPostType(TextView postType, Dashboard dashboard) {
+        private void setupPostType(CustomTextView postType, Dashboard dashboard) {
             String type = dashboard.getType();
             if (!TextUtils.isEmpty(type)) {
                 postType.setText(type);
@@ -342,14 +332,14 @@ public class ArticleAdapter extends BaseAdapter<Dashboard> {
          * @param postTitle Title of article
          * @param dashboard used to access response of api
          */
-        private void setupPostTitle(TextView postTitle, Dashboard dashboard) {
+        private void setupPostTitle(CustomTextView postTitle, Dashboard dashboard) {
             String title = dashboard.getTitle();
             if (!TextUtils.isEmpty(title)) {
                 postTitle.setText(title);
             }
         }
 
-        /*private void setupLikesCount(TextView like, Dashboard detail) {
+        /*private void setupLikesCount(CustomTextView like, Dashboard detail) {
             int likesCount = detail.getUpvoteCount();
             if (likesCount == 0) {
                 like.setText("");
@@ -362,7 +352,7 @@ public class ArticleAdapter extends BaseAdapter<Dashboard> {
             }
         }
 
-        private void setupUnLikesCount(TextView unlike, Dashboard detail) {
+        private void setupUnLikesCount(CustomTextView unlike, Dashboard detail) {
             int unlikesCount = detail.getDownvoteCount();
             if (unlikesCount == 0) {
                 unlike.setText("");
@@ -374,7 +364,7 @@ public class ArticleAdapter extends BaseAdapter<Dashboard> {
             }
         }*/
 
-       /* private void setupPostLikes(TextView tvLike, Dashboard dashboard) {
+       /* private void setupPostLikes(CustomTextView tvLike, Dashboard dashboard) {
             int like = dashboard.getUpvoteCount();
             if (like == 0) {
                 tvLike.setText("");
@@ -388,7 +378,7 @@ public class ArticleAdapter extends BaseAdapter<Dashboard> {
             }
         }
 
-        private void setupPostUnlikes(TextView postUnlikes, Dashboard dashboard) {
+        private void setupPostUnlikes(CustomTextView postUnlikes, Dashboard dashboard) {
             int unlike = dashboard.getDownvoteCount();
             if (unlike > 0) {
                 int userDislikeStatus = dashboard.getUserDownvoteCount();
@@ -398,10 +388,10 @@ public class ArticleAdapter extends BaseAdapter<Dashboard> {
             }
         }*/
 
-        private void setupPostComments(TextView postComments, Dashboard dashboard) {
+        private void setupPostComments(CustomTextView postComments, Dashboard dashboard) {
         }
 
-        private void setupPostShares(TextView postShare, Dashboard dashboard) {
+        private void setupPostShares(CustomTextView postShare, Dashboard dashboard) {
         }
     }
 

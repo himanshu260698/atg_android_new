@@ -10,6 +10,11 @@
 
     </style>
 
+    <declare-styleable name="CustomView">
+        <attr name="customFont" format="string"></attr>
+        <attr name="setAlpha" format="boolean"></attr>
+    </declare-styleable>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
