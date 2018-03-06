@@ -9,6 +9,8 @@ import com.ATG.World.models.EducationDetailResponse;
 import com.ATG.World.models.FeedDetailResponse;
 import com.ATG.World.models.JobDetailResponse;
 import com.ATG.World.models.PostArticleResponse2;
+import com.ATG.World.models.PostEducationResponse1;
+import com.ATG.World.models.PostEducationResponse2;
 import com.ATG.World.models.PostJobDetails2;
 import com.ATG.World.models.PostJobResponse;
 import com.ATG.World.models.PostJobResponse2;
@@ -212,6 +214,22 @@ public interface AtgService {
                                                   @Part("tags") RequestBody tags, @Part MultipartBody.Part file,
                                                   @Part("title") RequestBody title);
     //Post qrious calls
+
+    @POST("ws-post-education-step-one")
+    @FormUrlEncoded
+    Call<PostEducationResponse1> postEducationStepOne(@Field("user_id") @NonNull String userId,
+                                                      @Field("group_id") @NonNull String groupId,
+                                                      @Field("already_exist_education_id") String already_exist_education_id,
+                                                      @Field("title") @NonNull String title, @Field("description") @NonNull String description,
+                                                      @Field("website")String website,@Field("education_type")String education_type);
+    @Multipart
+    @POST("ws-post-education-step-two")
+    @FormUrlEncoded
+    Call<PostEducationResponse2> postEducationStepTwo(@Part("user_id") RequestBody userId, @Part("education_image") MultipartBody.Part file,
+                                                      @Part("education_id") RequestBody educationId,
+                                                  @Part("title") RequestBody title,
+                                                      @Part("tags") RequestBody tags);
+
 
     @POST("ws-post-qrious-step-one")
     @FormUrlEncoded

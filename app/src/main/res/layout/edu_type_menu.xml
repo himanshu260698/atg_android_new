@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/menu_dialog_design">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:layout_marginTop="20dp"
+        android:text="Select Education Type"
+        android:gravity="center"/>
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edu_type_rad"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="25dp">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rad_podcast"
+            android:text="Podcast"
+            android:textSize="25dp"
+            android:textColor="#5f615e"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rad_document"
+            android:text="Document"
+            android:textSize="25dp"
+            android:textColor="#5f615e"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rad_video"
+            android:text="Video"
+            android:textSize="25dp"
+            android:textColor="#5f615e"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rad_audio"
+            android:text="Audio"
+            android:textSize="25dp"
+            android:textColor="#5f615e"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rad_webinar"
+            android:text="Webinar"
+            android:textSize="25dp"
+            android:textColor="#5f615e"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rad_online_classes"
+            android:text="Online Classes"
+            android:textSize="25dp"
+            android:textColor="#5f615e"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rad_regional_classes"
+            android:text="Regional Classes"
+            android:textSize="25dp"
+            android:textColor="#5f615e"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rad_others"
+            android:text="Others"
+            android:textSize="25dp"
+            android:textColor="#5f615e"/>
+
+    </RadioGroup>
+    <Button
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/save_butto"
+        android:layout_marginTop="15dp"
+        android:text="Proceed"
+        android:id="@+id/call_edu_one"
+        android:textSize="20dp"
+        android:layout_marginBottom="15dp"
+        android:textColor="#ffffff"/>
+</LinearLayout>
