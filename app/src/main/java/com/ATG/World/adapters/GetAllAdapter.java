@@ -160,9 +160,9 @@ public class GetAllAdapter extends BaseAdapter<Dashboard> {
             setupPostType(postType, article);
             setupPostImage(postImage, article);
             setupPostTitle(postTitle, article);
-            /*setupPostLikes(postLikes, article);
+            setupPostLikes(postLikes, article);
             setupPostUnlikes(postUnlikes, article);
-            setupPostComments(postComments, article);
+            /*setupPostComments(postComments, article);
             setupPostShares(postShare, article);*/
             int adapterPos = getAdapterPosition();
         }
