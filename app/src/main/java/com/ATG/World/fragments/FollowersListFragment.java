@@ -1,7 +1,6 @@
 package com.ATG.World.fragments;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,27 +8,23 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ATG.World.R;
-import com.ATG.World.activity.PostDetailActivity;
-import com.ATG.World.adapters.GetAllAdapter;
-import com.ATG.World.models.Dashboard;
-import com.ATG.World.models.DashboardResponse;
+import com.ATG.World.adapters.FollowersListAdapter;
+import com.ATG.World.models.FollowersList;
+import com.ATG.World.models.FollowersResponse;
 import com.ATG.World.network.AtgClient;
 import com.ATG.World.network.AtgService;
 import com.ATG.World.preferences.UserPreferenceManager;
 import com.ATG.World.utilities.NetworkLogUtility;
 import com.ATG.World.utilities.NetworkUtility;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -41,17 +36,16 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * This fragment will be used to show list of all posts.
+ * A simple {@link Fragment} subclass.
  */
-public class GetAllFragment extends BaseFragment implements GetAllAdapter.OnItemClickListener, GetAllAdapter.OnReloadClickListener {
+public class FollowersListFragment extends BaseFragment implements FollowersListAdapter.OnItemClickListener, FollowersListAdapter.OnReloadClickListener {
 
-    private static final String TAG = GetAllFragment.class.getSimpleName();
-    public static final int PAGE_SIZE = 7;
-    public static final int GET_ALL_FILTER = 1;
+    private static final String TAG = ArticleFragment.class.getSimpleName();
+
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
     @BindView(R.id.empty_view)
-    View emptyView;
+    LinearLayout emptyView;
     @BindView(R.id.error_ll)
     LinearLayout errorLinearLayout;
     @BindView(R.id.tv_error)
@@ -62,26 +56,22 @@ public class GetAllFragment extends BaseFragment implements GetAllAdapter.OnItem
     ProgressBar mProgressBar;
 
     private LinearLayoutManager mLinearLayoutManager;
-    private static final int PAGE_START = 1;
+    public static final int PAGE_SIZE = 10;
+    public static final int NO_RECORD_FOUND = 3;
+    private static final int PAGE_START = 0;
     private boolean isLoading = false;
     private boolean isLastPage = false;
     private int mCurrentPage = PAGE_START;
     private Unbinder unbinder;
-    private GetAllAdapter mGetAllAdapter;
+    private FollowersListAdapter followersListAdapter;
 
-    public GetAllFragment() {
+    public FollowersListFragment() {
     }
 
-    public static GetAllFragment newInstance() {
-        return new GetAllFragment();
+    public static FollowersListFragment newInstance() {
+        return new FollowersListFragment();
     }
 
-    public static GetAllFragment newInstance(Bundle extras) {
-        GetAllFragment fragment = new GetAllFragment();
-        Bundle bundle = new Bundle();
-        fragment.setArguments(bundle);
-        return fragment;
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,7 +81,7 @@ public class GetAllFragment extends BaseFragment implements GetAllAdapter.OnItem
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_get_all, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_followers_list, container, false);
         unbinder = ButterKnife.bind(this, rootView);
 
         return rootView;
@@ -104,19 +94,19 @@ public class GetAllFragment extends BaseFragment implements GetAllAdapter.OnItem
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
-        mGetAllAdapter = new GetAllAdapter();
-        mGetAllAdapter.setOnItemClickListener(this);
-        mGetAllAdapter.setOnReloadClickListener(this);
+        followersListAdapter = new FollowersListAdapter();
+        followersListAdapter.setOnItemClickListener(this);
+        followersListAdapter.setOnReloadClickListener(this);
 
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.setAdapter(mGetAllAdapter);
+        mRecyclerView.setAdapter(followersListAdapter);
 
         // Pagination
         mRecyclerView.addOnScrollListener(recyclerViewOnScrollListener);
 
         AtgService atgService = AtgClient.getClient().create(AtgService.class);
-        Call<DashboardResponse> call = atgService.getDashboardData(0, PAGE_START,
-                Integer.parseInt(UserPreferenceManager.getUserId(getContext())));
+        Call<FollowersResponse> call = atgService.getFollowers(Integer.parseInt(UserPreferenceManager.getUserId(getActivity())), PAGE_START, 10);
+        calls.add(call);
         call.enqueue(firstFetchCallback);
 
     }
@@ -158,7 +148,7 @@ public class GetAllFragment extends BaseFragment implements GetAllAdapter.OnItem
         mProgressBar.setVisibility(View.VISIBLE);
 
         AtgService atgService = AtgClient.getClient().create(AtgService.class);
-        Call<DashboardResponse> fetchAll = atgService.getDashboardData(0, PAGE_START, 455);
+        Call<FollowersResponse> fetchAll = atgService.getFollowers(Integer.parseInt(UserPreferenceManager.getUserId(getActivity())), PAGE_START, 10);
         calls.add(fetchAll);
         fetchAll.enqueue(firstFetchCallback);
     }
@@ -168,16 +158,15 @@ public class GetAllFragment extends BaseFragment implements GetAllAdapter.OnItem
         mCurrentPage = mCurrentPage + 1;
 
         AtgService atgService = AtgClient.getClient().create(AtgService.class);
-        Call<DashboardResponse> call = atgService.getDashboardData(GET_ALL_FILTER, mCurrentPage, Integer.parseInt(UserPreferenceManager.getUserId(getActivity())));
+        Call<FollowersResponse> call = atgService.getFollowers(Integer.parseInt(UserPreferenceManager.getUserId(getActivity())), mCurrentPage, 10);
         call.enqueue(nextFetchCallback);
 
     }
 
-    public Callback<DashboardResponse> firstFetchCallback = new Callback<DashboardResponse>() {
+    public Callback<FollowersResponse> firstFetchCallback = new Callback<FollowersResponse>() {
         @Override
-        public void onResponse(Call<DashboardResponse> call, Response<DashboardResponse> response) {
-            if(mProgressBar != null)
-                mProgressBar.setVisibility(View.GONE);
+        public void onResponse(Call<FollowersResponse> call, Response<FollowersResponse> response) {
+            mProgressBar.setVisibility(View.GONE);
             isLoading = false;
 
             if (!response.isSuccessful()) {
@@ -189,45 +178,45 @@ public class GetAllFragment extends BaseFragment implements GetAllAdapter.OnItem
                 return;
             }
 
-            DashboardResponse dashboardResponse = response.body();
-            if (dashboardResponse != null) {
-                List<Dashboard> dashboardList = dashboardResponse.getDashboard();
-                if (dashboardList != null) {
-                    if (dashboardList.size() > 0) {
-                        mGetAllAdapter.addAll(dashboardList);
+            FollowersResponse FollowersResponse = response.body();
+            int errorMessage = FollowersResponse.getErr();
+            if (FollowersResponse != null) {
+                List<FollowersList> followersList = FollowersResponse.getFollowers();
+                if (followersList != null) {
+                    if (followersList.size() > 0) {
+                        followersListAdapter.addAll(followersList);
                     }
-                    if (dashboardList.size() >= PAGE_SIZE) {
-                        mGetAllAdapter.addFooter();
+                    if (followersList.size() >= PAGE_SIZE) {
+                        followersListAdapter.addFooter();
                     } else {
                         isLastPage = true;
                     }
                 }
+            } else if (errorMessage == NO_RECORD_FOUND) {
+                emptyView.setVisibility(View.VISIBLE);
             }
         }
 
         @Override
-        public void onFailure(retrofit2.Call call, Throwable t) {
+        public void onFailure(Call call, Throwable t) {
             NetworkLogUtility.logFailure(call, t);
 
             if (!call.isCanceled()) {
                 isLoading = false;
-                if(mProgressBar!=null)
-                    mProgressBar.setVisibility(View.GONE);
+                mProgressBar.setVisibility(View.GONE);
 
                 if (NetworkUtility.isKnownException(t)) {
-                    if(errorTextView!=null) {
-                        errorTextView.setText("Can't load data.\nCheck your network connection.");
-                        errorLinearLayout.setVisibility(View.VISIBLE);
-                    }
+                    errorTextView.setText("Can't load data.\nCheck your network connection.");
+                    errorLinearLayout.setVisibility(View.VISIBLE);
                 }
             }
 
         }
     };
-    public Callback<DashboardResponse> nextFetchCallback = new Callback<DashboardResponse>() {
+    public Callback<FollowersResponse> nextFetchCallback = new Callback<FollowersResponse>() {
         @Override
-        public void onResponse(Call<DashboardResponse> call, Response<DashboardResponse> response) {
-            mGetAllAdapter.removeFooter();
+        public void onResponse(Call<FollowersResponse> call, Response<FollowersResponse> response) {
+            followersListAdapter.removeFooter();
             isLoading = false;
 
             if (!response.isSuccessful()) {
@@ -242,15 +231,15 @@ public class GetAllFragment extends BaseFragment implements GetAllAdapter.OnItem
                 return;
             }
 
-            DashboardResponse dashboardResponse = response.body();
-            if (dashboardResponse != null) {
-                List<Dashboard> dashboardList = dashboardResponse.getDashboard();
-                if (dashboardList != null) {
-                    if (dashboardList.size() > 0)
-                        mGetAllAdapter.addAll(dashboardList);
+            FollowersResponse FollowersResponse = response.body();
+            if (FollowersResponse != null) {
+                List<FollowersList> followersList = FollowersResponse.getFollowers();
+                if (followersList != null) {
+                    if (followersList.size() > 0)
+                        followersListAdapter.addAll(followersList);
 
-                    if (dashboardList.size() >= PAGE_SIZE) {
-                        mGetAllAdapter.addFooter();
+                    if (followersList.size() >= PAGE_SIZE) {
+                        followersListAdapter.addFooter();
                     } else {
                         isLastPage = true;
                     }
@@ -264,7 +253,7 @@ public class GetAllFragment extends BaseFragment implements GetAllAdapter.OnItem
 
             if (!call.isCanceled()) {
                 if (NetworkUtility.isKnownException(t)) {
-                    mGetAllAdapter.updateFooter(GetAllAdapter.FooterType.ERROR);
+                    followersListAdapter.updateFooter(FollowersListAdapter.FooterType.ERROR);
                 }
             }
 
@@ -273,19 +262,6 @@ public class GetAllFragment extends BaseFragment implements GetAllAdapter.OnItem
 
     @Override
     public void onItemClick(int position, View view) {
-        // Get Item position
-        Log.d(TAG, "onItemClick: " + position);
-        // Get Item position
-        try {
-            Intent intent = new Intent(getActivity(), PostDetailActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putString("Type", mGetAllAdapter.getItem(position).getType());
-            bundle.putInt("FeedId", mGetAllAdapter.getItem(position).getId());
-            intent.putExtras(bundle);
-            startActivity(intent);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     private void removeListeners() {
@@ -297,28 +273,4 @@ public class GetAllFragment extends BaseFragment implements GetAllAdapter.OnItem
 
     }
 
-    /*@OnClick(R.id.tv_likes)
-    public void onLikesImageViewClicked(final View view){
-
-    }
-
-    @OnClick(R.id.tv_unlikes)
-    public void onUnLikesImageViewClicked(final View view){
-
-    }
-
-    @OnClick(R.id.tv_comments)
-    public void onCommentsImageViewClicked(final View view){
-        Intent intent = new Intent(getActivity(), CommentsActivity.class);
-
-        Bundle bundle = new Bundle();
-        intent.putExtras(bundle);
-
-        startActivity(intent);
-    }
-
-    @OnClick(R.id.tv_share)
-    public void onShareImageViewClicked(final View view){
-
-    }*/
 }

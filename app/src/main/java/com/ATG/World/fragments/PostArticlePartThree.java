@@ -217,6 +217,7 @@ public class PostArticlePartThree extends Fragment {
         cursor.close();
         return res;
     }
+
     private Bitmap compressImage(Uri imageU){
         InputStream inputStream=null;
         try{

@@ -137,6 +137,20 @@
     <string name="activity_post_details">Post Details</string>
     <string name="title_activity_signup">Sign up</string>
     <string name="comment_here">Comment Here</string>
+    <string name="followers_label">Followers</string>
+    <string name="following_label">Following</string>
+    <string name="profile_photo_label">Profile Photo</string>
+    <string name="users_first_name_label">First Name</string>
+    <string name="users_last_name_label">Last Name</string>
+    <string name="users_headline_label">Headline</string>
+    <string name="users_Education_label">Education</string>
+    <string name="users_profession_label">Profession</string>
+    <string name="users_location_label">Location</string>
+    <string name="users_about_me_label">About Me</string>
+    <string name="edit_intro_label">Edit Intro</string>
+    <string name="connection_label">Connections</string>
+    <string name="save">Save</string>
+    <string name="users_tagline_label">Tagline</string>
 
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
 
