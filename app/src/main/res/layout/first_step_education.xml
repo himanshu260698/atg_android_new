@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:zhy="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/layout_step1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/SIZE_10"
+            android:gravity="center_horizontal"
+            android:text="Select Group(s)"
+            android:textColor="@color/green_700"
+            android:textSize="@dimen/TEXT_SIZE_16" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="@dimen/SIZE_10"
+            android:gravity="center"
+            android:text="Your education will be post in following groups!"
+            android:textColor="#4C6A5C"
+            android:textSize="@dimen/TEXT_SIZE_16" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_margin="@dimen/SIZE_10"
+            android:background="@drawable/main_select_group_back"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:orientation="vertical">
+
+                <android.support.v4.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_margin="@dimen/SIZE_8"
+                    android:layout_marginBottom="@dimen/SIZE_15"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:elevation="20dp"
+                        android:orientation="vertical">
+
+                        <com.zhy.view.flowlayout.TagFlowLayout
+                            android:id="@+id/id_flowlayout_post_education"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_below="@+id/tv_select_group"
+                            android:elevation="20dp"
+                            android:padding="8dp"
+                            zhy:max_select="5" />
+                    </LinearLayout>
+                </android.support.v4.widget.NestedScrollView>
+            </LinearLayout>
+            <!--   <View
+                   android:layout_width="match_parent"
+                   android:layout_height="1dp"
+                   android:background="@color/green"/>
+               <TextView
+                   android:id="@+id/tv_select_max_five"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:gravity="center_horizontal"
+                   android:padding="@dimen/SIZE_10"
+                   android:text="Select maximum 5 Groups"
+                   android:textColor="@color/green"
+                   android:textSize="@dimen/TEXT_SIZE_18"/>-->
+            <TextView
+                android:id="@+id/tv_next_education"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/cornor_buttom_drawable"
+                android:gravity="center_horizontal"
+                android:padding="@dimen/SIZE_10"
+                android:text="Next"
+                android:textAllCaps="true"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/TEXT_SIZE_18" />
+            <!-- <View
+                 android:layout_width="match_parent"
+                 android:layout_height="@dimen/SIZE_1"
+                 android:layout_above="@id/tv_select_max_five"
+                 android:background="@color/green" />-->
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/SIZE_5"
+            android:text="Don't select any groups to post to your connections and followers."
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/TEXT_SIZE_16" />
+
+    </LinearLayout>
+
+</LinearLayout>

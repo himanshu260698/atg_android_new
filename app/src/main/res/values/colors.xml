@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#1A4D33</color>
     <color name="colorPrimaryDark">#20794d</color>
-    <color name="colorAccent">#FFFFFF</color>
+    <color name="colorAccent">#4CAF50</color>
 
     <color name="colorFab">#f31a4d33</color>
 
@@ -327,9 +327,8 @@
     <!--Custom Notification Bar-->
     <color name="social_notification_bar">#339966</color>
 
-
-
     <color name="darker_shade">#1A4D33</color>
     <color name="lighter_shade">#339966</color>
 
+    <color name="colorButton">#0277bd</color>
 </resources>

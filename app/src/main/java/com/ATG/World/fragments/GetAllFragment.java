@@ -5,18 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ATG.World.R;
 import com.ATG.World.activity.PostDetailActivity;
@@ -29,7 +26,6 @@ import com.ATG.World.preferences.UserPreferenceManager;
 import com.ATG.World.utilities.NetworkLogUtility;
 import com.ATG.World.utilities.NetworkUtility;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -176,7 +172,7 @@ public class GetAllFragment extends BaseFragment implements GetAllAdapter.OnItem
     public Callback<DashboardResponse> firstFetchCallback = new Callback<DashboardResponse>() {
         @Override
         public void onResponse(Call<DashboardResponse> call, Response<DashboardResponse> response) {
-            if(mProgressBar!=null)
+            if (mProgressBar != null)
                 mProgressBar.setVisibility(View.GONE);
             isLoading = false;
 
@@ -211,11 +207,11 @@ public class GetAllFragment extends BaseFragment implements GetAllAdapter.OnItem
 
             if (!call.isCanceled()) {
                 isLoading = false;
-                if(mProgressBar!=null)
+                if (mProgressBar != null)
                     mProgressBar.setVisibility(View.GONE);
 
                 if (NetworkUtility.isKnownException(t)) {
-                    if(errorTextView!=null) {
+                    if (errorTextView != null) {
                         errorTextView.setText("Can't load data.\nCheck your network connection.");
                         errorLinearLayout.setVisibility(View.VISIBLE);
                     }
@@ -273,9 +269,6 @@ public class GetAllFragment extends BaseFragment implements GetAllAdapter.OnItem
 
     @Override
     public void onItemClick(int position, View view) {
-        // Get Item position
-        Log.d(TAG, "onItemClick: " + position);
-        // Get Item position
         try {
             Intent intent = new Intent(getActivity(), PostDetailActivity.class);
             Bundle bundle = new Bundle();
@@ -296,29 +289,4 @@ public class GetAllFragment extends BaseFragment implements GetAllAdapter.OnItem
     public void onReloadClick() {
 
     }
-
-    /*@OnClick(R.id.tv_likes)
-    public void onLikesImageViewClicked(final View view){
-
-    }
-
-    @OnClick(R.id.tv_unlikes)
-    public void onUnLikesImageViewClicked(final View view){
-
-    }
-
-    @OnClick(R.id.tv_comments)
-    public void onCommentsImageViewClicked(final View view){
-        Intent intent = new Intent(getActivity(), CommentsActivity.class);
-
-        Bundle bundle = new Bundle();
-        intent.putExtras(bundle);
-
-        startActivity(intent);
-    }
-
-    @OnClick(R.id.tv_share)
-    public void onShareImageViewClicked(final View view){
-
-    }*/
 }

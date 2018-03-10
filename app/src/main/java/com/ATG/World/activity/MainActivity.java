@@ -142,6 +142,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        headerLayout = navigationView.getHeaderView(0);
+        UpdateNavProfile();
+
         setUpNavigationView();
 
         if (savedInstanceState == null) {
@@ -162,102 +165,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             isInternetAvailable = netInfo != null && netInfo.isConnectedOrConnecting();
             if (FlagLocation == 1) {
-
                 Location();
             }
-
-            headerLayout = navigationView.getHeaderView(0);
-            UpdateNavProfile();
-
-            headerLayout = navigationView.getHeaderView(0);
-            UpdateNavProfile();
-            layoutFabArticle.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    closeSubMenusFab();
-                    fab.hide();
-                    PostArticlePartOne postArticlePartOne = new PostArticlePartOne();
-                    Fragment fragment = postArticlePartOne;
-                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                            android.R.anim.fade_out);
-                    fragmentTransaction.replace(R.id.main_content, fragment);
-                    fragmentTransaction.commitAllowingStateLoss();
-                }
-            });
         }
-   /* layoutFabQrious.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            closeSubMenusFab();
-            fab.hide();
-            PostQriousOne postQriousOne=new PostQriousOne();
-            Fragment fragment = postQriousOne;
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                    android.R.anim.fade_out);
-            fragmentTransaction.replace(R.id.main_content, fragment);
-            fragmentTransaction.commitAllowingStateLoss();
-        });
-        */
-        layoutFabEducation.setOnClickListener(new View.OnClickListener() {
+
+
+        headerLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                closeSubMenusFab();
-                fab.hide();
-                PostEducationPartOne postEducationPartOne = new PostEducationPartOne();
-                Fragment fragment = postEducationPartOne;
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                        android.R.anim.fade_out);
-                fragmentTransaction.replace(R.id.main_content, fragment);
-                fragmentTransaction.commitAllowingStateLoss();
+                Intent intent = new Intent(MainActivity.this, MyProfileActivity.class);
+                startActivity(intent);
             }
         });
 
-        layoutFabArticle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                closeSubMenusFab();
-                fab.hide();
-                PostArticlePartOne postArticlePartOne = new PostArticlePartOne();
-                Fragment fragment = postArticlePartOne;
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                        android.R.anim.fade_out);
-                fragmentTransaction.replace(R.id.main_content, fragment);
-                fragmentTransaction.commitAllowingStateLoss();
-            }
-        });
-        layoutFabjob.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                closeSubMenusFab();
-                fab.hide();
-                PostJobOne postJobOne = new PostJobOne();
-                Fragment fragment = postJobOne;
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                        android.R.anim.fade_out);
-                fragmentTransaction.replace(R.id.main_content, fragment);
-                fragmentTransaction.commitAllowingStateLoss();
-            }
-        });
-        layoutFabQrious.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                closeSubMenusFab();
-                fab.hide();
-                PostQriousOne postQriousOne = new PostQriousOne();
-                Fragment fragment = postQriousOne;
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                        android.R.anim.fade_out);
-                fragmentTransaction.replace(R.id.main_content, fragment);
-                fragmentTransaction.commitAllowingStateLoss();
-            }
-        });
     }
 
     @Override
@@ -366,7 +286,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Sometimes, when fragment has huge data, screen seems hanging
         // when switching between navigation menus
         // So using runnable, the fragment is loaded with cross fade effect
-        Runnable mPendingRunnable = new Runnable() {
+        /*Runnable mPendingRunnable = new Runnable() {
             @Override
             public void run() {
                 // update the main content by replacing fragments
@@ -381,7 +301,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //If mPendingRunnable is not null, then add to the message queue
         if (mPendingRunnable != null) {
             mHandler.post(mPendingRunnable);
-        }
+        }*/
+
+        Fragment fragment = getHomeFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        //fragmentTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+        fragmentTransaction.replace(R.id.main_content, fragment, CURRENT_TAG);
+        fragmentTransaction.commitAllowingStateLoss();
 
         // show or hide the fab button
         toggleFab();
@@ -397,18 +323,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (navItemIndex) {
             case 0:
                 // Home
-                HomeFragment homeFragment = new HomeFragment();
-                return homeFragment;
+                return new HomeFragment();
 
             case 1:
                 logOut();
                 return null;
             case 2:
-                NotificationFragment myNotificationFragment = new NotificationFragment();
-                return myNotificationFragment;
+                // Notification
+                return new NotificationFragment();
             case 3:
                 // Call My Posts
-                //    return ;
+                return new NotificationFragment();
             case 4:
                 // Call My Groups
                 return new MyGroupFragment();
@@ -419,79 +344,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return null;
 
             case 7:
-                SettingsFragment settingsFragment = new SettingsFragment();
                 closeSubMenusFab();
                 toggleFab();
-                return settingsFragment;
+                return new SettingsFragment();
 
             default:
                 return new HomeFragment();
         }
     }
 
-    private void loadNotificationFragment() {
-        //selectNavMenu();
-
-        setToolbarTitle();
-
-        if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
-            drawer.closeDrawers();
-
-            toggleFab();
-            return;
-        }
-
-        // Sometimes, when fragment has huge data, screen seems hanging
-        // when switching between navigation menus
-        // So using runnable, the fragment is loaded with cross fade effect
-        Runnable mPendingRunnable = new Runnable() {
-            @Override
-            public void run() {
-                //Update the main content by replacing fragments
-                Fragment fragment = getNotificationFragment();
-                Bundle bundle = new Bundle();
-                bundle.putInt("user_id", 1941);
-                fragment.setArguments(bundle);
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                        android.R.anim.fade_out);
-                fragmentTransaction.replace(R.id.main_content, fragment, CURRENT_TAG);
-                fragmentTransaction.commitAllowingStateLoss();
-            }
-        };
-
-        // If mPendingRunnable is not null, then add to the message queue
-        if (mPendingRunnable != null) {
-            mHandler.post(mPendingRunnable);
-        }
-
-        // show or hide the fab button
-        toggleFab();
-
-        //Closing drawer on item click
-        drawer.closeDrawers();
-
-        // refresh toolbar menu
-        invalidateOptionsMenu();
-    }
-
-    private Fragment getNotificationFragment() {
-        switch (navItemIndex) {
-            case 2:
-                // Notification
-                NotificationFragment homeFragment = new NotificationFragment();
-                return homeFragment;
-
-            case 1:
-                logOut();
-
-            default:
-                return new NotificationFragment();
-        }
-    }
 
     public void Location() {
 
+        gps = new GPSTracker(MainActivity.this, isInternetAvailable);
         rxPermissions
                 .request(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
                         Manifest.permission.ACCESS_NETWORK_STATE)
@@ -532,7 +397,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     case R.id.nav_post:
                         navItemIndex = 1;
                         CURRENT_TAG = TAG_HOME;
-                        // loadPostFragment();
+                       // loadPostFragment();
                         loadHomeFragment();
                         fab.show();
                         openSubMenusFab();
@@ -541,36 +406,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     case R.id.nav_notification:
                         navItemIndex = 2;
                         CURRENT_TAG = TAG_NOTIFICATION;
-                        loadNotificationFragment();
+                        loadHomeFragment();
                         break;
 
                     case R.id.nav_my_posts:
                         navItemIndex = 3;
                         CURRENT_TAG = TAG_MY_POST;
-                        loadMyPostFragment();
+                        loadHomeFragment();
                         break;
 
                     case R.id.nav_my_groups:
                         navItemIndex = 4;
                         CURRENT_TAG = TAG_MY_GROUPS;
-                        changeFrame(new MyGroupFragment(), R.string.my_groups);
+                        loadHomeFragment();
                         break;
 
                     case R.id.nav_explore_groups:
                         navItemIndex = 5;
                         CURRENT_TAG = TAG_EXPLORE_GROUPS;
-                        changeFrame(new ExploreGroupsFragment(), R.string.explore_groups);
+                        loadHomeFragment();
                         break;
 
                     case R.id.nav_logout:
                         navItemIndex = 6;
                         logOut();
                         return true;
+
                     case R.id.settings:
                         navItemIndex = 7;
                         CURRENT_TAG = TAG_SETTINGS;
                         loadHomeFragment();
                         break;
+
                     default:
                         navItemIndex = 0;
                 }
@@ -604,7 +471,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         };
 
         //Setting the actionbarToggle to drawer layout
-        drawer.setDrawerListener(actionBarDrawerToggle);
+        drawer.addDrawerListener(actionBarDrawerToggle);
 
         //calling sync state is necessary or else your hamburger icon wont show up
         actionBarDrawerToggle.syncState();
@@ -631,7 +498,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(MainActivity.this, SocialLoginActivity.class);
                 UserPreferenceManager.logout(MainActivity.this);
-                UserPreferenceManager.setUserId(MainActivity.this, "login");
                 intent.setClass(MainActivity.this, SocialLoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
@@ -669,6 +535,77 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         layoutFabQrious.setVisibility(View.VISIBLE);
         fab.setImageResource(R.drawable.ic_clear_black_24px);
         fabExpanded = true;
+
+        layoutFabArticle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeSubMenusFab();
+                fab.hide();
+                Fragment fragment = new PostArticlePartOne();
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.main_content, fragment);
+                fragmentTransaction.commitAllowingStateLoss();
+            }
+        });
+
+
+        /* layoutFabQrious.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            closeSubMenusFab();
+            fab.hide();
+            PostQriousOne postQriousOne=new PostQriousOne();
+            Fragment fragment = postQriousOne;
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                    android.R.anim.fade_out);
+            fragmentTransaction.replace(R.id.main_content, fragment);
+            fragmentTransaction.commitAllowingStateLoss();
+        });
+        */
+        layoutFabArticle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeSubMenusFab();
+                fab.hide();
+                PostArticlePartOne postArticlePartOne = new PostArticlePartOne();
+                Fragment fragment = postArticlePartOne;
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                        android.R.anim.fade_out);
+                fragmentTransaction.replace(R.id.main_content, fragment);
+                fragmentTransaction.commitAllowingStateLoss();
+            }
+        });
+        layoutFabjob.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                closeSubMenusFab();
+                fab.hide();
+                PostJobOne postJobOne = new PostJobOne();
+                Fragment fragment = postJobOne;
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                        android.R.anim.fade_out);
+                fragmentTransaction.replace(R.id.main_content, fragment);
+                fragmentTransaction.commitAllowingStateLoss();
+            }
+        });
+        layoutFabQrious.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeSubMenusFab();
+                fab.hide();
+                PostQriousOne postQriousOne = new PostQriousOne();
+                Fragment fragment = postQriousOne;
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                        android.R.anim.fade_out);
+                fragmentTransaction.replace(R.id.main_content, fragment);
+                fragmentTransaction.commitAllowingStateLoss();
+            }
+        });
     }
 
     public void showBack() {
@@ -810,24 +747,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fragmentTransaction.commit();
         postJobThree.receiveJobData(jobID, location);
     }
-
-
-    private void loadMyPostFragment() {
-        fragment = new MyPostFragment();
-
-        if (fragment != null) {
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                    android.R.anim.fade_out);
-            fragmentTransaction.replace(R.id.main_content, fragment, CURRENT_TAG);
-            fragmentTransaction.commitAllowingStateLoss();
-            getSupportActionBar().setTitle("My Post");
-
-            //Close Fab button..
-            toggleFab();
-            //Closing drawer on item click
-            drawer.closeDrawers();
-        }
-    }
-
 }

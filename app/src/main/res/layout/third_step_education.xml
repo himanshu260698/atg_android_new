@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_margin="@dimen/SIZE_10"
+        android:background="@drawable/square_drawable">
+
+        <ImageView
+            android:id="@+id/imv_cover_photo_edu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY" />
+
+        <ImageView
+            android:id="@+id/imv_add_cover_edu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="100dp" />
+
+        <TextView
+            android:id="@+id/tv_remove_image_education"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:gravity="end"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imv_add_cover_edu"
+            android:gravity="center_horizontal"
+            android:textColor="@color/green_500" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="@dimen/SIZE_10"
+        android:background="@drawable/main_select_group_back"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/layout_tags_type_edc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:padding="@dimen/SIZE_5">
+
+            <TextView
+                android:id="@+id/tv_main_tags"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Tag"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:id="@+id/tv_tags"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/SIZE_5"
+                android:gravity="center"
+                android:text="Add Tags"
+                android:textColor="@color/colorBlack" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_tags_type_post_educat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_tags_type_edc"
+            android:layout_margin="@dimen/SIZE_5"
+            android:orientation="horizontal"
+            android:padding="@dimen/SIZE_5">
+
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/layout_add_tags_educat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"></LinearLayout>
+            </HorizontalScrollView>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_tags_chips"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/TEXT_SIZE_16" />
+
+        <EditText
+            android:id="@+id/edt_tags_educat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_tags_type_post_educat"
+            android:layout_margin="@dimen/SIZE_5"
+            android:background="@drawable/square_drawable"
+            android:focusable="true"
+            android:hint=" Type tag and press enter or ok"
+            android:inputType="text"
+            android:padding="@dimen/SIZE_10"
+            android:singleLine="true"
+            android:textSize="14sp"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tv_post_educat_third"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/cornor_buttom_drawable"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/SIZE_10"
+            android:text="Post"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/TEXT_SIZE_18" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/skip_post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/cornor_buttom_drawable"
+        android:gravity="center_horizontal"
+        android:padding="5dp"
+        android:text="skip"
+        android:textAllCaps="true"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/TEXT_SIZE_18" />
+
+
+</LinearLayout>

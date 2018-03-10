@@ -1,10 +1,11 @@
 package com.ATG.World.network;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 
 import com.ATG.World.models.AddEditDialogueResponse;
+import com.ATG.World.models.ConnectionResponse;
 import com.ATG.World.models.DashboardResponse;
+import com.ATG.World.models.EditProfileInfoResponse;
 import com.ATG.World.models.EducationDetailResponse;
 import com.ATG.World.models.FeedDetailResponse;
 import com.ATG.World.models.JobDetailResponse;
@@ -19,7 +20,10 @@ import com.ATG.World.models.PostQriousResponse2;
 import com.ATG.World.models.UpvoteDownvoteResponse;
 import com.ATG.World.models.FeedDetailResponse;
 import com.ATG.World.models.UpvoteDownvoteResponse;
+import com.ATG.World.models.FollowersResponse;
+import com.ATG.World.models.FollowingUsersResponse;
 import com.ATG.World.models.GroupPostListResponse;
+import com.ATG.World.models.JobDetailResponse;
 import com.ATG.World.models.JoinLeaveGroupResponse;
 import com.ATG.World.models.LocationDetails;
 import com.ATG.World.models.MainGroup;
@@ -27,21 +31,21 @@ import com.ATG.World.models.MarkNotificationResponse;
 import com.ATG.World.models.MyGroupResponse;
 import com.ATG.World.models.NicheGroupResponse;
 import com.ATG.World.models.NotificationRes;
-import com.ATG.World.models.PostArticleDetails;
 import com.ATG.World.models.PostArticleResponse;
+import com.ATG.World.models.PostArticleResponse2;
+import com.ATG.World.models.PostJobResponse;
+import com.ATG.World.models.PostJobResponse2;
+import com.ATG.World.models.PostQriousResponse;
+import com.ATG.World.models.PostQriousResponse2;
 import com.ATG.World.models.SignUpResponse;
 import com.ATG.World.models.SubGroupResponse;
+import com.ATG.World.models.UpvoteDownvoteResponse;
+import com.ATG.World.models.UserProfile;
 import com.ATG.World.models.User_details;
 import com.ATG.World.models.WsJoinLeaveGroupResponse;
 import com.ATG.World.models.WsLoginResponse;
 
-import java.util.List;
-
-import com.ATG.World.models.User_details;
-import com.ATG.World.models.WsLoginResponse;
-
 import okhttp3.MultipartBody;
-import okhttp3.Request;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -50,7 +54,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -178,6 +181,7 @@ public interface AtgService {
     Call<JobDetailResponse> getJobDetails(@Field("type") String postType,
                                           @Field("feed_id") int feedId,
                                           @Field("user_id") int userId);
+
     @POST("ws-feed-detail")
     @FormUrlEncoded
     Call<EducationDetailResponse> getEducationDetails(@Field("type") String postType,
@@ -208,6 +212,7 @@ public interface AtgService {
     Call<PostArticleResponse> postArticleStepOne(@Field("user_id") @NonNull String userId, @Field("group_id") @NonNull int groupId,
                                                  @Field("already_exist_article_id") String already_exist_article_id,
                                                  @Field("title") @NonNull String title, @Field("description") @NonNull String description);
+
     @Multipart
     @POST("ws-post-article-step-two")
     Call<PostArticleResponse2> postArticleStepTwo(@Part("user_id") RequestBody userId, @Part("article_id") RequestBody articleId,
@@ -267,4 +272,39 @@ public interface AtgService {
                                @Field("user_id") @NonNull int userId,
                                @Field("page_number") int pageNumber,
                                @Field("count") int count);
+
+    @POST("ws-profile")
+    @FormUrlEncoded
+    Call<UserProfile> getAccountSettings(@Field("user_id") int userId);
+
+    @GET("ws-get-user-followers")
+    Call<FollowersResponse> getFollowers(@Query("user_id") int userId,
+                                         @Query("page_number") int pageNumber,
+                                         @Query("count") int perPageCount);
+
+    @GET("ws-get-user-followings")
+    Call<FollowingUsersResponse> getFollowingUsers(@Query("user_id") int userId,
+                                                   @Query("page_number") int pageNumber,
+                                                   @Query("count") int perPageCount);
+
+    @GET("ws-get-user-connections")
+    Call<ConnectionResponse> getConnections(@Query("user_id") int userId,
+                                            @Query("page_number") int pageNumber,
+                                            @Query("count") int perPageCount);
+
+    @Multipart
+    @POST("ws-edit-account-setting")
+    Call<EditProfileInfoResponse> editProfile (@Part("user_id") RequestBody userId,
+                                               @Part MultipartBody.Part profilePhoto,
+                                               @Part("user_name") RequestBody userName,
+                                               @Part("first_name") RequestBody userFirstName,
+                                               @Part("last_name") RequestBody userLastName,
+                                               @Part("tagline") RequestBody userProfileTagline,
+                                               @Part("email") RequestBody userEmail,
+                                               @Part("profession") RequestBody userProfession,
+                                               @Part("about_me") RequestBody userAboutMe,
+                                               @Part("mob_no") RequestBody userMobileNumber,
+                                               @Part("phone_no") RequestBody userPhoneNumber,
+                                               @Part("location") RequestBody userLocation,
+                                               @Part("user_type") RequestBody userType);
 }

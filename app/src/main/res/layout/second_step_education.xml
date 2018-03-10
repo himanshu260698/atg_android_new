@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/SIZE_10"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <EditText
+        android:id="@+id/edt_post_educatn_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/square_drawable"
+        android:focusable="true"
+        android:hint="Title"
+        android:padding="@dimen/SIZE_10"
+        android:textColor="@color/colorBlack"
+        android:textColorHint="@color/grey_600"
+        android:textSize="@dimen/TEXT_SIZE_16" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/SIZE_10">
+
+        <Spinner
+            android:id="@+id/spn_type_education"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/square_drawable" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/SIZE_15"
+            android:src="@drawable/ic_arrow_drop_down_black_24dp" />
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/edt_post_educatnother"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/SIZE_10"
+        android:background="@drawable/square_drawable"
+        android:focusable="true"
+        android:hint="Other"
+        android:padding="@dimen/SIZE_10"
+        android:singleLine="true"
+        android:textColor="@color/colorBlack"
+        android:textColorHint="@color/grey_600"
+        android:textSize="@dimen/TEXT_SIZE_16"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/SIZE_10"
+        android:background="@drawable/square_drawable"
+        android:orientation="vertical"
+        android:padding="@dimen/SIZE_5">
+
+        <TextView
+            android:id="@+id/tv_add_cost_educat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/ic_add_black_24dp"
+            android:padding="@dimen/SIZE_5"
+            android:text="Cost"
+            android:textColor="@color/colorBlack" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/edt_post_educatn_website"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/SIZE_10"
+        android:background="@drawable/square_drawable"
+        android:focusable="true"
+        android:hint="Website"
+        android:padding="@dimen/SIZE_10"
+        android:singleLine="true"
+        android:textColor="@color/colorBlack"
+        android:textColorHint="@color/grey_600"
+        android:textSize="@dimen/TEXT_SIZE_16" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="351dp"
+        android:layout_marginTop="@dimen/SIZE_10"
+        android:layout_weight="0.28"
+        android:background="@drawable/main_select_group_back">
+
+        <EditText
+            android:id="@+id/edt_post_educatn_descrip"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:background="@null"
+            android:focusable="false"
+            android:gravity="top"
+            android:hint="Description"
+            android:overScrollMode="always"
+            android:padding="@dimen/SIZE_10"
+            android:scrollbarStyle="insideInset"
+            android:scrollbars="vertical"
+            android:textColor="@color/colorBlack"
+            android:textColorHint="@color/grey_900"
+            android:textSize="@dimen/TEXT_SIZE_16" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_above="@id/tv_select_max_five"
+            android:background="@color/green_500" />
+
+        <TextView
+            android:id="@+id/tv_select_max_five"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/SIZE_10"
+            android:textColor="@color/green_500"
+            android:textSize="@dimen/TEXT_SIZE_18" />
+
+        <TextView
+            android:id="@+id/tv_post_education"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/cornor_buttom_drawable"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/SIZE_10"
+            android:text="Next"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/TEXT_SIZE_18" />
+    </RelativeLayout>
+
+</LinearLayout>

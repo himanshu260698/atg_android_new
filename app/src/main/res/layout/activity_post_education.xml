@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:zhy="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:clickable="true"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@drawable/ic_color_gread_main"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:maxLines="1"
+                android:id="@+id/testTes"
+                android:text="You are posting education"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/TEXT_SIZE_16"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="@dimen/SIZE_10"
+                    android:src="@drawable/left_arrow"
+                    android:id="@+id/imv_educat_prev"/>
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/testTes"
+                    android:id="@+id/imv_step_educat"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="@dimen/SIZE_20"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/right_arrow"
+                    android:layout_marginTop="@dimen/SIZE_5"
+                    android:id="@+id/imv_educat_next"/>
+            </LinearLayout>
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey_900"/>
+        <include
+            android:id="@+id/layoutFirstEducation"
+            layout="@layout/first_step_education" />
+
+        <include android:id="@+id/layoutSecondEducation"
+            android:visibility="gone"
+            layout="@layout/second_step_education"/>
+        <include
+            android:id="@+id/layoutThirdEducation"
+            android:visibility="gone"
+            layout="@layout/third_step_education"/>
+        <include
+            android:id="@+id/layoutFourEducation"
+            android:visibility="gone"
+            layout="@layout/four_step_education"/>
+    </LinearLayout>
+
+</ScrollView>
