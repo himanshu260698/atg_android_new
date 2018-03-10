@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/get_all_card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/dashboard_card_margin"
+    android:layout_marginBottom="@dimen/dashboard_card_margin"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
     android:padding="@dimen/dashboard_card_padding"
     app:cardElevation="2dp">
 
@@ -17,9 +20,9 @@
         <ImageView
             android:id="@+id/iv_get_all"
             android:layout_width="match_parent"
-            android:layout_height="170dp"
+            android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:src="@color/orange_A400"
+            android:maxHeight="150dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,7 +35,7 @@
                app:layout_constraintTop_toTopOf="parent" />
    --><com.ATG.World.utilities.CustomTextView
         android:id="@+id/tv_title_get_all"
-        style="@style/OtherText"
+        style="@style/HeadingText"
         android:layout_width="@dimen/size_0"
         android:layout_height="wrap_content"
         android:ellipsize="marquee"
@@ -40,26 +43,25 @@
         android:shadowColor="@color/darker_shade"
         android:shadowDx="-2"
         android:shadowDy="-2"
-        android:text="details"
         app:customFont="@string/roboto_font"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_get_all" />
+        app:layout_constraintTop_toBottomOf="@id/iv_get_all"
+        tools:text="details" />
 
         <com.ATG.World.utilities.CustomTextView
             android:id="@+id/tv_dashboard_post_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            android:drawablePadding="4dp"
-            android:drawableStart="@drawable/ic_history_black_24dp"
+            android:paddingLeft="8dp"
             android:shadowColor="@color/darker_shade"
             android:shadowDx="-2"
             android:shadowDy="-2"
-            android:text="timestamp"
             android:textSize="14sp"
             app:customFont="@string/roboto_font"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_title_get_all" />
+            app:layout_constraintTop_toBottomOf="@id/tv_title_get_all"
+            tools:text="timestamp" />
 
         <com.ATG.World.utilities.CustomTextView
             android:id="@+id/tv_post_type"
@@ -79,7 +81,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_thumb_up_black_24dp"
-            android:onClick="onLikesImageViewClicked"
             android:shadowColor="@color/darker_shade"
             android:shadowDx="-2"
             android:shadowDy="-2"
@@ -95,7 +96,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_thumb_down_black_24dp"
-            android:onClick="onUnLikesImageViewClicked"
             android:shadowColor="@color/darker_shade"
             android:shadowDx="-2"
             android:shadowDy="-2"
@@ -111,7 +111,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_share_black_24dp"
-            android:onClick="onShareImageViewClicked"
             android:shadowColor="@color/darker_shade"
             android:shadowDx="-2"
             android:shadowDy="-2"
@@ -125,8 +124,6 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_margin="8dp"
-            android:padding="5dp"
-            android:src="@color/orange_A400"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_dashboard_post_time" />
 
@@ -139,10 +136,10 @@
             android:shadowColor="@color/darker_shade"
             android:shadowDx="-2"
             android:shadowDy="-2"
-            android:text="User Name"
             app:customFont="@string/roboto_font"
             app:layout_constraintBottom_toBottomOf="@id/iv_dashboard_user_img"
-            app:layout_constraintLeft_toRightOf="@id/iv_dashboard_user_img" />
+            app:layout_constraintLeft_toRightOf="@id/iv_dashboard_user_img"
+            tools:text="User Name" />
 
 
         <!--<View
@@ -205,4 +202,5 @@
             app:layout_constraintTop_toBottomOf="@id/view_separater" />-->
 
     </android.support.constraint.ConstraintLayout>
+
 </android.support.v7.widget.CardView>

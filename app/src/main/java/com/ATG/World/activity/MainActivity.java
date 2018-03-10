@@ -498,7 +498,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(MainActivity.this, SocialLoginActivity.class);
                 UserPreferenceManager.logout(MainActivity.this);
-                UserPreferenceManager.setUserId(MainActivity.this, "login");
                 intent.setClass(MainActivity.this, SocialLoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);

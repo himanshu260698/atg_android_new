@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import com.ATG.World.R;
 import com.ATG.World.models.Dashboard;
 import com.ATG.World.utilities.CustomTextView;
+import com.ATG.World.utilities.GlideApp;
 import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
@@ -127,8 +128,8 @@ public class GetAllAdapter extends BaseAdapter<Dashboard> {
 
     public static class AllViewHolder extends RecyclerView.ViewHolder {
 
-        /*@BindView(R.id.iv_dashboard_user_img)
-        ImageView postUserProfilePicture;*/
+        @BindView(R.id.iv_dashboard_user_img)
+        ImageView postUserProfilePicture;
         @BindView(R.id.tv_dashboard_user_name)
         CustomTextView postUserName;
         @BindView(R.id.tv_dashboard_post_time)
@@ -154,7 +155,7 @@ public class GetAllAdapter extends BaseAdapter<Dashboard> {
         }
 
         private void bind(Dashboard article) {
-            //setupUserImage(postUserProfilePicture, article);
+            setupUserImage(postUserProfilePicture, article);
             setupUserName(postUserName, article);
             setupPostTime(postTime, article);
             setupPostType(postType, article);
@@ -175,16 +176,15 @@ public class GetAllAdapter extends BaseAdapter<Dashboard> {
             }
         }
 
-        /*private void setupUserImage(ImageView postUserProfilePicture, Dashboard dashboard) {
-            String profileImageUrl = dashboard.getProfilePicture();
-            if (!TextUtils.isEmpty(profileImageUrl)) {
-                Glide.with(postUserProfilePicture.getContext())
-                        .load(R.string.profile_image_path + profileImageUrl)
-                        .into(postUserProfilePicture);
-            } else {
+        private void setupUserImage(ImageView postUserProfilePicture, Dashboard dashboard) {
+            String profileImageUrl = R.string.profile_image_path + dashboard.getUserId() + dashboard.getProfilePicture();
 
-            }
-        }*/
+            GlideApp.with(postUserProfilePicture.getContext())
+                    .load(profileImageUrl)
+                    .placeholder(R.drawable.ic_avtar_male)
+                    .into(postUserProfilePicture);
+
+        }
 
         private void setupPostTime(CustomTextView postTime, Dashboard dashboard) {
             String time = dashboard.getCreatedAt();
