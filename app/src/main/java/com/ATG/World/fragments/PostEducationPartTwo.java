@@ -48,7 +48,6 @@ import retrofit2.Response;
 public class PostEducationPartTwo extends Fragment {
     Button nextButton,backButton;
     EditText title,description;
-    private List<String> articleIds;
     ArrayList<String> arrayList;
     private AtgService atgService;
     //SendArticleData sendArticleData;
@@ -77,7 +76,6 @@ public class PostEducationPartTwo extends Fragment {
         description=view.findViewById(R.id.descriptionEdittext);
         website=view.findViewById(R.id.websiteEdittext);
         nextButton=view.findViewById(R.id.nextStep);
-        articleIds=new ArrayList<>();
         fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
 
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -157,7 +155,7 @@ public class PostEducationPartTwo extends Fragment {
                         //  Toast.makeText(getActivity(), "Title "+titlea, Toast.LENGTH_SHORT).show();
                         //   Toast.makeText(getActivity(), "ID "+id, Toast.LENGTH_SHORT).show();
                         //sendArticleData.transferData(String.valueOf(id),titlea);
-                        articleIds.add(String.valueOf(id));
+                        //articleIds.add(String.valueOf(id));
                         PostEducationPartThree fragment=new PostEducationPartThree();
                         fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
                                 android.R.anim.fade_out);
@@ -167,9 +165,8 @@ public class PostEducationPartTwo extends Fragment {
                         bundle.putInt("eduationId",id);
                         bundle.putString("title",titlea);
                         fragment.setArguments(bundle);
-                        //fragmentTransaction.commit();
-                        loadHomeFragment();
-                        //  Toast.makeText(getActivity(), "data "+articleIds.get(0), Toast.LENGTH_SHORT).show();
+                        fragmentTransaction.commit();
+                        //loadHomeFragment();
                     }
                 }
 
@@ -238,9 +235,7 @@ public class PostEducationPartTwo extends Fragment {
         super.onResume();
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
         ((MainActivity)getActivity()).showBack();
-        if(articleIds.size()>0) {
-            Toast.makeText(getActivity(), "Ids " + articleIds.get(articleIds.size() - 1), Toast.LENGTH_SHORT).show();
-        }
+
     }
     public boolean checkFor(){
         if(title.getText().toString().equals("")){

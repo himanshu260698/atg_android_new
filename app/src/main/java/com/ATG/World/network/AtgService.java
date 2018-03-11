@@ -218,13 +218,18 @@ public interface AtgService {
                                                       @Field("website")String website,@Field("education_type")String education_type);
     @Multipart
     @POST("ws-post-education-step-two")
-    @FormUrlEncoded
     Call<PostEducationResponse2> postEducationStepTwo(@Part("user_id") RequestBody userId, @Part("education_image") MultipartBody.Part file,
                                                       @Part("education_id") RequestBody educationId,
                                                   @Part("title") RequestBody title,
                                                       @Part("tags") RequestBody tags);
 
 
+   /* @Multipart
+    @POST("ws-post-education-step-two")
+    Call<PostEducationResponse2> postEducationStepTwo(@Part("user_id") Integer userId, @Part("education_image") MultipartBody.Part file,
+                                                      @Part("education_id") Integer educationId,
+                                                      @Part("title") String title,
+                                                      @Part("tags") String tags);*/
     @POST("ws-post-qrious-step-one")
     @FormUrlEncoded
     Call<PostQriousResponse> postQriousStepOne(@Field("user_id") @NonNull String userId, @Field("group_id") @NonNull int groupId,
