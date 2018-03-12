@@ -1,5 +1,6 @@
 package com.ATG.World.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -360,9 +361,15 @@ public class JobDetailFragment extends Fragment {
         intent.putExtras(bundle);
 
         startActivity(intent);
-    }
+    }*/
 
     @OnClick(R.id.tv_share)
     public void onShareImageViewClicked(final View view){
-    }*/
+        Intent share = new Intent(Intent.ACTION_SEND);
+        share.setType("text/plain");
+        share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        share.putExtra(Intent.EXTRA_SUBJECT,jobDetail.getTitle());
+        share.putExtra(Intent.EXTRA_TEXT,jobDetail.getLink());
+        startActivity(Intent.createChooser(share,"Share link!"));
+    }
 }
