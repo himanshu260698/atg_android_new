@@ -155,7 +155,7 @@ public class PostArticlePartOne extends Fragment {
                             public void unSelected(int position, View view) {
                                 super.unSelected(position, view);
                              //   Toast.makeText(getActivity(), "Deselected " + groupDetailsList.get(position).getName() + groupDetailsList.get(position).getId(), Toast.LENGTH_SHORT).show();
-                                list.remove(position);
+                                list.remove(array[position]);
                             }
                         });
                     } else {

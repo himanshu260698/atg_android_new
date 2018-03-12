@@ -68,7 +68,7 @@ public class PostEducationPartThree extends Fragment {
     private RxPermissions permissions;
     private byte[] byteArray;
     private Uri realUri;
-    int educationIds;
+    ArrayList<String> articleIds;
     public PostEducationPartThree() {
         // Required empty public constructor
     }
@@ -87,7 +87,7 @@ public class PostEducationPartThree extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadHomeFragment();
+                loadPreviousFragment();
             }
         });
         tags=view.findViewById(R.id.tagEdittext);
@@ -114,19 +114,20 @@ public class PostEducationPartThree extends Fragment {
         return view;
     }
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        educationId=String.valueOf(getArguments().getInt("eduationId"));
+        transfereedTitle=getArguments().getString("title");
+
+    }
+    @Override
     public void onStop() {
         super.onStop();
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
         ((MainActivity) getActivity()).showNButton();
 
     }
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        educationIds = getArguments().getInt("educationId");
-        transfereedTitle=getArguments().getString("title");
-        Log.e("educationId",""+ educationId);
-    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -144,12 +145,14 @@ public class PostEducationPartThree extends Fragment {
         }
         return returnTag;
     }
-    /*public void receiveArticleData(String aId,String title){
-        //educationId=aId;
+    public void receiveArticleData(String aId,String title){
+        //articleID=aId;
+        articleIds=new ArrayList<>();
         transfereedTitle=title;
-        Log.d("article data received", "receiveArticleData: "+educationIds.get(educationIds.size()-1)+title);
+        articleIds.add(aId);
+        Log.d("article data received", "receiveArticleData: "+articleIds.get(articleIds.size()-1)+title);
 
-    }*/
+    }
     private void checkPermissions(){
         permissions.request(Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE)
                 .subscribe(granted->{
@@ -263,24 +266,35 @@ public class PostEducationPartThree extends Fragment {
                         byteArray = getImageByteArray(((BitmapDrawable) selectButton.getDrawable()).getBitmap());
                         //  RequestBody rFile = RequestBody.create(MediaType.parse("image/jpeg"),file);
                         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), byteArray);
-                        MultipartBody.Part body = MultipartBody.Part.createFormData("eduction_img", "image.png", requestFile);
-                        RequestBody userId = RequestBody.create(MultipartBody.FORM, UserPreferenceManager.getUserId(getActivity()));
-                        RequestBody educationId = RequestBody.create(MultipartBody.FORM, String.valueOf(educationIds));
-                        RequestBody tags = RequestBody.create(MultipartBody.FORM, getTags());
+                        MultipartBody.Part body = MultipartBody.Part.createFormData("article_img", "image.png", requestFile);
+                        RequestBody userId = RequestBody.create(MediaType.parse("multipart/form-data"), UserPreferenceManager.getUserId(getActivity()));
+                        RequestBody educationID = RequestBody.create(MediaType.parse("multipart/form-data"), educationId);
+                        RequestBody tags = RequestBody.create(MediaType.parse("multipart/form-data"), getTags());
                         RequestBody title = RequestBody.create(MediaType.parse("multipart/form-data"), transfereedTitle);
-                        Call<PostEducationResponse2> postEducationResponseCall = atgService.postEducationStepTwo(userId,body ,educationId, title, tags);
-                    postEducationResponseCall.enqueue(new Callback<PostEducationResponse2>() {
+
+                        /*Integer userId=Integer.parseInt(UserPreferenceManager.getUserId(getActivity()));
+                        Integer educationID=Integer.parseInt(educationId);
+                        String title=transfereedTitle;
+                        String tags=getTags();
+                        Log.e("in final submit","yippy!!");
+                        Log.e("userId",userId.toString());
+                        Log.e("education_id",educationID.toString());
+                        Log.e("tags",tags.toString());
+                        Log.e("title",title);*/
+                        Call<PostEducationResponse2> postEducationResponseCall = atgService.postEducationStepTwo(userId, body, educationID, title,tags);
+                        postEducationResponseCall.enqueue(new Callback<PostEducationResponse2>() {
                             @Override
                             public void onResponse(Call<PostEducationResponse2> call, Response<PostEducationResponse2> response) {
                                 if (response.code() == 200) {
                                     Toast.makeText(getActivity(), "Education updated successfully ", Toast.LENGTH_SHORT).show();
+                                    loadHomeFragment();
                                     Log.d("Tags", "Tags: "+getTags());
                                 }
                             }
 
                             @Override
                             public void onFailure(Call<PostEducationResponse2> call, Throwable t) {
-                                Toast.makeText(getActivity(), "Failed to update Education", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "Failed to update education", Toast.LENGTH_SHORT).show();
                             }
                         });
 
@@ -289,7 +303,6 @@ public class PostEducationPartThree extends Fragment {
             }
 
         }
-        loadHomeFragment();
     }
     private byte[] getImageByteArray(Bitmap bmp) {
         byte[] byteArray = null;
@@ -297,10 +310,11 @@ public class PostEducationPartThree extends Fragment {
         if (bmp != null)
             bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byteArray = stream.toByteArray();
+        Log.e("body",byteArray.toString());
         return byteArray;
     }
     private boolean validation(){
-        if(TextUtils.isEmpty(tags.getText().toString())){
+        if(tags.getText().toString().trim().length()==0){
             tags.requestFocus();
             tags.setError("Tags cannot be empty");
             return false;
