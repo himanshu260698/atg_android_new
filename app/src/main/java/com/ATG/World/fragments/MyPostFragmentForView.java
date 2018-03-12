@@ -21,6 +21,7 @@ import com.ATG.World.adapters.MyPostAdapter;
 import com.ATG.World.models.MyPostPojo;
 import com.ATG.World.network.AtgClient;
 import com.ATG.World.network.AtgService;
+import com.ATG.World.preferences.UserPreferenceManager;
 import com.ATG.World.utilities.NetworkLogUtility;
 import com.ATG.World.utilities.NetworkUtility;
 
@@ -118,7 +119,7 @@ public class MyPostFragmentForView extends BaseFragment implements MyPostAdapter
         Log.d("MyPost", "GetMyPostData " + setTypeOfData);
 
         AtgService atgService = AtgClient.getClient().create(AtgService.class);
-        Call call = atgService.getMyPostData(Integer.parseInt(setTypeOfData), 455, pageNumberIs, 1);
+        Call call = atgService.getMyPostData(Integer.parseInt(setTypeOfData), Integer.parseInt(UserPreferenceManager.getUserId(getActivity())), pageNumberIs, 1);
         call.enqueue(getResultFromServer);
     }
 
@@ -299,7 +300,7 @@ public class MyPostFragmentForView extends BaseFragment implements MyPostAdapter
 
         Log.d("myPost", "loadMoreItems = " + setTypeOfData);
         AtgService atgService = AtgClient.getClient().create(AtgService.class);
-        Call call = atgService.getMyPostData(Integer.parseInt(setTypeOfData), 455/*Integer.parseInt(UserPreferenceManager.getUserId(getActivity()))*/, pageNumberIs, 1);
+        Call call = atgService.getMyPostData(Integer.parseInt(setTypeOfData), Integer.parseInt(UserPreferenceManager.getUserId(getActivity())), pageNumberIs, 1);
         call.enqueue(nextFetchCallback);
     }
 
