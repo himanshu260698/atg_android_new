@@ -58,9 +58,10 @@ public class ExploreGroupsFragment extends Fragment {
 
 
     mTopToolbar = view.findViewById(R.id.my_toolbar);
-    AppCompatActivity activity = (AppCompatActivity) getActivity();
-    activity.setSupportActionBar(mTopToolbar);
-    activity.getSupportActionBar().setTitle("Select Your Interest");
+//    AppCompatActivity activity = (AppCompatActivity) getActivity();
+//    activity.setSupportActionBar(mTopToolbar);
+//    activity.getSupportActionBar().setTitle("Select Your Interest");
+        mTopToolbar.setTitle("Select your Interest");
     retrofit= AtgClient.getClient().create(AtgService.class);
 
     progressBar=view.findViewById(R.id.my_group_progress);

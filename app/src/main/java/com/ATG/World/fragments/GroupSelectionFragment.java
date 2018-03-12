@@ -106,8 +106,9 @@ public class GroupSelectionFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mTopToolbar = (Toolbar) getActivity().findViewById(R.id.my_toolbar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(mTopToolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Select your Interest");
+//        ((AppCompatActivity) getActivity()).setSupportActionBar(mTopToolbar);
+//        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Select your Interest");
+        mTopToolbar.setTitle("Select your Interest");
         AtgService retrofit = AtgClient.getClient().create(AtgService.class);
         Call<NicheGroupResponse> call=retrofit.getNicheGroup(id);
         call.enqueue(callback);
@@ -238,14 +239,17 @@ public class GroupSelectionFragment extends Fragment {
     private void setToolbar() {
        if(count<=0){
            count=0;
-           ((AppCompatActivity) getActivity()).setSupportActionBar(mTopToolbar);
-           ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Select your Interest");
+//           ((AppCompatActivity) getActivity()).setSupportActionBar(mTopToolbar);
+//           ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Select your Interest");
+           mTopToolbar.setTitle("Select your Interest");
        }else if(count==1){
-           ((AppCompatActivity) getActivity()).setSupportActionBar(mTopToolbar);
-           ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(""+count+" Interest");
+//           ((AppCompatActivity) getActivity()).setSupportActionBar(mTopToolbar);
+//           ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(""+count+" Interest");
+           mTopToolbar.setTitle(""+count+" Interest");
        } else{
-        ((AppCompatActivity) getActivity()).setSupportActionBar(mTopToolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(""+count+" Interests");}
+//        ((AppCompatActivity) getActivity()).setSupportActionBar(mTopToolbar);
+//        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(""+count+" Interests");}
+           mTopToolbar.setTitle(""+count+" Interests");}
     }
 
     private class NicheGroupAdapter extends RecyclerView.Adapter<NicheGroupHolder>{
