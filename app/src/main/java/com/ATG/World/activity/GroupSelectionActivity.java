@@ -1,7 +1,6 @@
 package com.ATG.World.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -49,6 +48,9 @@ public class GroupSelectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_group_selection);
+
+        mTopToolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(mTopToolbar);
 
         retrofit= AtgClient.getClient().create(AtgService.class);
 
