@@ -264,6 +264,7 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
     private void initFacebookLogin() {
 
         fbLoginManager = com.facebook.login.LoginManager.getInstance();
+        RC_FB_SIGN_IN=64206;
 
         callbackManager = CallbackManager.Factory.create();
         fbLoginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -272,7 +273,7 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
                 GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
-                        LoginManager.getInstance().logOut();
+                        fbLoginManager.logOut();
                         try {
                             showProgress(true);
                             fbEmail = object.getString("email");
@@ -281,11 +282,7 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
                             String[] name = mName.split(" ");
                             fbFirstName = name[0];
                             fbLastLame = name[1];
-
                             socialFlag = 1;
-
-                            socialFlag = 1;
-
                             socialLogin();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -305,11 +302,6 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
             }
 
             @Override
-
-//            public void onError(FacebookException exception) {
-//                Toast.makeText(SocialLoginActivity.this, "Network prob", Toast.LENGTH_SHORT).show();
-//                // App code
-
             public void onError(FacebookException e) {
                 Toast.makeText(SocialLoginActivity.this, "Network problem", Toast.LENGTH_SHORT).show();
 
@@ -554,14 +546,12 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.e("CHECK1",requestCode+"");
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         } else if (requestCode == RC_FB_SIGN_IN) {
             callbackManager.onActivityResult(requestCode, resultCode, data);
-
-        } else if (requestCode == TwitterAuthConfig.DEFAULT_AUTH_REQUEST_CODE) {
-            mTwitterAuthClient.onActivityResult(requestCode, resultCode, data);
 
         } else if (requestCode == TwitterAuthConfig.DEFAULT_AUTH_REQUEST_CODE) {
             mTwitterAuthClient.onActivityResult(requestCode, resultCode, data);
